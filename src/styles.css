@@ -1,3 +1,135 @@
-body {
-    font-family: Arial, sans-serif;
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+/* Estilos generales */
+th, td {
+  text-align: center;
+}
+
+.inventory-table-container {
+  margin-top: 80px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  padding: 1em;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  max-height: 850px;
+  overflow-y: auto;
+}
+
+.caption-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.caption-title {
+  flex: 1;
+}
+
+.search-bar {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 5px;
+}
+
+.add-button {
+  flex: 1;
+  text-align: right;
+}
+
+button .bi {
+  margin-right: 5px;
+}
+
+table {
+  width: 100%;
+}
+
+#cuentaModal .modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#cuentaModal .modal-body .d-flex {
+  width: 100%;
+}
+
+#cuentaModal .modal-body .mb-3 h5 {
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 576px) {
+  #cuentaModal .modal-body .d-flex {
+    flex-direction: column;
+    align-items: center;
   }
+
+  #cuentaModal .modal-body .d-flex img {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .caption-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .add-button {
+    margin-top: 10px;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 767px) {
+  .caption-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .add-button {
+    margin-top: 10px;
+    justify-content: flex-start;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table tbody, .table tr, .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  .table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 1rem;
+    font-weight: bold;
+    text-align: left;
+  }
+}

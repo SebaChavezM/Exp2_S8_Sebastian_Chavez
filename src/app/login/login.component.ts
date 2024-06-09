@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     const loginForm = document.querySelector('form') as HTMLFormElement;
@@ -20,34 +24,10 @@ export class LoginComponent implements OnInit {
         const email = emailInput.value;
         const password = passwordInput.value;
 
-        const users: { email: string, password: string, role: string }[] = JSON.parse(localStorage.getItem('users') || '[]');
-
-        const user = users.find(user => user.email === email);
-
-        if (user) {
-            if (password === user.password) {
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                switch (user.role) {
-                    case 'Admin':
-                        window.location.href = 'Vista_Admin/Inicio_Admin.html';
-                        break;
-                    case 'Área':
-                        window.location.href = 'Vista_Area/Inicio_Area.html';
-                        break;
-                    case 'Bodega':
-                        window.location.href = 'Vista_Bodega/Inicio_Bodega.html';
-                        break;
-                    case 'Auditor':
-                        window.location.href = 'Vista_Auditor/Inicio_Auditor.html';
-                        break;
-                    default:
-                        alert('Rol no reconocido');
-                }
-            } else {
-                alert('Contraseña incorrecta. Por favor, inténtelo de nuevo.');
-            }
+        if (this.authService.login(email, password)) {
+          this.router.navigate(['/dashboard']);
         } else {
-            alert('Usuario no encontrado. Por favor, regístrese o inténtelo de nuevo.');
+          alert('Credenciales incorrectas. Por favor, inténtelo de nuevo.');
         }
     });
   }
