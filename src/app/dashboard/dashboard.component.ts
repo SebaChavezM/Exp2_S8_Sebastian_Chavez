@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';  // Asegúrate de importar NgForm
 import { ProductService, Product } from '../service/product.service';
 
 @Component({
@@ -34,24 +35,27 @@ export class DashboardComponent implements OnInit {
     this.productService.historial$.subscribe(historial => this.historial = historial);
   }
 
-  onAddProduct() {
-    this.productService.addProduct(this.newProduct);
-    // Reset form
-    this.newProduct = {
-      code: '',
-      name: '',
-      description: '',
-      model: '',
-      brand: '',
-      material: '',
-      color: '',
-      family: '',
-      value: 0,
-      currency: '',
-      unit: '',
-      location: '',
-      stock: 0
-    };
+  onAddProduct(form: NgForm) {
+    if (form.valid) {
+      this.productService.addProduct(this.newProduct);
+      // Reset form
+      form.resetForm();
+      this.newProduct = {
+        code: '',
+        name: '',
+        description: '',
+        model: '',
+        brand: '',
+        material: '',
+        color: '',
+        family: '',
+        value: 0,
+        currency: '',
+        unit: '',
+        location: '',
+        stock: 0
+      };
+    }
   }
 
   onDeleteProduct(index: number) {
