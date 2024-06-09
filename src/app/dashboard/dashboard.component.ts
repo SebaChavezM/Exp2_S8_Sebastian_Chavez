@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';  // Asegúrate de importar NgForm
+import { NgForm } from '@angular/forms';
 import { ProductService, Product } from '../service/product.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  standalone: true,
 })
 export class DashboardComponent implements OnInit {
   products: Product[] = [];
