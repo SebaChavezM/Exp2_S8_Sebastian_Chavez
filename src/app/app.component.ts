@@ -5,6 +5,6 @@ import { LoginComponent } from './login/login.component';
   selector: 'app-root',
   template: '<app-login></app-login>',
   standalone: true,
-  imports: [LoginComponent],
+  imports: [LoginComponent]
 })
 export class AppComponent {}
