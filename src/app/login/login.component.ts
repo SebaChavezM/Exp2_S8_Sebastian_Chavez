@@ -1,34 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
+import { NgForm, FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  imports: [FormsModule, CommonModule]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
+  email: string = '';
+  password: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private router: Router) {}
 
-  ngOnInit() {
-    const loginForm = document.querySelector('form') as HTMLFormElement;
+  onSubmit(form: NgForm) {
+    if (form.valid) {
+      const users: { email: string, password: string, role: string }[] = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(user => user.email === this.email);
 
-    loginForm.addEventListener('submit', (event: Event) => {
-        event.preventDefault();
-
-        const emailInput = document.getElementById('exampleInputEmail1') as HTMLInputElement;
-        const passwordInput = document.getElementById('exampleInputPassword1') as HTMLInputElement;
-
-        const email = emailInput.value;
-        const password = passwordInput.value;
-
-        if (this.authService.login(email, password)) {
-          this.router.navigate(['/dashboard']);
+      if (user) {
+        if (user.password === this.password) {
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          switch (user.role) {
+            case 'Admin':
+              this.router.navigate(['/dashboard']);
+              break;
+            case 'Área':
+              this.router.navigate(['/area']);
+              break;
+            case 'Bodega':
+              this.router.navigate(['/bodega']);
+              break;
+            case 'Auditor':
+              this.router.navigate(['/auditor']);
+              break;
+            default:
+              alert('Rol no reconocido');
+          }
         } else {
-          alert('Credenciales incorrectas. Por favor, inténtelo de nuevo.');
+          alert('Contraseña incorrecta. Por favor, inténtelo de nuevo.');
         }
-    });
+      } else {
+        alert('Usuario no encontrado. Por favor, regístrese o inténtelo de nuevo.');
+      }
+    }
   }
 }
