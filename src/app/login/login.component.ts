@@ -24,6 +24,7 @@ export class LoginComponent {
       if (user) {
         if (user.password === this.password) {
           localStorage.setItem('currentUser', JSON.stringify(user));
+          console.log('User authenticated, role:', user.role); // Debugging
           switch (user.role) {
             case 'Admin':
               this.router.navigate(['/dashboard']);

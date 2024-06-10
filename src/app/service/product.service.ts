@@ -2,77 +2,103 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 export interface Product {
+  code: string;
+  name: string;
+  description: string;
+  model: string;
+  brand: string;
+  material: string;
+  color: string;
+  family: string;
+  value: number;
+  currency: string;
+  unit: string;
+  location: string;
+  stock: number;
+}
+
+export interface Movimiento {
+  tipo: string;
+  numero: number;
+  fecha: string;
+  documento?: string;
+  detalles: string;
+  items: {
     code: string;
     name: string;
     description: string;
-    model: string;
-    brand: string;
-    material: string;
-    color: string;
-    family: string;
-    value: number;
-    currency: string;
-    unit: string;
-    location: string;
-    stock: number;
+    cantidad: number;
+  }[];
+  usuario?: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
-  private productsSubject = new BehaviorSubject<Product[]>(this.loadProducts());
+  private productsSubject: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   products$ = this.productsSubject.asObservable();
-
-  private historialSubject = new BehaviorSubject<any[]>(this.loadHistorial());
+  private products: Product[] = JSON.parse(localStorage.getItem('products')!) || [];
+  private nextIngresoNumber: number = +localStorage.getItem('nextIngresoNumber')! || 1;
+  private nextSalidaNumber: number = +localStorage.getItem('nextSalidaNumber')! || 1;
+  private historial: Movimiento[] = JSON.parse(localStorage.getItem('historial')!) || [];
+  private historialSubject: BehaviorSubject<Movimiento[]> = new BehaviorSubject<Movimiento[]>(this.historial);
   historial$ = this.historialSubject.asObservable();
 
-  private ultimoIngreso = parseInt(localStorage.getItem('ultimoIngreso') || '0', 10);
-  private ultimoSalida = parseInt(localStorage.getItem('ultimoSalida') || '0', 10);
-
-  constructor() {}
-
-  private loadProducts(): Product[] {
-    return JSON.parse(localStorage.getItem('products') || '[]');
+  constructor() {
+    this.productsSubject.next(this.products);
+    this.historialSubject.next(this.historial);
   }
 
-  private saveProducts(products: Product[]): void {
-    localStorage.setItem('products', JSON.stringify(products));
-    this.productsSubject.next(products);
+  addProduct(product: Product) {
+    this.products.push(product);
+    this.updateLocalStorage();
   }
 
-  private loadHistorial(): any[] {
-    return JSON.parse(localStorage.getItem('historial') || '[]');
+  deleteProduct(index: number) {
+    this.products.splice(index, 1);
+    this.updateLocalStorage();
   }
 
-  private saveHistorial(historial: any[]): void {
-    localStorage.setItem('historial', JSON.stringify(historial));
-    this.historialSubject.next(historial);
+  updateProduct(index: number, product: Product) {
+    this.products[index] = product;
+    this.updateLocalStorage();
   }
 
-  addProduct(product: Product): void {
-    const products = this.loadProducts();
-    products.push(product);
-    this.saveProducts(products);
+  getNextIngresoNumber(): number {
+    const currentNumber = this.nextIngresoNumber;
+    this.nextIngresoNumber++;
+    this.saveNextIngresoNumber();
+    return currentNumber;
   }
 
-  deleteProduct(index: number): void {
-    const products = this.loadProducts();
-    products.splice(index, 1);
-    this.saveProducts(products);
+  getNextSalidaNumber(): number {
+    const currentNumber = this.nextSalidaNumber;
+    this.nextSalidaNumber++;
+    this.saveNextSalidaNumber();
+    return currentNumber;
   }
 
-  updateProduct(index: number, updatedProduct: Product): void {
-    const products = this.loadProducts();
-    products[index] = updatedProduct;
-    this.saveProducts(products);
+  saveNextIngresoNumber() {
+    localStorage.setItem('nextIngresoNumber', this.nextIngresoNumber.toString());
   }
 
-  addSalida(nuevoRegistro: any): void {
-    const historial = this.loadHistorial();
-    historial.push(nuevoRegistro);
-    this.saveHistorial(historial);
-    this.ultimoSalida++;
-    localStorage.setItem('ultimoSalida', this.ultimoSalida.toString());
+  saveNextSalidaNumber() {
+    localStorage.setItem('nextSalidaNumber', this.nextSalidaNumber.toString());
+  }
+
+  private updateLocalStorage() {
+    localStorage.setItem('products', JSON.stringify(this.products));
+    this.productsSubject.next(this.products);
+  }
+
+  addMovimiento(movimiento: Movimiento) {
+    this.historial.push(movimiento);
+    this.updateHistorialLocalStorage();
+  }
+
+  private updateHistorialLocalStorage() {
+    localStorage.setItem('historial', JSON.stringify(this.historial));
+    this.historialSubject.next(this.historial);
   }
 }

@@ -4,22 +4,22 @@
       <img src="assets/img/logos/Logo_grande-removebg-preview.png" alt="Logo de la empresa">
     </div>
     <div class="form-container">
-      <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Correo electrónico</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" required [(ngModel)]="email" name="email" #emailModel="ngModel">
-          <div *ngIf="emailModel.invalid && emailModel.touched" class="text-danger">
-            Por favor, ingrese un correo válido.
+          <input type="email" class="form-control" id="exampleInputEmail1" [(ngModel)]="email" name="email" required>
+          <div class="invalid-feedback" *ngIf="loginForm.submitted && !loginForm.controls['email']?.valid">
+            Por favor, ingrese su correo electrónico.
           </div>
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" required [(ngModel)]="password" name="password" #passwordModel="ngModel">
-          <div *ngIf="passwordModel.invalid && passwordModel.touched" class="text-danger">
-            Por favor, ingrese una contraseña.
+          <input type="password" class="form-control" id="exampleInputPassword1" [(ngModel)]="password" name="password" required>
+          <div class="invalid-feedback" *ngIf="loginForm.submitted && !loginForm.controls['password']?.valid">
+            Por favor, ingrese su contraseña.
           </div>
         </div>
-        <button type="submit" class="btn btn-warning" [disabled]="loginForm.invalid">Iniciar sesión</button>
+        <button type="submit" class="btn btn-warning">Iniciar sesión</button>
       </form>
     </div>
   </div>
