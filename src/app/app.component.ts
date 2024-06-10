@@ -1,21 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
-  template: '<router-outlet></router-outlet>',
+  template: `
+    <app-navbar></app-navbar>
+    <router-outlet></router-outlet>
+  `,
   standalone: true,
-  imports: [RouterModule]
+  imports: [RouterModule, NavbarComponent]
 })
-export class AppComponent implements OnInit {
-  ngOnInit() {
-    const users = [
-      { email: 'admin@example.com', password: 'admin', role: 'Admin' },
-      { email: 'user@example.com', password: 'user', role: 'User' }
-    ];
-
-    if (!localStorage.getItem('users')) {
-      localStorage.setItem('users', JSON.stringify(users));
-    }
-  }
-}
+export class AppComponent {}

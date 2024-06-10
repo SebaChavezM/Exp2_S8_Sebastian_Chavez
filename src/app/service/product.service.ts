@@ -66,17 +66,21 @@ export class ProductService {
   }
 
   getNextIngresoNumber(): number {
-    const currentNumber = this.nextIngresoNumber;
-    this.nextIngresoNumber++;
-    this.saveNextIngresoNumber();
-    return currentNumber;
+    return this.nextIngresoNumber;
   }
 
   getNextSalidaNumber(): number {
-    const currentNumber = this.nextSalidaNumber;
+    return this.nextSalidaNumber;
+  }
+
+  incrementNextIngresoNumber() {
+    this.nextIngresoNumber++;
+    this.saveNextIngresoNumber();
+  }
+
+  incrementNextSalidaNumber() {
     this.nextSalidaNumber++;
     this.saveNextSalidaNumber();
-    return currentNumber;
   }
 
   saveNextIngresoNumber() {

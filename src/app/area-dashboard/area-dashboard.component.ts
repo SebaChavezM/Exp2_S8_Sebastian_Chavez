@@ -1,29 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../auth/auth.service';
-import { ProductService, Product, Movimiento } from '../service/product.service';
 import * as bootstrap from 'bootstrap';
-
-interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: string;
-  password: string;
-}
+import { ProductService, Product, Movimiento } from '../service/product.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  selector: 'app-area-dashboard',
+  templateUrl: './area-dashboard.component.html',
+  styleUrls: ['./area-dashboard.component.css'],
   standalone: true,
   imports: [FormsModule, CommonModule]
 })
-export class DashboardComponent implements OnInit {
+export class AreaDashboardComponent implements OnInit {
   products: Product[] = [];
-  filteredProducts: Product[] = [];
   historial: Movimiento[] = [];
   selectedProductIndexToDelete: number = -1;
   selectedProductIndexToEdit: number = -1;
@@ -72,18 +61,10 @@ export class DashboardComponent implements OnInit {
   };
 
   productToDelete: Product | null = null;
-
-  newUser: User = { id: '', firstName: '', lastName: '', email: '', password: '', role: 'User' };
-  repeatPassword: string = '';
-  registerError: string = '';
-  registerSuccess: string = '';
-  users: User[] = [];
-  filteredUsers: User[] = [];
-  searchUserTerm: string = '';
   searchProductTerm: string = '';
-  selectedUser: User = { id: '', firstName: '', lastName: '', email: '', password: '', role: 'User' };
+  filteredProducts: Product[] = [];
 
-  constructor(private productService: ProductService, private authService: AuthService) {}
+  constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
     this.productService.products$.subscribe(products => {
@@ -94,160 +75,23 @@ export class DashboardComponent implements OnInit {
     this.today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
     this.registroNumeroIngreso = this.productService.getNextIngresoNumber();
     this.registroNumeroSalida = this.productService.getNextSalidaNumber();
-    this.loadUsers(); // Cargar usuarios al iniciar el componente
   }
 
   productExists(code: string): boolean {
     return this.products.some(product => product.code === code);
   }
 
-  onRegister(form: NgForm) {
-    if (form.valid) {
-      if (this.newUser.password !== this.repeatPassword) {
-        this.registerError = 'Las contraseñas no coinciden.';
-        return;
-      }
-
-      const existingUser = this.users.find(user => user.email === this.newUser.email);
-      if (existingUser) {
-        this.registerError = 'El usuario ya existe. Por favor, intente con otro email.';
-        this.registerSuccess = '';
-        return;
-      }
-
-      this.users.push({ ...this.newUser });
-      localStorage.setItem('users', JSON.stringify(this.users));
-      this.registerSuccess = 'Usuario registrado exitosamente.';
-      this.registerError = '';
-      this.loadUsers(); // Recargar la lista de usuarios
-      form.resetForm(); // Resetear el formulario
-      const userModal = bootstrap.Modal.getInstance(document.getElementById('userModal')!);
-      userModal?.hide();
-    }
-  }
-
-  // Cargar usuarios desde localStorage
-  loadUsers() {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    this.users = users;
-    this.filteredUsers = users;
-  }
-
-  // Filtrar usuarios por término de búsqueda
-  onSearchUser() {
-    if (this.searchUserTerm) {
-      this.filteredUsers = this.users.filter(user =>
-        user.firstName.toLowerCase().includes(this.searchUserTerm.toLowerCase()) ||
-        user.lastName.toLowerCase().includes(this.searchUserTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(this.searchUserTerm.toLowerCase()) ||
-        user.role.toLowerCase().includes(this.searchUserTerm.toLowerCase())
-      );
-    } else {
-      this.filteredUsers = this.users;
-    }
-  }
-
-  // Método para abrir el modal de usuario
-  openUserModal() {
-    const userModal = new bootstrap.Modal(document.getElementById('userModal')!);
-    userModal.show();
-  }
-
-  // Método para guardar el usuario desde el formulario
-  onSaveUser(form: NgForm) {
-    this.onRegister(form);
-  }
-
-  // Método para ver la información de usuario
-  viewUser(user: User) {
-    this.selectedUser = user;
-    const userInfoModal = new bootstrap.Modal(document.getElementById('userInfoModal')!);
-    userInfoModal.show();
-  }
-
-  // Método para editar usuario
-  editUser(user: User) {
-    this.selectedUser = { ...user }; // Crear una copia del usuario seleccionado
-    const editUserModal = new bootstrap.Modal(document.getElementById('editUserModal')!);
-    editUserModal.show();
-  }
-
-  // Método para guardar cambios en usuario
-  onSaveEditUser(form: NgForm) {
-    if (form.valid) {
-      const index = this.users.findIndex(u => u.id === this.selectedUser.id);
-      if (index !== -1) {
-        this.users[index] = { ...this.selectedUser };
-        localStorage.setItem('users', JSON.stringify(this.users));
-        this.loadUsers(); // Recargar la lista de usuarios
-        const editUserModal = bootstrap.Modal.getInstance(document.getElementById('editUserModal')!);
-        editUserModal?.hide();
-      }
-    }
-  }
-
-  // Método para eliminar usuario
-  deleteUser(user: User) {
-    this.selectedUser = user; // Establecer el usuario seleccionado para eliminación
-    const confirmDeleteUserModal = new bootstrap.Modal(document.getElementById('confirmDeleteUserModal')!);
-    confirmDeleteUserModal.show();
-  }
-
-  // Método para confirmar la eliminación del usuario
-  onConfirmDeleteUser() {
-    const index = this.users.findIndex(u => u.id === this.selectedUser.id);
-    if (index > -1) {
-      this.users.splice(index, 1);
-      localStorage.setItem('users', JSON.stringify(this.users));
-      this.loadUsers();
-      const confirmDeleteUserModal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteUserModal')!);
-      confirmDeleteUserModal?.hide();
-    }
-  }
-
-  // Método para alternar la visibilidad de la contraseña
-  togglePasswordVisibility() {
-    const passwordField = document.getElementById('editPassword') as HTMLInputElement;
-    if (passwordField.type === 'password') {
-      passwordField.type = 'text';
-    } else {
-      passwordField.type = 'password';
-    }
-  }
-
-  // Métodos para productos e inventario
   onSearchProduct(event: any) {
-    this.searchProductTerm = event.target.value.toLowerCase();
-    if (this.searchProductTerm) {
+    const searchTerm = event.target.value.toLowerCase();
+    if (searchTerm) {
       this.filteredProducts = this.products.filter(product =>
-        product.code.toLowerCase().includes(this.searchProductTerm) ||
-        product.description.toLowerCase().includes(this.searchProductTerm) ||
-        product.name.toLowerCase().includes(this.searchProductTerm)
+        product.code.toLowerCase().includes(searchTerm) ||
+        product.description.toLowerCase().includes(searchTerm) ||
+        product.name.toLowerCase().includes(searchTerm)
       );
     } else {
       this.filteredProducts = this.products;
     }
-  }
-
-  onDeleteProduct(index: number) {
-    this.selectedProductIndexToDelete = index;
-    this.productToDelete = this.products[index];
-    const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal')!);
-    confirmDeleteModal.show();
-  }
-
-  onConfirmDelete() {
-    if (this.selectedProductIndexToDelete !== -1) {
-      this.productService.deleteProduct(this.selectedProductIndexToDelete);
-      this.selectedProductIndexToDelete = -1;
-      this.productToDelete = null;
-      const confirmDeleteModal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal')!);
-      confirmDeleteModal?.hide();
-    }
-  }
-
-  onUpdateProduct(index: number, product: Product) {
-    this.productService.updateProduct(index, product);
   }
 
   onViewProductInfo(index: number) {
@@ -261,6 +105,31 @@ export class DashboardComponent implements OnInit {
     this.selectedProductToEdit = { ...this.products[index] }; // Crear una copia del producto seleccionado
     const editProductModal = new bootstrap.Modal(document.getElementById('editProductModal')!);
     editProductModal.show();
+  }
+
+  onAddProduct(form: NgForm) {
+    if (form.valid) {
+      if (!this.productExists(this.newProduct.code)) {
+        this.productService.addProduct(this.newProduct);
+        // Reset form
+        form.resetForm();
+        this.newProduct = {
+          code: '',
+          name: '',
+          description: '',
+          model: '',
+          brand: '',
+          material: '',
+          color: '',
+          family: '',
+          value: 0,
+          currency: '',
+          unit: '',
+          location: '',
+          stock: 0
+        };
+      }
+    }
   }
 
   onSaveEditProduct() {
@@ -288,28 +157,20 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  onAddProduct(form: NgForm) {
-    if (form.valid) {
-      if (!this.productExists(this.newProduct.code)) {
-        this.productService.addProduct(this.newProduct);
-        // Reset form
-        form.resetForm();
-        this.newProduct = {
-          code: '',
-          name: '',
-          description: '',
-          model: '',
-          brand: '',
-          material: '',
-          color: '',
-          family: '',
-          value: 0,
-          currency: '',
-          unit: '',
-          location: '',
-          stock: 0
-        };
-      }
+  onDeleteProduct(index: number) {
+    this.selectedProductIndexToDelete = index;
+    this.productToDelete = this.products[index];
+    const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal')!);
+    confirmDeleteModal.show();
+  }
+
+  onConfirmDelete() {
+    if (this.selectedProductIndexToDelete !== -1) {
+      this.productService.deleteProduct(this.selectedProductIndexToDelete);
+      this.selectedProductIndexToDelete = -1;
+      this.productToDelete = null;
+      const confirmDeleteModal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal')!);
+      confirmDeleteModal?.hide();
     }
   }
 

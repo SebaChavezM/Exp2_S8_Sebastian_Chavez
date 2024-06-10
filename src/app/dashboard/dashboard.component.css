@@ -1,28 +1,24 @@
-th, td {
-    text-align: center;
-    vertical-align: middle;
-  }
+th, td 
+{
+  text-align: center;
+  vertical-align: middle;
+}
 
-  .inventory-table-container {
-    padding: 20px;
-  }
-  
-  .table {
-    border-radius: 10px;
-    overflow: hidden;
-  }
+.inventory-table-container {
+  padding: 20px;
+}
 
-  .table-bordered {
-    border: 1px solid #dee2e6;
-  }
-  
-  .table th, .table td {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .btn-group .btn {
-    margin-right: 5px;
-  }
-  
+.table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+
+.table th, .table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
