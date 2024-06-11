@@ -94,7 +94,7 @@ export class DashboardComponent implements OnInit {
     this.today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
     this.registroNumeroIngreso = this.productService.getNextIngresoNumber();
     this.registroNumeroSalida = this.productService.getNextSalidaNumber();
-    this.loadUsers(); // Cargar usuarios al iniciar el componente
+    this.loadUsers();
   }
 
   productExists(code: string): boolean {
@@ -119,21 +119,19 @@ export class DashboardComponent implements OnInit {
       localStorage.setItem('users', JSON.stringify(this.users));
       this.registerSuccess = 'Usuario registrado exitosamente.';
       this.registerError = '';
-      this.loadUsers(); // Recargar la lista de usuarios
-      form.resetForm(); // Resetear el formulario
+      this.loadUsers();
+      form.resetForm();
       const userModal = bootstrap.Modal.getInstance(document.getElementById('userModal')!);
       userModal?.hide();
     }
   }
 
-  // Cargar usuarios desde localStorage
   loadUsers() {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     this.users = users;
     this.filteredUsers = users;
   }
 
-  // Filtrar usuarios por término de búsqueda
   onSearchUser() {
     if (this.searchUserTerm) {
       this.filteredUsers = this.users.filter(user =>
@@ -147,53 +145,46 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  // Método para abrir el modal de usuario
   openUserModal() {
     const userModal = new bootstrap.Modal(document.getElementById('userModal')!);
     userModal.show();
   }
 
-  // Método para guardar el usuario desde el formulario
   onSaveUser(form: NgForm) {
     this.onRegister(form);
   }
 
-  // Método para ver la información de usuario
   viewUser(user: User) {
     this.selectedUser = user;
     const userInfoModal = new bootstrap.Modal(document.getElementById('userInfoModal')!);
     userInfoModal.show();
   }
 
-  // Método para editar usuario
   editUser(user: User) {
-    this.selectedUser = { ...user }; // Crear una copia del usuario seleccionado
+    this.selectedUser = { ...user };
     const editUserModal = new bootstrap.Modal(document.getElementById('editUserModal')!);
     editUserModal.show();
   }
 
-  // Método para guardar cambios en usuario
   onSaveEditUser(form: NgForm) {
     if (form.valid) {
       const index = this.users.findIndex(u => u.id === this.selectedUser.id);
       if (index !== -1) {
         this.users[index] = { ...this.selectedUser };
         localStorage.setItem('users', JSON.stringify(this.users));
-        this.loadUsers(); // Recargar la lista de usuarios
+        this.loadUsers();
         const editUserModal = bootstrap.Modal.getInstance(document.getElementById('editUserModal')!);
         editUserModal?.hide();
       }
     }
   }
 
-  // Método para eliminar usuario
   deleteUser(user: User) {
-    this.selectedUser = user; // Establecer el usuario seleccionado para eliminación
+    this.selectedUser = user;
     const confirmDeleteUserModal = new bootstrap.Modal(document.getElementById('confirmDeleteUserModal')!);
     confirmDeleteUserModal.show();
   }
 
-  // Método para confirmar la eliminación del usuario
   onConfirmDeleteUser() {
     const index = this.users.findIndex(u => u.id === this.selectedUser.id);
     if (index > -1) {
@@ -205,7 +196,6 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  // Método para alternar la visibilidad de la contraseña
   togglePasswordVisibility() {
     const passwordField = document.getElementById('editPassword') as HTMLInputElement;
     if (passwordField.type === 'password') {
@@ -215,7 +205,6 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  // Métodos para productos e inventario
   onSearchProduct(event: any) {
     this.searchProductTerm = event.target.value.toLowerCase();
     if (this.searchProductTerm) {
@@ -258,7 +247,7 @@ export class DashboardComponent implements OnInit {
 
   onEditProduct(index: number) {
     this.selectedProductIndexToEdit = index;
-    this.selectedProductToEdit = { ...this.products[index] }; // Crear una copia del producto seleccionado
+    this.selectedProductToEdit = { ...this.products[index] };
     const editProductModal = new bootstrap.Modal(document.getElementById('editProductModal')!);
     editProductModal.show();
   }
@@ -292,7 +281,6 @@ export class DashboardComponent implements OnInit {
     if (form.valid) {
       if (!this.productExists(this.newProduct.code)) {
         this.productService.addProduct(this.newProduct);
-        // Reset form
         form.resetForm();
         this.newProduct = {
           code: '',
@@ -329,7 +317,7 @@ export class DashboardComponent implements OnInit {
         product: productToAdd,
         cantidad: this.cantidadIngreso
       });
-      this.cantidadIngreso = 1; // Reset the input
+      this.cantidadIngreso = 1;
     }
   }
 
@@ -343,7 +331,6 @@ export class DashboardComponent implements OnInit {
       if (product) {
         product.stock += item.cantidad;
         this.productService.updateProduct(this.products.indexOf(product), product);
-        // Añadir registro al historial
         this.productService.addMovimiento({
           tipo: 'Ingreso',
           numero: this.registroNumeroIngreso,
@@ -355,7 +342,7 @@ export class DashboardComponent implements OnInit {
             description: i.product.description,
             cantidad: i.cantidad
           })),
-          usuario: 'usuario_definido' // Cambia esto por la lógica adecuada para obtener el usuario
+          usuario: `${this.authService.getCurrentUser().firstName} ${this.authService.getCurrentUser().lastName}`
         });
       }
     });
@@ -389,7 +376,7 @@ export class DashboardComponent implements OnInit {
         product: productToAdd,
         cantidad: this.cantidadSalida
       });
-      this.cantidadSalida = 1; // Reset the input
+      this.cantidadSalida = 1;
     }
   }
 
@@ -403,7 +390,6 @@ export class DashboardComponent implements OnInit {
       if (product) {
         product.stock -= item.cantidad;
         this.productService.updateProduct(this.products.indexOf(product), product);
-        // Añadir registro al historial
         this.productService.addMovimiento({
           tipo: 'Salida',
           numero: this.registroNumeroSalida,
@@ -416,7 +402,7 @@ export class DashboardComponent implements OnInit {
             description: i.product.description,
             cantidad: i.cantidad
           })),
-          usuario: 'usuario_definido' // Cambia esto por la lógica adecuada para obtener el usuario
+          usuario: `${this.authService.getCurrentUser().firstName} ${this.authService.getCurrentUser().lastName}`
         });
       }
     });

@@ -5,12 +5,12 @@ import { routes } from './app/app.routes';
 import { importProvidersFrom } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';  // Importar CommonModule
+import { CommonModule } from '@angular/common';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
     provideHttpClient(),
-    importProvidersFrom(FormsModule, CommonModule)  // Agregar CommonModule
+    importProvidersFrom(FormsModule, CommonModule)
   ]
 });

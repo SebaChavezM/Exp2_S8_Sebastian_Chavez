@@ -1,0 +1,58 @@
+<div class="container mt-3">
+<div class="d-flex justify-content-between align-items-center">
+    <h2>Inventario</h2>
+</div>
+<input type="text" class="form-control mt-2" placeholder="Buscar productos..." [(ngModel)]="searchProductTerm" (input)="onSearchProduct($event)">
+<table id="productTable" class="table table-striped table-bordered caption-top mt-2">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">CÓDIGO</th>
+        <th scope="col">DESCRIPCIÓN</th>
+        <th scope="col">UNIDAD</th>
+        <th scope="col">STOCK</th>
+        <th scope="col">HERRAMIENTAS</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let product of filteredProducts; let i = index">
+        <td>{{ product.code }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.unit }}</td>
+        <td>{{ product.stock }}</td>
+        <td>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-success" (click)="onViewProductInfo(i)">
+            <i class="bi bi-info-circle"></i>
+            </button>
+        </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>
+  
+  
+<div class="modal fade" id="productInfoModal" tabindex="-1" aria-labelledby="productInfoModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="productInfoModalLabel">Información del Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <p><strong>Código:</strong> {{ selectedProduct?.code }}</p>
+        <p><strong>Descripción:</strong> {{ selectedProduct?.description }}</p>
+        <p><strong>Modelo:</strong> {{ selectedProduct?.model }}</p>
+        <p><strong>Marca:</strong> {{ selectedProduct?.brand }}</p>
+        <p><strong>Material:</strong> {{ selectedProduct?.material }}</p>
+        <p><strong>Color:</strong> {{ selectedProduct?.color }}</p>
+        <p><strong>Familia:</strong> {{ selectedProduct?.family }}</p>
+        <p><strong>Valor:</strong> {{ selectedProduct?.value }}</p>
+        <p><strong>Moneda:</strong> {{ selectedProduct?.currency }}</p>
+        <p><strong>Unidad:</strong> {{ selectedProduct?.unit }}</p>
+        <p><strong>Ubicación:</strong> {{ selectedProduct?.location }}</p>
+        <p><strong>Stock:</strong> {{ selectedProduct?.stock }}</p>
+    </div>
+    </div>
+</div>
+</div>

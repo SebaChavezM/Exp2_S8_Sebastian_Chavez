@@ -1,7 +1,7 @@
 <div class="login-container-wrapper">
   <div class="login-container">
     <div class="logo">
-      <img src="assets/img/logos/Logo_grande-removebg-preview.png" alt="Logo de la empresa">
+      <img src="../../assets/img/logos/Logo_grande-removebg-preview.png" alt="logo de la empresa">
     </div>
     <div class="form-container">
       <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
@@ -20,7 +20,7 @@
           </div>
         </div>
         <button type="submit" class="btn btn-warning">Iniciar sesión</button>
-        <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+        <div *ngIf="loginError" class="alert alert-danger mt-3">{{ loginError }}</div>
       </form>
     </div>
   </div>

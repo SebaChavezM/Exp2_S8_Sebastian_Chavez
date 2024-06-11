@@ -1,27 +1,28 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgForm, FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [FormsModule, CommonModule]
+  standalone: true,
+  imports: [CommonModule, FormsModule]
 })
 export class LoginComponent {
   email: string = '';
   password: string = '';
-  errorMessage: string = '';
+  loginError: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService) {}
 
   onSubmit(form: NgForm) {
     if (form.valid) {
-      if (!this.authService.login(this.email, this.password)) {
-        this.errorMessage = 'Usuario o contraseña incorrectos. Por favor, inténtelo de nuevo.';
+      const success = this.authService.login(this.email, this.password);
+      if (!success) {
+        this.loginError = 'Credenciales incorrectas';
       }
     }
   }

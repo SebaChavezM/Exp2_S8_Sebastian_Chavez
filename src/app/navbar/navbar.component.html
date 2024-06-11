@@ -1,32 +1,27 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="../../assets/img/logos/Logo_grande-removebg-preview.png" alt="Logo" style="height: 40px; margin-right: 10px;">
-        ERP PRAXA INGENIERIA SPA
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <!-- Visible solo para administradores -->
-          <li class="nav-item" *ngIf="authService.isAdmin()">
-            <a class="nav-link" routerLink="/admin-dashboard">Admin Dashboard</a>
-          </li>
-          <!-- Visible solo para usuarios de área -->
-          <li class="nav-item" *ngIf="authService.isArea()">
-            <a class="nav-link" routerLink="/area-dashboard">Área Dashboard</a>
-          </li>
-          <!-- Visible para cualquier usuario autenticado -->
-          <li class="nav-item" *ngIf="authService.isAuthenticated()">
-            <a class="nav-link" (click)="logout()">Logout</a>
-          </li>
-          <!-- Visible solo para usuarios no autenticados -->
-          <li class="nav-item" *ngIf="!authService.isAuthenticated()">
-            <a class="nav-link" routerLink="/login">Login</a>
-          </li>
-        </ul>
-      </div>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">ERP PRAXA INGENIERIA</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item" *ngIf="authService.isAdmin()">
+          <a class="nav-link" routerLink="/admin-dashboard">Admin Dashboard</a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isArea()">
+          <a class="nav-link" routerLink="/area-dashboard">Área Dashboard</a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isAuditor()">
+          <a class="nav-link" routerLink="/auditor-dashboard">Auditor Dashboard</a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isAuthenticated()">
+          <a class="nav-link" (click)="logout()">Logout</a>
+        </li>
+      </ul>
+      <span class="navbar-text ms-auto text-black" *ngIf="authService.isAuthenticated()">
+        Bienvenido, {{ authService.getCurrentUser()?.firstName }} {{ authService.getCurrentUser()?.lastName }}
+      </span>
     </div>
-  </nav>
-  
+  </div>
+</nav>

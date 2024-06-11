@@ -15,8 +15,10 @@ export class AuthService {
       localStorage.setItem('currentUser', JSON.stringify(user));
       if (user.role === 'Admin') {
         this.router.navigate(['/admin-dashboard']);
-      } else if (user.role === 'Area') {
+      } else if (user.role === 'Área') {
         this.router.navigate(['/area-dashboard']);
+      } else if (user.role === 'Auditor') {
+        this.router.navigate(['/auditor-dashboard']);
       }
       return true;
     }
@@ -36,15 +38,18 @@ export class AuthService {
     return JSON.parse(localStorage.getItem('currentUser')!);
   }
 
-  // Método para registrar un nuevo usuario
-  register(newUser: any): boolean {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    if (users.find((u: any) => u.email === newUser.email)) {
-      return false; // Usuario ya existe
-    }
-    users.push(newUser);
-    localStorage.setItem('users', JSON.stringify(users));
-    return true;
+  isAdmin(): boolean {
+    const user = this.getCurrentUser();
+    return user && user.role === 'Admin';
+  }
+
+  isArea(): boolean {
+    const user = this.getCurrentUser();
+    return user && user.role === 'Área';
+  }
+
+  isAuditor(): boolean {
+    const user = this.getCurrentUser();
+    return user && user.role === 'Auditor';
   }
 }
-

@@ -3,6 +3,7 @@ import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import * as bootstrap from 'bootstrap';
 import { ProductService, Product, Movimiento } from '../service/product.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-area-dashboard',
@@ -64,7 +65,7 @@ export class AreaDashboardComponent implements OnInit {
   searchProductTerm: string = '';
   filteredProducts: Product[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.productService.products$.subscribe(products => {
@@ -102,7 +103,7 @@ export class AreaDashboardComponent implements OnInit {
 
   onEditProduct(index: number) {
     this.selectedProductIndexToEdit = index;
-    this.selectedProductToEdit = { ...this.products[index] }; // Crear una copia del producto seleccionado
+    this.selectedProductToEdit = { ...this.products[index] };
     const editProductModal = new bootstrap.Modal(document.getElementById('editProductModal')!);
     editProductModal.show();
   }
@@ -190,7 +191,7 @@ export class AreaDashboardComponent implements OnInit {
         product: productToAdd,
         cantidad: this.cantidadIngreso
       });
-      this.cantidadIngreso = 1; // Reset the input
+      this.cantidadIngreso = 1;
     }
   }
 
@@ -204,7 +205,6 @@ export class AreaDashboardComponent implements OnInit {
       if (product) {
         product.stock += item.cantidad;
         this.productService.updateProduct(this.products.indexOf(product), product);
-        // Añadir registro al historial
         this.productService.addMovimiento({
           tipo: 'Ingreso',
           numero: this.registroNumeroIngreso,
@@ -216,7 +216,7 @@ export class AreaDashboardComponent implements OnInit {
             description: i.product.description,
             cantidad: i.cantidad
           })),
-          usuario: 'usuario_definido' // Cambia esto por la lógica adecuada para obtener el usuario
+          usuario: `${this.authService.getCurrentUser().firstName} ${this.authService.getCurrentUser().lastName}`
         });
       }
     });
@@ -226,11 +226,11 @@ export class AreaDashboardComponent implements OnInit {
 
     const ingresoBodegaModalElement = document.getElementById('ingresoBodegaModal');
     if (ingresoBodegaModalElement) {
-        const ingresoBodegaModal = bootstrap.Modal.getInstance(ingresoBodegaModalElement);
-        if (ingresoBodegaModal) {
-            ingresoBodegaModal.hide();
-            setTimeout(() => ingresoBodegaModal.dispose(), 500);
-        }
+      const ingresoBodegaModal = bootstrap.Modal.getInstance(ingresoBodegaModalElement);
+      if (ingresoBodegaModal) {
+        ingresoBodegaModal.hide();
+        setTimeout(() => ingresoBodegaModal.dispose(), 500);
+      }
     }
   }
 
@@ -250,7 +250,7 @@ export class AreaDashboardComponent implements OnInit {
         product: productToAdd,
         cantidad: this.cantidadSalida
       });
-      this.cantidadSalida = 1; // Reset the input
+      this.cantidadSalida = 1;
     }
   }
 
@@ -264,7 +264,6 @@ export class AreaDashboardComponent implements OnInit {
       if (product) {
         product.stock -= item.cantidad;
         this.productService.updateProduct(this.products.indexOf(product), product);
-        // Añadir registro al historial
         this.productService.addMovimiento({
           tipo: 'Salida',
           numero: this.registroNumeroSalida,
@@ -277,7 +276,7 @@ export class AreaDashboardComponent implements OnInit {
             description: i.product.description,
             cantidad: i.cantidad
           })),
-          usuario: 'usuario_definido' // Cambia esto por la lógica adecuada para obtener el usuario
+          usuario: `${this.authService.getCurrentUser().firstName} ${this.authService.getCurrentUser().lastName}`
         });
       }
     });
@@ -287,11 +286,11 @@ export class AreaDashboardComponent implements OnInit {
 
     const salidaBodegaModalElement = document.getElementById('salidaBodegaModal');
     if (salidaBodegaModalElement) {
-        const salidaBodegaModal = bootstrap.Modal.getInstance(salidaBodegaModalElement);
-        if (salidaBodegaModal) {
-            salidaBodegaModal.hide();
-            setTimeout(() => salidaBodegaModal.dispose(), 500);
-        }
+      const salidaBodegaModal = bootstrap.Modal.getInstance(salidaBodegaModalElement);
+      if (salidaBodegaModal) {
+        salidaBodegaModal.hide();
+        setTimeout(() => salidaBodegaModal.dispose(), 500);
+      }
     }
   }
 
