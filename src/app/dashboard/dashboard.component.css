@@ -22,3 +22,8 @@ th, td
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+#detalleHistorialModal .modal-body {
+  max-height: 900px;
+  overflow-y: auto;
+}

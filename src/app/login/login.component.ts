@@ -23,6 +23,8 @@ export class LoginComponent {
       const success = this.authService.login(this.email, this.password);
       if (!success) {
         this.loginError = 'Credenciales incorrectas';
+      } else {
+        this.loginError = 'Credenciales inválidas. Por favor, intente de nuevo.';
       }
     }
   }

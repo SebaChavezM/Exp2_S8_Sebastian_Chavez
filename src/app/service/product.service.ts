@@ -15,6 +15,7 @@ export interface Product {
   unit: string;
   location: string;
   stock: number;
+  bodega: string;
 }
 
 export interface Movimiento {
@@ -23,13 +24,15 @@ export interface Movimiento {
   fecha: string;
   documento?: string;
   detalles: string;
-  items: {
+  items: Array<{
     code: string;
     name: string;
     description: string;
     cantidad: number;
-  }[];
-  usuario?: string;
+  }>;
+  usuario: string;
+  bodegaOrigen?: string;
+  bodegaDestino?: string;
 }
 
 @Injectable({

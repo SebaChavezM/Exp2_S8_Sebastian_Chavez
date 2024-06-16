@@ -5,12 +5,33 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    this.createDefaultAdmin();
+  }
+
+  createDefaultAdmin() {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const adminUser = users.find((u: any) => u.email === 'admin@example.com');
+
+    if (!adminUser) {
+      const defaultAdmin = {
+        id: '1',
+        firstName: 'Admin',
+        lastName: 'User',
+        email: 'admin@example.com',
+        password: 'Admin12345',
+        role: 'Admin'
+      };
+      users.push(defaultAdmin);
+      localStorage.setItem('users', JSON.stringify(users));
+      console.log('Usuario administrador creado:', defaultAdmin);
+    }
+  }
 
   login(email: string, password: string): boolean {
     const users = JSON.parse(localStorage.getItem('users')!);
     const user = users.find((u: any) => u.email === email && u.password === password);
-    
+
     if (user) {
       localStorage.setItem('currentUser', JSON.stringify(user));
       if (user.role === 'Admin') {
@@ -51,5 +72,18 @@ export class AuthService {
   isAuditor(): boolean {
     const user = this.getCurrentUser();
     return user && user.role === 'Auditor';
+  }
+
+  updateCurrentUser(user: any) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  }
+
+  updateUserInList(updatedUser: any) {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const userIndex = users.findIndex((user: any) => user.id === updatedUser.id);
+    if (userIndex !== -1) {
+      users[userIndex] = updatedUser;
+      localStorage.setItem('users', JSON.stringify(users));
+    }
   }
 }

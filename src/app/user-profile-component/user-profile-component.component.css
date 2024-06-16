@@ -1,0 +1,30 @@
+.profile-picture-wrapper {
+  position: relative;
+}
+
+.profile-picture {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+}
+
+.profile-picture-wrapper label {
+  display: block;
+  margin-top: 10px;
+}
+
+.form-control[readonly] {
+  background-color: #f8f9fa;
+  opacity: 1;
+}
+
+.btn-success {
+  margin-right: 10px;
+}
+
+input[type="file"] {
+  display: none;
+}

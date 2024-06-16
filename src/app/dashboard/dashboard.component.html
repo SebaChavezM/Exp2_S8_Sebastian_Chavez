@@ -1,76 +1,81 @@
 <div class="container mt-3">
-<div class="row mb-3">
-  <div class="col-md-8">
-    <h2>Usuarios</h2>
+  <div class="row mb-3">
+    <div class="col-md-8">
+      <h2>Usuarios</h2>
+    </div>
+    <div class="col-md-4 text-end">
+      <button class="btn btn-success" (click)="openUserModal()">Crear Usuario</button>
+    </div>
   </div>
-  <div class="col-md-4 text-end">
-    <button class="btn btn-success" (click)="openUserModal()">Crear Usuario</button>
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="searchUserTerm" (input)="onSearchUser()">
+    </div>
   </div>
+  <table class="table table-striped table-bordered caption-top mt-2">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Correo Laboral</th>
+        <th>Rol</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers">
+        <td>{{ user.id }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-success btn-sm" (click)="viewUser(user)">
+              <i class="bi bi-info-circle"></i>
+            </button>
+            <button class="btn btn-warning btn-sm" (click)="editUser(user)">
+              <i class="bi bi-pen"></i>
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="deleteUser(user)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-<div class="row mb-3">
-  <div class="col-md-12">
-    <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="searchUserTerm" (input)="onSearchUser()">
-  </div>
-</div>
-<table class="table table-striped table-bordered caption-top mt-2">
-  <thead class="table-dark">
-    <tr>
-      <th>ID</th>
-      <th>Nombre</th>
-      <th>Apellido</th>
-      <th>Correo Laboral</th>
-      <th>Rol</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let user of filteredUsers">
-      <td>{{ user.id }}</td>
-      <td>{{ user.firstName }}</td>
-      <td>{{ user.lastName }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.role }}</td>
-      <td>
-        <div class="btn-group" role="group" aria-label="Basic example">
-          <button class="btn btn-info btn-sm" (click)="viewUser(user)">
-            <i class="bi bi-info-circle"></i>
-          </button>
-          <button class="btn btn-warning btn-sm" (click)="editUser(user)">
-            <i class="bi bi-pen"></i>
-          </button>
-          <button class="btn btn-danger btn-sm" (click)="deleteUser(user)">
-            <i class="bi bi-trash"></i>
-          </button>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
 
 <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="userModalLabel">Creación de Usuario</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm(userForm, 'user')"></button>
       </div>
       <div class="modal-body">
-        <form #userForm="ngForm">
+        <form #userForm="ngForm" (ngSubmit)="onSaveUser(userForm)" class="needs-validation needs-validation-user" novalidate>
           <div class="mb-3">
             <label for="userId" class="form-label">ID</label>
             <input type="text" class="form-control" id="userId" [(ngModel)]="newUser.id" name="id" required>
+            <div class="invalid-feedback" *ngIf="userForm.submitted && !newUser.id">Por favor ingrese un ID.</div>
           </div>
           <div class="mb-3">
             <label for="firstName" class="form-label">Nombres</label>
             <input type="text" class="form-control" id="firstName" [(ngModel)]="newUser.firstName" name="firstName" required>
+            <div class="invalid-feedback" *ngIf="userForm.submitted && !newUser.firstName">Por favor ingrese un nombre.</div>
           </div>
           <div class="mb-3">
             <label for="lastName" class="form-label">Apellidos</label>
             <input type="text" class="form-control" id="lastName" [(ngModel)]="newUser.lastName" name="lastName" required>
+            <div class="invalid-feedback" *ngIf="userForm.submitted && !newUser.lastName">Por favor ingrese un apellido.</div>
           </div>
           <div class="mb-3">
             <label for="email" class="form-label">Correo Laboral</label>
-            <input type="email" class="form-control" id="email" [(ngModel)]="newUser.email" name="email" required>
+            <input type="email" class="form-control" id="email" [(ngModel)]="newUser.email" name="email" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$">
+            <div class="invalid-feedback" *ngIf="userForm.submitted && !newUser.email">Por favor ingrese un correo electrónico válido.</div>
           </div>
           <div class="mb-3">
             <label for="role" class="form-label">Rol</label>
@@ -80,20 +85,23 @@
               <option value="Bodega">Bodega</option>
               <option value="Auditor">Auditor</option>
             </select>
+            <div class="invalid-feedback" *ngIf="userForm.submitted && !newUser.role">Por favor seleccione un rol.</div>
           </div>
           <div class="mb-3">
             <label for="password" class="form-label">Clave</label>
-            <input type="password" class="form-control" id="password" [(ngModel)]="newUser.password" name="password" required>
+            <input type="password" class="form-control" id="password" [(ngModel)]="newUser.password" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}">
+            <div class="invalid-feedback" *ngIf="userForm.submitted && !newUser.password">La clave debe tener al menos 10 caracteres, una mayúscula y un número.</div>
           </div>
           <div class="mb-3">
             <label for="repeatPassword" class="form-label">Repetir Clave</label>
             <input type="password" class="form-control" id="repeatPassword" [(ngModel)]="repeatPassword" name="repeatPassword" required>
+            <div class="invalid-feedback" *ngIf="userForm.submitted && (newUser.password !== repeatPassword)">Las claves no coinciden.</div>
           </div>
+          <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="onSaveUser(userForm)">Guardar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetForm(userForm, 'user')">Cerrar</button>
       </div>
     </div>
   </div>
@@ -184,58 +192,72 @@
   </div>
 </div>
 
-<div class="mt-5">
-  <div class="d-flex justify-content-between align-items-center">
-    <h2>Inventario</h2>
-    <div class="btn-group">
-      <button class="btn btn-success" id="btnAddItem" data-bs-toggle="modal" data-bs-target="#Modal_add_item">
-        <i class="bi bi-plus-square"></i>
-      </button>
-      <button class="btn btn-success" id="btnIngresoBodega" data-bs-toggle="modal" data-bs-target="#ingresoBodegaModal">
-        <i class="bi bi-box-arrow-in-down"></i>
-      </button>
-      <button class="btn btn-success" id="btnAbrirSalidaBodega" data-bs-toggle="modal" data-bs-target="#salidaBodegaModal">
-        <i class="bi bi-box-arrow-up"></i>
-      </button>
-      <button class="btn btn-success" id="btnAbrirHistorial" data-bs-toggle="modal" data-bs-target="#detalleHistorialModal">
-        <i class="bi bi-clock-history"></i>
-      </button>
+<div class="container mt-3">
+  <ul class="nav nav-tabs" id="bodegaTabs" role="tablist">
+    <li class="nav-item" *ngFor="let bodega of bodegas">
+      <a class="nav-link" [class.active]="bodega === selectedBodega" (click)="selectBodega(bodega)" role="tab">{{ bodega.name }}</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="openAddBodegaModal()"><i class="bi bi-plus"></i></a>
+    </li>
+  </ul>
+  <div class="tab-content mt-3">
+    <div class="tab-pane fade show active" id="bodegaContent" role="tabpanel">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Inventario - {{ selectedBodega.name }}</h2>
+        <div class="btn-group">
+          <button class="btn btn-success" id="btnAddItem" data-bs-toggle="modal" data-bs-target="#Modal_add_item">
+            <i class="bi bi-plus-square"></i>
+          </button>
+          <button class="btn btn-success" id="btnIngresoBodega" data-bs-toggle="modal" data-bs-target="#ingresoBodegaModal">
+            <i class="bi bi-box-arrow-in-down"></i>
+          </button>
+          <button class="btn btn-success" id="btnAbrirSalidaBodega" data-bs-toggle="modal" data-bs-target="#salidaBodegaModal">
+            <i class="bi bi-box-arrow-up"></i>
+          </button>
+          <button class="btn btn-success" id="btnTrasladoBodega" data-bs-toggle="modal" data-bs-target="#trasladoBodegaModal">
+            <i class="bi bi-arrow-left-right"></i>
+          </button>
+          <button class="btn btn-success" id="btnAbrirHistorial" data-bs-toggle="modal" data-bs-target="#detalleHistorialModal">
+            <i class="bi bi-clock-history"></i>
+          </button>
+        </div>
+      </div>
+      <input type="text" class="form-control mt-2" placeholder="Buscar productos..." [(ngModel)]="searchProductTerm" (input)="onSearchProduct($event)">
+      <table id="productTable" class="table table-striped table-bordered caption-top mt-2">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">CÓDIGO</th>
+            <th scope="col">DESCRIPCIÓN</th>
+            <th scope="col">UNIDAD</th>
+            <th scope="col">STOCK</th>
+            <th scope="col">HERRAMIENTAS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of filteredProducts; let i = index">
+            <td>{{ product.code }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.unit }}</td>
+            <td>{{ product.stock }}</td>
+            <td>
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-success" (click)="onViewProductInfo(i)">
+                  <i class="bi bi-info-circle"></i>
+                </button>
+                <button type="button" class="btn btn-warning" (click)="onEditProduct(i)">
+                  <i class="bi bi-pen"></i>
+                </button>
+                <button type="button" class="btn btn-danger" (click)="onDeleteProduct(i)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  <input type="text" class="form-control mt-2" placeholder="Buscar productos..." [(ngModel)]="searchProductTerm" (input)="onSearchProduct($event)">
-  <table id="productTable" class="table table-striped table-bordered caption-top mt-2">
-    <thead class="table-dark">
-      <tr>
-        <th scope="col">CÓDIGO</th>
-        <th scope="col">DESCRIPCIÓN</th>
-        <th scope="col">UNIDAD</th>
-        <th scope="col">STOCK</th>
-        <th scope="col">HERRAMIENTAS</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let product of filteredProducts; let i = index">
-        <td>{{ product.code }}</td>
-        <td>{{ product.description }}</td>
-        <td>{{ product.unit }}</td>
-        <td>{{ product.stock }}</td>
-        <td>
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-success" (click)="onViewProductInfo(i)">
-              <i class="bi bi-info-circle"></i>
-            </button>
-            <button type="button" class="btn btn-warning" (click)="onEditProduct(i)">
-              <i class="bi bi-pen"></i>
-            </button>
-            <button type="button" class="btn btn-danger" (click)="onDeleteProduct(i)">
-              <i class="bi bi-trash"></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
 </div>
 
 <div class="modal fade" id="Modal_add_item" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="Modal_add_itemLabel" aria-hidden="true">
@@ -243,67 +265,70 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="Modal_add_itemLabel">Creación de Producto</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm(productForm, 'product')"></button>
       </div>
       <div class="modal-body">
-        <form (ngSubmit)="onAddProduct(productForm)" #productForm="ngForm" class="row g-3 needs-validation" novalidate>
+        <form (ngSubmit)="onAddProduct(productForm)" #productForm="ngForm" class="row g-3 needs-validation-product">
+          <div class="col-md-4">
+            <label for="productBodega" class="form-label">Bodega</label>
+            <select class="form-select" id="productBodega" required [(ngModel)]="newProduct.bodega" name="bodega">
+              <option *ngFor="let bodega of bodegas" [ngValue]="bodega.name">{{ bodega.name }}</option>
+            </select>
+          </div>          
           <div class="col-md-4">
             <label for="productCode" class="form-label">Codigo Producto</label>
-            <input type="text" class="form-control" id="productCode" required [(ngModel)]="newProduct.code" name="code">
-            <div *ngIf="productForm.submitted && !productForm.controls['code']?.valid" class="invalid-feedback">
-              Por favor ingrese el código del producto.
-            </div>
+            <input type="text" class="form-control" id="productCode" required [(ngModel)]="newProduct.code" name="code" (input)="toUpperCase($event)">
             <div *ngIf="productExists(newProduct.code) && productForm.submitted" class="invalid-feedback">
               El código del producto ya existe. Por favor, ingrese un código diferente.
             </div>
           </div>
           <div class="col-md-4">
             <label for="productName" class="form-label">Nombre Producto</label>
-            <input type="text" class="form-control" id="productName" required [(ngModel)]="newProduct.name" name="name">
-            <div *ngIf="productForm.submitted && !productForm.controls['name']?.valid" class="invalid-feedback">
+            <input type="text" class="form-control" id="productName" required [(ngModel)]="newProduct.name" name="name" (input)="toUpperCase($event)">
+            <div *ngIf="productForm.submitted && !newProduct.name" class="invalid-feedback">
               Por favor ingrese el nombre del producto.
             </div>
           </div>
           <div class="col-md-4">
             <label for="productDescription" class="form-label">Descripción</label>
-            <input type="text" class="form-control" id="productDescription" required [(ngModel)]="newProduct.description" name="description">
-            <div *ngIf="productForm.submitted && !productForm.controls['description']?.valid" class="invalid-feedback">
+            <input type="text" class="form-control" id="productDescription" required [(ngModel)]="newProduct.description" name="description" (input)="toUpperCase($event)">
+            <div *ngIf="productForm.submitted && !newProduct.description" class="invalid-feedback">
               Por favor ingrese la descripción del producto.
             </div>
           </div>
           <div class="col-md-4">
             <label for="productModel" class="form-label">Modelo</label>
-            <input type="text" class="form-control" id="productModel" required [(ngModel)]="newProduct.model" name="model">
-            <div *ngIf="productForm.submitted && !productForm.controls['model']?.valid" class="invalid-feedback">
+            <input type="text" class="form-control" id="productModel" required [(ngModel)]="newProduct.model" name="model" (input)="toUpperCase($event)">
+            <div *ngIf="productForm.submitted && !newProduct.model" class="invalid-feedback">
               Por favor ingrese el modelo del producto.
             </div>
           </div>
           <div class="col-md-4">
             <label for="productBrand" class="form-label">Marca</label>
-            <input type="text" class="form-control" id="productBrand" required [(ngModel)]="newProduct.brand" name="brand">
-            <div *ngIf="productForm.submitted && !productForm.controls['brand']?.valid" class="invalid-feedback">
+            <input type="text" class="form-control" id="productBrand" required [(ngModel)]="newProduct.brand" name="brand" (input)="toUpperCase($event)">
+            <div *ngIf="productForm.submitted && !newProduct.brand" class="invalid-feedback">
               Por favor ingrese la marca del producto.
             </div>
           </div>
           <div class="col-md-4">
             <label for="productMaterial" class="form-label">Material</label>
-            <input type="text" class="form-control" id="productMaterial" [(ngModel)]="newProduct.material" name="material">
+            <input type="text" class="form-control" id="productMaterial" [(ngModel)]="newProduct.material" name="material" (input)="toUpperCase($event)">
           </div>
           <div class="col-md-4">
             <label for="productColor" class="form-label">Color</label>
-            <input type="text" class="form-control" id="productColor" [(ngModel)]="newProduct.color" name="color">
+            <input type="text" class="form-control" id="productColor" [(ngModel)]="newProduct.color" name="color" (input)="toUpperCase($event)">
           </div>
           <div class="col-md-4">
             <label for="productFamily" class="form-label">Familia</label>
-            <input type="text" class="form-control" id="productFamily" required [(ngModel)]="newProduct.family" name="family">
-            <div *ngIf="productForm.submitted && !productForm.controls['family']?.valid" class="invalid-feedback">
-              Por favor seleccione una familia.
+            <input type="text" class="form-control" id="productFamily" required [(ngModel)]="newProduct.family" name="family" (input)="toUpperCase($event)">
+            <div *ngIf="productForm.submitted && !newProduct.family" class="invalid-feedback">
+              Por favor ingrese una familia.
             </div>
           </div>
           <div class="col-md-4">
             <label for="productValue" class="form-label">Valor Neto</label>
             <input type="number" class="form-control" id="productValue" required [(ngModel)]="newProduct.value" name="value">
-            <div *ngIf="productForm.submitted && !productForm.controls['value']?.valid" class="invalid-feedback">
+            <div *ngIf="productForm.submitted && !newProduct.value" class="invalid-feedback">
               Por favor ingrese el valor neto del producto.
             </div>
           </div>
@@ -315,31 +340,31 @@
               <option>USD</option>
               <option>EUR</option>
             </select>
-            <div *ngIf="productForm.submitted && !productForm.controls['currency']?.valid" class="invalid-feedback">
+            <div *ngIf="productForm.submitted && !newProduct.currency" class="invalid-feedback">
               Por favor seleccione un tipo de moneda.
             </div>
           </div>
           <div class="col-md-4">
             <label for="productUnit" class="form-label">Unidad</label>
-            <input type="text" class="form-control" id="productUnit" required [(ngModel)]="newProduct.unit" name="unit">
-            <div *ngIf="productForm.submitted && !productForm.controls['unit']?.valid" class="invalid-feedback">
+            <input type="text" class="form-control" id="productUnit" required [(ngModel)]="newProduct.unit" name="unit" (input)="toUpperCase($event)">
+            <div *ngIf="productForm.submitted && !newProduct.unit" class="invalid-feedback">
               Por favor ingrese la unidad del producto.
             </div>
           </div>
           <div class="col-md-4">
             <label for="productLocation" class="form-label">Ubicación</label>
-            <input type="text" class="form-control" id="productLocation" required [(ngModel)]="newProduct.location" name="location">
-            <div *ngIf="productForm.submitted && !productForm.controls['location']?.valid" class="invalid-feedback">
+            <input type="text" class="form-control" id="productLocation" required [(ngModel)]="newProduct.location" name="location" (input)="toUpperCase($event)">
+            <div *ngIf="productForm.submitted && !newProduct.location" class="invalid-feedback">
               Por favor ingrese la ubicación del producto.
             </div>
           </div>
           <div class="col-12">
             <button class="btn btn-primary" type="submit">Crear Producto</button>
           </div>
-        </form>                      
+        </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetForm(productForm, 'product')">Cerrar</button>
       </div>
     </div>
   </div>
@@ -355,6 +380,7 @@
       <div class="modal-body" *ngIf="selectedProduct">
         <ul class="list-group">
           <li class="list-group-item"><strong>Código:</strong> {{ selectedProduct.code }}</li>
+          <li class="list-group-item"><strong>Bodega:</strong> {{ selectedProduct.bodega }}</li>
           <li class="list-group-item"><strong>Nombre:</strong> {{ selectedProduct.name }}</li>
           <li class="list-group-item"><strong>Descripción:</strong> {{ selectedProduct.description }}</li>
           <li class="list-group-item"><strong>Modelo:</strong> {{ selectedProduct.model }}</li>
@@ -396,7 +422,7 @@
                       <div class="col-md-6">
                           <label for="selectProducto" class="form-label">Producto:</label>
                           <select class="form-select" id="selectProducto" [(ngModel)]="selectedProduct" name="selectedProduct" required>
-                              <option *ngFor="let product of products" [ngValue]="product">{{ product.name }} ({{ product.code }})</option>
+                              <option *ngFor="let product of selectedBodega.products" [ngValue]="product">{{ product.name }} ({{ product.code }})</option>
                           </select>
                       </div>
                       <div class="col-md-6">
@@ -462,7 +488,7 @@
             <div class="col-md-6">
               <label for="selectProductoSalida" class="form-label">Producto:</label>
               <select class="form-select" id="selectProductoSalida" [(ngModel)]="selectedProductSalida" name="selectedProductSalida" required>
-                <option *ngFor="let product of products" [ngValue]="product">{{ product.name }} ({{ product.code }})</option>
+                <option *ngFor="let product of allProducts" [ngValue]="product">{{ product.name }} ({{ product.code }})</option>
               </select>
               <div *ngIf="salidaBodegaForm.submitted && !salidaBodegaForm.controls['selectedProductSalida']?.valid" class="invalid-feedback">
                 Por favor seleccione un producto.
@@ -473,26 +499,6 @@
               <input type="number" class="form-control" id="cantidadSalida" [(ngModel)]="cantidadSalida" name="cantidadSalida" min="1" required>
               <div *ngIf="salidaBodegaForm.submitted && !salidaBodegaForm.controls['cantidadSalida']?.valid" class="invalid-feedback">
                 Por favor ingrese una cantidad válida.
-              </div>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <label for="tipoDocumento" class="form-label">Tipo de Documento:</label>
-              <select class="form-select" id="tipoDocumento" [(ngModel)]="tipoDocumento" name="tipoDocumento" required>
-                <option selected disabled value="">Elegir...</option>
-                <option value="VD">VD</option>
-                <option value="OE">OE</option>
-              </select>
-              <div *ngIf="salidaBodegaForm.submitted && !salidaBodegaForm.controls['tipoDocumento']?.valid" class="invalid-feedback">
-                Por favor seleccione un tipo de documento.
-              </div>
-            </div>
-            <div class="col-md-6">
-              <label for="numeroDocumento" class="form-label">Número de Documento:</label>
-              <input type="text" class="form-control" id="numeroDocumento" [(ngModel)]="numeroDocumento" name="numeroDocumento" required>
-              <div *ngIf="salidaBodegaForm.submitted && !salidaBodegaForm.controls['numeroDocumento']?.valid" class="invalid-feedback">
-                Por favor ingrese el número del documento.
               </div>
             </div>
           </div>
@@ -515,6 +521,8 @@
                   <th scope="col">Descripción</th>
                   <th scope="col">Stock Actual</th>
                   <th scope="col">Cantidad</th>
+                  <th scope="col">Tipo Documento</th>
+                  <th scope="col">Número Documento</th>
                   <th scope="col">Acciones</th>
                 </tr>
               </thead>
@@ -526,6 +534,16 @@
                   <td>{{ item.product.stock }}</td>
                   <td>
                     <input type="number" [(ngModel)]="item.cantidad" name="cantidadSalida{{i}}" min="1" class="form-control">
+                  </td>
+                  <td>
+                    <select class="form-select" [(ngModel)]="item.tipoDocumento" name="tipoDocumento{{i}}">
+                      <option selected disabled value="">Elegir...</option>
+                      <option value="VD">VD</option>
+                      <option value="OE">OE</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" [(ngModel)]="item.numeroDocumento" name="numeroDocumento{{i}}">
                   </td>
                   <td>
                     <button type="button" class="btn btn-danger" (click)="onEliminarItemSalida(i)">Borrar</button>
@@ -545,34 +563,36 @@
 
 <div class="modal fade" id="detalleHistorialModal" tabindex="-1" aria-labelledby="detalleHistorialModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="detalleHistorialModalLabel">Historial de Movimientos</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <table class="table">
-                  <thead>
-                      <tr>
-                          <th scope="col">Tipo</th>
-                          <th scope="col">Número</th>
-                          <th scope="col">Fecha</th>
-                          <th scope="col">Detalles</th>
-                      </tr>
-                  </thead>
-                  <tbody id="tablaHistorial">
-                      <tr *ngFor="let movimiento of historial">
-                          <td>{{ movimiento?.tipo }}</td>
-                          <td>{{ movimiento?.numero }}</td>
-                          <td>{{ movimiento?.fecha }}</td>
-                          <td>
-                              <button class="btn btn-success" (click)="onVerDetallesMovimiento(movimiento)">Ver Detalles</button>
-                          </td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detalleHistorialModalLabel">Historial de Movimientos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <div class="modal-body">
+        <div style="max-height: 800px; overflow-y: auto;"> <!-- Añadido para el scroll -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Tipo</th>
+                <th scope="col">Número</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Detalles</th>
+              </tr>
+            </thead>
+            <tbody id="tablaHistorial">
+              <tr *ngFor="let movimiento of historial">
+                <td>{{ movimiento?.tipo }}</td>
+                <td>{{ movimiento?.numero }}</td>
+                <td>{{ movimiento?.fecha }}</td>
+                <td>
+                  <button class="btn btn-success" (click)="onVerDetallesMovimiento(movimiento)">Ver Detalles</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -590,6 +610,11 @@
         <div *ngIf="selectedMovimiento?.tipo === 'Salida'">
           <p><strong>Documento:</strong> {{ selectedMovimiento?.documento }}</p>
           <p><strong>Detalles:</strong> {{ selectedMovimiento?.detalles }}</p>
+        </div>
+        <div *ngIf="selectedMovimiento?.tipo === 'Traslado'">
+          <p><strong>Detalles:</strong> {{ selectedMovimiento?.detalles }}</p>
+          <p><strong>Bodega Origen:</strong> {{ selectedMovimiento?.bodegaOrigen }}</p>
+          <p><strong>Bodega Destino:</strong> {{ selectedMovimiento?.bodegaDestino }}</p>
         </div>
         <p><strong>Usuario:</strong> {{ selectedMovimiento?.usuario }}</p>
         <table class="table">
@@ -699,6 +724,90 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-danger" (click)="onConfirmDelete()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addBodegaModal" tabindex="-1" aria-labelledby="addBodegaModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addBodegaModalLabel">Agregar Nueva Bodega</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="addBodega(bodegaForm)" #bodegaForm="ngForm">
+          <div class="mb-3">
+            <label for="bodegaName" class="form-label">Nombre de la Bodega</label>
+            <input type="text" class="form-control" id="bodegaName" [(ngModel)]="newBodegaName" name="bodegaName" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Agregar Bodega</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="trasladoBodegaModal" tabindex="-1" aria-labelledby="trasladoBodegaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="trasladoBodegaLabel">Traslado de Bodega</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="trasladoBodegaForm">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="selectBodegaOrigen" class="form-label">Seleccione Bodega de Origen:</label>
+              <select class="form-select" id="selectBodegaOrigen" [(ngModel)]="selectedBodegaOrigen" name="selectedBodegaOrigen" required>
+                <option *ngFor="let bodega of bodegas" [ngValue]="bodega">{{ bodega.name }}</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="selectBodegaDestino" class="form-label">Seleccione Bodega de Destino:</label>
+              <select class="form-select" id="selectBodegaDestino" [(ngModel)]="selectedBodegaDestino" name="selectedBodegaDestino" required>
+                <option *ngFor="let bodega of bodegas" [ngValue]="bodega">{{ bodega.name }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="selectProductoTraslado" class="form-label">Productos:</label>
+              <select class="form-select" id="selectProductoTraslado" [(ngModel)]="selectedProductTraslado" name="selectedProductTraslado" required>
+                <option *ngFor="let product of selectedBodegaOrigen?.products" [ngValue]="product">{{ product.name }} ({{ product.code }})</option>
+              </select>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary mb-3" (click)="onAddProductoToTraslado()">Agregar Producto</button>
+          <div style="max-height: 300px; overflow-y: auto;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Stock</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of trasladoItems; let i = index">
+                  <td>{{ item.product.code }}</td>
+                  <td>{{ item.product.name }}</td>
+                  <td>{{ item.product.stock }}</td>
+                  <td>
+                    <button type="button" class="btn btn-danger" (click)="onEliminarItemTraslado(i)">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="onConfirmarTraslado()" [disabled]="trasladoItems.length === 0">Confirmar Traslado</button>
       </div>
     </div>
   </div>

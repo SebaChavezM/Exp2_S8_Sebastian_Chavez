@@ -16,11 +16,15 @@
           <a class="nav-link" routerLink="/auditor-dashboard">Auditor Dashboard</a>
         </li>
         <li class="nav-item" *ngIf="authService.isAuthenticated()">
+          <a class="nav-link" routerLink="/user-profile">Cuenta</a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isAuthenticated()">
           <a class="nav-link" (click)="logout()">Logout</a>
         </li>
       </ul>
-      <span class="navbar-text ms-auto text-black" *ngIf="authService.isAuthenticated()">
+      <span class="navbar-text ms-auto text-black d-flex align-items-center" *ngIf="authService.isAuthenticated()">
         Bienvenido, {{ authService.getCurrentUser()?.firstName }} {{ authService.getCurrentUser()?.lastName }}
+        <img [src]="authService.getCurrentUser()?.profilePicture || 'assets/img/fondos/profile picture.webp'" class="rounded-circle me-2" alt="Profile Picture" width="60" height="60">
       </span>
     </div>
   </div>
