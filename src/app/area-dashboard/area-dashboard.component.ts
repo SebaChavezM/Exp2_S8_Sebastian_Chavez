@@ -77,6 +77,11 @@ export class AreaDashboardComponent  implements OnInit {
   productToDelete: Product | null = null;
   productCodeExists: boolean = false;
 
+  trasladoItems: any[] = [];
+  selectedBodegaOrigen: Bodega | null = null;
+  selectedBodegaDestino: Bodega | null = null;
+  selectedProductTraslado: Product | null = null;
+
   constructor(private productService: ProductService, private authService: AuthService) {}
 
   ngOnInit(): void {
@@ -446,4 +451,81 @@ export class AreaDashboardComponent  implements OnInit {
     const detalleHistorialModal = new bootstrap.Modal(document.getElementById('detalleHistorialModal')!);
     detalleHistorialModal.show();
   }
+
+  onAddProductoToTraslado() {
+    if (!this.selectedProductTraslado) {
+      alert('Por favor, seleccione un producto.');
+      return;
+    }
+  
+    const existingItem = this.trasladoItems.find(item => item.product.code === this.selectedProductTraslado!.code);
+    if (existingItem) {
+      alert('El producto ya se encuentra en la tabla.');
+      return;
+    }
+  
+    this.trasladoItems.push({
+      product: this.selectedProductTraslado,
+    });
+    this.selectedProductTraslado = null;
+  }
+  
+  onEliminarItemTraslado(index: number) {
+    this.trasladoItems.splice(index, 1);
+  }
+  
+  onConfirmarTraslado() {
+    if (!this.selectedBodegaOrigen || !this.selectedBodegaDestino || this.selectedBodegaOrigen === this.selectedBodegaDestino) {
+      alert('Seleccione bodegas válidas.');
+      return;
+    }
+  
+    this.trasladoItems.forEach(item => {
+      const productInOrigen = this.selectedBodegaOrigen!.products.find(p => p.code === item.product.code);
+      if (productInOrigen) {
+        const productInDestino = this.selectedBodegaDestino!.products.find(p => p.code === item.product.code);
+        if (productInDestino) {
+          productInDestino.stock += productInOrigen.stock;
+        } else {
+          this.selectedBodegaDestino!.products.push({
+            ...item.product,
+            stock: productInOrigen.stock
+          });
+        }
+        productInOrigen.stock = 0;
+      }
+    });
+  
+    this.selectedBodegaOrigen!.products = this.selectedBodegaOrigen!.products.filter(product => product.stock > 0);
+  
+    this.productService.addMovimiento({
+      tipo: 'Traslado',
+      numero: this.productService.getNextSalidaNumber(),
+      fecha: this.today,
+      detalles: `Traslado de productos de ${this.selectedBodegaOrigen.name} a ${this.selectedBodegaDestino.name}`,
+      bodegaOrigen: this.selectedBodegaOrigen.name,
+      bodegaDestino: this.selectedBodegaDestino.name,
+      items: this.trasladoItems.map(item => ({
+        code: item.product.code,
+        name: item.product.name,
+        description: item.product.description,
+        cantidad: item.product.stock
+      })),
+      usuario: `${this.authService.getCurrentUser().firstName} ${this.authService.getCurrentUser().lastName}`
+    });
+  
+    this.saveBodegas();
+    this.trasladoItems = [];
+    this.selectedBodegaOrigen = null;
+    this.selectedBodegaDestino = null;
+  
+    const trasladoBodegaModalElement = document.getElementById('trasladoBodegaModal');
+    if (trasladoBodegaModalElement) {
+      const trasladoBodegaModal = bootstrap.Modal.getInstance(trasladoBodegaModalElement);
+      if (trasladoBodegaModal) {
+        trasladoBodegaModal.hide();
+        setTimeout(() => trasladoBodegaModal.dispose(), 500);
+      }
+    }
+  }  
 }

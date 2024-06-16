@@ -16,6 +16,9 @@
           <a class="nav-link" routerLink="/auditor-dashboard">Auditor Dashboard</a>
         </li>
         <li class="nav-item" *ngIf="authService.isAuthenticated()">
+          <a class="nav-link" routerLink="#">Notificaciones</a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isAuthenticated()">
           <a class="nav-link" routerLink="/user-profile">Cuenta</a>
         </li>
         <li class="nav-item" *ngIf="authService.isAuthenticated()">

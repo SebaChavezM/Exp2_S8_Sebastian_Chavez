@@ -46,6 +46,11 @@ export class AuthService {
     return false;
   }
 
+  getUserRoles(): string[] {
+    const user = this.getCurrentUser();
+    return user ? user.roles : [];
+  }
+
   logout(): void {
     localStorage.removeItem('currentUser');
     this.router.navigate(['/login']);
@@ -72,6 +77,11 @@ export class AuthService {
   isAuditor(): boolean {
     const user = this.getCurrentUser();
     return user && user.role === 'Auditor';
+  }
+
+  isRoleAllowed(allowedRoles: string[]): boolean {
+    const user = this.getCurrentUser();
+    return user && allowedRoles.includes(user.role);
   }
 
   updateCurrentUser(user: any) {
