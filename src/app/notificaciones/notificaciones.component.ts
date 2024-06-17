@@ -1,77 +1,103 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
+import { ProductService } from '../service/product.service';
+import { Modal } from 'bootstrap';
+import { CommonModule } from '@angular/common';
 
-interface Product {
-  code: string;
-  name: string;
-  description: string;
-  model: string;
-  brand: string;
-  material: string;
-  color: string;
-  family: string;
-  value: number;
-  currency: string;
-  unit: string;
-  location: string;
-  stock: number;
-  bodega: string;
-}
-
-interface ModificationRequest {
-  originalProduct: Product;
-  requestedChanges: Partial<Product>;
-  status: 'pending' | 'accepted' | 'rejected';
-  requestedBy: string;
-  responseMessage?: string;
+interface Notification {
+  id: number;
+  status: string;
+  message: string;
+  solicitadaPor: string;
+  productoOriginal: {
+    code: string;
+    name: string;
+    description: string;
+    model: string;
+    brand: string;
+    material: string;
+    color: string;
+    family: string;
+    value: number;
+    currency: string;
+    unit: string;
+    location: string;
+  };
+  cambiosSolicitados: {
+    name: string;
+    description: string;
+    model: string;
+    brand: string;
+    material: string;
+    color: string;
+    family: string;
+    value: number;
+    currency: string;
+    unit: string;
+    location: string;
+  };
 }
 
 @Component({
   selector: 'app-notificaciones',
   templateUrl: './notificaciones.component.html',
-  styleUrl: './notificaciones.component.css',
+  styleUrls: ['./notificaciones.component.css'],
   standalone: true,
   imports: [CommonModule]
 })
 export class NotificacionesComponent implements OnInit {
-  modificationRequests: ModificationRequest[] = [];
+  notifications: Notification[] = [];
+  selectedNotification: Notification | null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private productService: ProductService) {}
 
   ngOnInit(): void {
-    this.loadModificationRequests();
+    this.loadNotifications();
   }
 
-  loadModificationRequests() {
-    this.modificationRequests = JSON.parse(localStorage.getItem('modificationRequests') || '[]');
+  loadNotifications() {
+    this.notifications = this.authService.getNotifications();
+    console.log(this.notifications); // Añadir un log para verificar que se cargan las notificaciones
   }
 
-  acceptModification(request: ModificationRequest) {
-    request.status = 'accepted';
-    this.saveModificationRequests();
-    this.updateProduct(request.originalProduct, request.requestedChanges);
-    alert('Modificación aceptada.');
+  openModal(notification: Notification) {
+    this.selectedNotification = notification;
+    const modalElement = document.getElementById('notificationModal');
+    if (modalElement) {
+      const modal = new Modal(modalElement);
+      modal.show();
+    }
   }
 
-  rejectModification(request: ModificationRequest) {
-    request.status = 'rejected';
-    this.saveModificationRequests();
-    alert('Modificación rechazada.');
+  acceptModification() {
+    if (this.selectedNotification) {
+      this.authService.updateNotificationStatus(this.selectedNotification.id, 'accepted');
+      this.selectedNotification.status = 'accepted';
+      this.saveNotifications();
+      this.closeModal();
+    }
   }
 
-  saveModificationRequests() {
-    localStorage.setItem('modificationRequests', JSON.stringify(this.modificationRequests));
+  rejectModification() {
+    if (this.selectedNotification) {
+      this.authService.updateNotificationStatus(this.selectedNotification.id, 'rejected');
+      this.selectedNotification.status = 'rejected';
+      this.saveNotifications();
+      this.closeModal();
+    }
   }
 
-  updateProduct(originalProduct: Product, changes: Partial<Product>) {
-    const products = JSON.parse(localStorage.getItem('bodegas') || '[]');
-    const bodega = products.find((b: any) => b.name === originalProduct.bodega);
-    const productIndex = bodega.products.findIndex((p: Product) => p.code === originalProduct.code);
+  saveNotifications() {
+    localStorage.setItem('notifications', JSON.stringify(this.notifications));
+  }
 
-    if (productIndex !== -1) {
-      bodega.products[productIndex] = { ...originalProduct, ...changes };
-      localStorage.setItem('bodegas', JSON.stringify(products));
+  closeModal() {
+    const modalElement = document.getElementById('notificationModal');
+    if (modalElement) {
+      const modal = Modal.getInstance(modalElement);
+      if (modal) {
+        modal.hide();
+      }
     }
   }
 }

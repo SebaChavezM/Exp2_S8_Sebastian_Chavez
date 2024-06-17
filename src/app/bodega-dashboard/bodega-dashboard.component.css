@@ -1,0 +1,29 @@
+th, td 
+{
+  text-align: center;
+  vertical-align: middle;
+}
+
+.inventory-table-container {
+  padding: 20px;
+}
+
+.table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+
+.table th, .table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#detalleHistorialModal .modal-body {
+  max-height: 900px;
+  overflow-y: auto;
+}

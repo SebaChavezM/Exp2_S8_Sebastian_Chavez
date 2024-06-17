@@ -1,43 +1,72 @@
 <div class="container mt-3">
   <h2>Notificaciones</h2>
-  <div *ngFor="let request of modificationRequests">
-    <div class="card mb-3">
-      <div class="card-body">
-        <h5 class="card-title">Solicitud de modificación</h5>
-        <p class="card-text"><strong>Solicitado por:</strong> {{ request.requestedBy }}</p>
-        <p class="card-text"><strong>Estado:</strong> {{ request.status }}</p>
-        <p class="card-text"><strong>Producto original:</strong></p>
-        <ul>
-          <li><strong>Código:</strong> {{ request.originalProduct.code }}</li>
-          <li><strong>Nombre:</strong> {{ request.originalProduct.name }}</li>
-          <li><strong>Descripción:</strong> {{ request.originalProduct.description }}</li>
-          <li><strong>Modelo:</strong> {{ request.originalProduct.model }}</li>
-          <li><strong>Marca:</strong> {{ request.originalProduct.brand }}</li>
-          <li><strong>Material:</strong> {{ request.originalProduct.material }}</li>
-          <li><strong>Color:</strong> {{ request.originalProduct.color }}</li>
-          <li><strong>Familia:</strong> {{ request.originalProduct.family }}</li>
-          <li><strong>Valor:</strong> {{ request.originalProduct.value }}</li>
-          <li><strong>Moneda:</strong> {{ request.originalProduct.currency }}</li>
-          <li><strong>Unidad:</strong> {{ request.originalProduct.unit }}</li>
-          <li><strong>Ubicación:</strong> {{ request.originalProduct.location }}</li>
-        </ul>
-        <p class="card-text"><strong>Cambios solicitados:</strong></p>
-        <ul>
-          <li *ngIf="request.requestedChanges.name"><strong>Nombre:</strong> {{ request.requestedChanges.name }}</li>
-          <li *ngIf="request.requestedChanges.description"><strong>Descripción:</strong> {{ request.requestedChanges.description }}</li>
-          <li *ngIf="request.requestedChanges.model"><strong>Modelo:</strong> {{ request.requestedChanges.model }}</li>
-          <li *ngIf="request.requestedChanges.brand"><strong>Marca:</strong> {{ request.requestedChanges.brand }}</li>
-          <li *ngIf="request.requestedChanges.material"><strong>Material:</strong> {{ request.requestedChanges.material }}</li>
-          <li *ngIf="request.requestedChanges.color"><strong>Color:</strong> {{ request.requestedChanges.color }}</li>
-          <li *ngIf="request.requestedChanges.family"><strong>Familia:</strong> {{ request.requestedChanges.family }}</li>
-          <li *ngIf="request.requestedChanges.value"><strong>Valor:</strong> {{ request.requestedChanges.value }}</li>
-          <li *ngIf="request.requestedChanges.currency"><strong>Moneda:</strong> {{ request.requestedChanges.currency }}</li>
-          <li *ngIf="request.requestedChanges.unit"><strong>Unidad:</strong> {{ request.requestedChanges.unit }}</li>
-          <li *ngIf="request.requestedChanges.location"><strong>Ubicación:</strong> {{ request.requestedChanges.location }}</li>
-        </ul>
-        <button *ngIf="request.status === 'pending'" class="btn btn-success" (click)="acceptModification(request)">Aceptar</button>
-        <button *ngIf="request.status === 'pending'" class="btn btn-danger" (click)="rejectModification(request)">Rechazar</button>
-        <p *ngIf="request.responseMessage"><strong>Respuesta:</strong> {{ request.responseMessage }}</p>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Modificación</th>
+        <th>Solicitada por</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let notification of notifications">
+        <td>Modificación Pendiente</td>
+        <td>{{ notification.solicitadaPor }}</td>
+        <td>{{ notification.status }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="openModal(notification)">Ver Solicitud</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container mt-3">
+  <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="notificationModalLabel">Solicitud de modificación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" *ngIf="selectedNotification">
+          <p><strong>Solicitado por:</strong> {{ selectedNotification.solicitadaPor }}</p>
+          <p><strong>Estado:</strong> {{ selectedNotification.status }}</p>
+          <h5>Producto original:</h5>
+          <ul *ngIf="selectedNotification.productoOriginal">
+            <li><strong>Código:</strong> {{ selectedNotification.productoOriginal.code }}</li>
+            <li><strong>Nombre:</strong> {{ selectedNotification.productoOriginal.name }}</li>
+            <li><strong>Descripción:</strong> {{ selectedNotification.productoOriginal.description }}</li>
+            <li><strong>Modelo:</strong> {{ selectedNotification.productoOriginal.model }}</li>
+            <li><strong>Marca:</strong> {{ selectedNotification.productoOriginal.brand }}</li>
+            <li><strong>Material:</strong> {{ selectedNotification.productoOriginal.material }}</li>
+            <li><strong>Color:</strong> {{ selectedNotification.productoOriginal.color }}</li>
+            <li><strong>Familia:</strong> {{ selectedNotification.productoOriginal.family }}</li>
+            <li><strong>Valor:</strong> {{ selectedNotification.productoOriginal.value }}</li>
+            <li><strong>Moneda:</strong> {{ selectedNotification.productoOriginal.currency }}</li>
+            <li><strong>Unidad:</strong> {{ selectedNotification.productoOriginal.unit }}</li>
+            <li><strong>Ubicación:</strong> {{ selectedNotification.productoOriginal.location }}</li>
+          </ul>
+          <h5>Cambios solicitados:</h5>
+          <ul *ngIf="selectedNotification.cambiosSolicitados">
+            <li><strong>Nombre:</strong> {{ selectedNotification.cambiosSolicitados.name }}</li>
+            <li><strong>Descripción:</strong> {{ selectedNotification.cambiosSolicitados.description }}</li>
+            <li><strong>Modelo:</strong> {{ selectedNotification.cambiosSolicitados.model }}</li>
+            <li><strong>Marca:</strong> {{ selectedNotification.cambiosSolicitados.brand }}</li>
+            <li><strong>Material:</strong> {{ selectedNotification.cambiosSolicitados.material }}</li>
+            <li><strong>Color:</strong> {{ selectedNotification.cambiosSolicitados.color }}</li>
+            <li><strong>Familia:</strong> {{ selectedNotification.cambiosSolicitados.family }}</li>
+            <li><strong>Valor:</strong> {{ selectedNotification.cambiosSolicitados.value }}</li>
+            <li><strong>Moneda:</strong> {{ selectedNotification.cambiosSolicitados.currency }}</li>
+            <li><strong>Unidad:</strong> {{ selectedNotification.cambiosSolicitados.unit }}</li>
+            <li><strong>Ubicación:</strong> {{ selectedNotification.cambiosSolicitados.location }}</li>
+          </ul>
+        </div>
+        <div class="modal-footer" *ngIf="selectedNotification">
+          <button type="button" class="btn btn-success" (click)="acceptModification()">Aceptar</button>
+          <button type="button" class="btn btn-danger" (click)="rejectModification()">Rechazar</button>
+        </div>
       </div>
     </div>
   </div>

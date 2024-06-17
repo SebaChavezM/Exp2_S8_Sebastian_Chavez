@@ -522,18 +522,32 @@ export class BodegaDashboardComponent implements OnInit {
   }
 
   onRequestModification() {
-    const currentUser = this.authService.getCurrentUser();
-    const modificationRequest: ModificationRequest = {
-      originalProduct: this.selectedProductToEdit!,
-      requestedChanges: { ...this.selectedProductToEdit },
+    const modificationRequest = {
+      id: new Date().getTime(), // ID único basado en el timestamp actual
       status: 'pending',
-      requestedBy: `${currentUser.firstName} ${currentUser.lastName}`
+      message: 'Solicitud de modificación de producto',
+      solicitadaPor: `${this.authService.getCurrentUser().firstName} ${this.authService.getCurrentUser().lastName}`,
+      productoOriginal: this.selectedProductToEdit, // Asegúrate de tener el producto original seleccionado
+      cambiosSolicitados: {
+        name: this.selectedProductToEdit.name,
+        description: this.selectedProductToEdit.description,
+        model: this.selectedProductToEdit.model,
+        brand: this.selectedProductToEdit.brand,
+        material: this.selectedProductToEdit.material,
+        color: this.selectedProductToEdit.color,
+        family: this.selectedProductToEdit.family,
+        value: this.selectedProductToEdit.value,
+        currency: this.selectedProductToEdit.currency,
+        unit: this.selectedProductToEdit.unit,
+        location: this.selectedProductToEdit.location,
+      }
     };
-
-    const modificationRequests = JSON.parse(localStorage.getItem('modificationRequests') || '[]');
-    modificationRequests.push(modificationRequest);
-    localStorage.setItem('modificationRequests', JSON.stringify(modificationRequests));
-
-    alert('Solicitud de modificación enviada.');
+  
+    // Añadir la solicitud de modificación a las notificaciones
+    this.productService.addNotification(modificationRequest);
+    // Cerrar el modal (opcional, dependiendo de tu implementación de UI)
+    const editProductModal = bootstrap.Modal.getInstance(document.getElementById('editProductModal')!);
+    editProductModal?.hide();
   }
+  
 }

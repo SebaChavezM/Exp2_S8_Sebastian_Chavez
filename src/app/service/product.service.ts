@@ -35,15 +35,13 @@ export interface Movimiento {
   bodegaDestino?: string;
 }
 
-export interface ModificationRequest {
-  product: Product;
-  requestedChanges: Partial<Product>;
-  status: string; // pending, accepted, rejected
-  requestedBy: string;
-  requestedAt: string;
-  handledBy?: string;
-  handledAt?: string;
-  responseMessage?: string;
+interface Notification {
+  id: number;
+  status: string;
+  message: string;
+  solicitadaPor: string;
+  productoOriginal: any; // Puedes cambiar el tipo según tus necesidades
+  cambiosSolicitados: any; // Puedes cambiar el tipo según tus necesidades
 }
 
 @Injectable({
@@ -57,6 +55,8 @@ export class ProductService {
   private nextSalidaNumber: number = +localStorage.getItem('nextSalidaNumber')! || 1;
   private historial: Movimiento[] = JSON.parse(localStorage.getItem('historial')!) || [];
   private historialSubject: BehaviorSubject<Movimiento[]> = new BehaviorSubject<Movimiento[]>(this.historial);
+  private notifications: Notification[] = JSON.parse(localStorage.getItem('notifications') || '[]');
+  private notificationsSubject: BehaviorSubject<Notification[]> = new BehaviorSubject<Notification[]>(this.notifications);
   historial$ = this.historialSubject.asObservable();
 
   constructor() {
@@ -119,5 +119,24 @@ export class ProductService {
     localStorage.setItem('historial', JSON.stringify(this.historial));
     this.historialSubject.next(this.historial);
   }
-  
+
+  // Notificaciones
+  addNotification(notification: Notification) {
+    this.notifications.push(notification);
+    localStorage.setItem('notifications', JSON.stringify(this.notifications));
+    this.notificationsSubject.next(this.notifications);
+  }
+
+  getNotifications(): Notification[] {
+    return JSON.parse(localStorage.getItem('notifications') || '[]');
+  }
+
+  updateNotificationStatus(notificationId: number, status: string) {
+    const notifications = this.getNotifications();
+    const notification = notifications.find(n => n.id === notificationId);
+    if (notification) {
+      notification.status = status;
+      localStorage.setItem('notifications', JSON.stringify(notifications));
+    }
+  }
 }

@@ -5,6 +5,9 @@ interface Notification {
   id: number;
   status: string;
   message: string;
+  solicitadaPor: string;
+  productoOriginal: any;
+  cambiosSolicitados: any;
 }
 
 @Injectable({
@@ -110,8 +113,13 @@ export class AuthService {
     }
   }
 
+  getNotifications(): Notification[] {
+    const storedNotifications = localStorage.getItem('notifications');
+    return storedNotifications ? JSON.parse(storedNotifications) : [];
+  }
+
   updateNotificationStatus(notificationId: number, status: string) {
-    const notifications = JSON.parse(localStorage.getItem('notifications') || '[]') as Notification[];
+    const notifications = this.getNotifications();
     const notification = notifications.find(n => n.id === notificationId);
     if (notification) {
       notification.status = status;
