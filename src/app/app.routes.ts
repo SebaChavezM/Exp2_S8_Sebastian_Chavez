@@ -3,6 +3,8 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AreaDashboardComponent } from './area-dashboard/area-dashboard.component';
 import { AuditorDashboardComponent } from './auditor-dashboard/auditor-dashboard.component';
+import { BodegaDashboardComponent } from './bodega-dashboard/bodega-dashboard.component';
+import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { UserProfileComponent } from './user-profile-component/user-profile-component.component';
 import { AuthGuard } from './auth/auth.guard';
 
@@ -12,6 +14,8 @@ export const routes: Routes = [
   { path: 'admin-dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: { role: 'Admin' } },
   { path: 'area-dashboard', component: AreaDashboardComponent, canActivate: [AuthGuard], data: { role: 'Área' } },
   { path: 'auditor-dashboard', component: AuditorDashboardComponent, canActivate: [AuthGuard], data: { role: 'Auditor' } },
+  { path: 'bodega-dashboard', component: BodegaDashboardComponent },
+  { path: 'notificaciones', component: NotificacionesComponent },
   { path: 'user-profile', component: UserProfileComponent },
   { path: '**', redirectTo: 'login' }
 ];

@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
+interface Notification {
+  id: number;
+  status: string;
+  message: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -40,6 +46,8 @@ export class AuthService {
         this.router.navigate(['/area-dashboard']);
       } else if (user.role === 'Auditor') {
         this.router.navigate(['/auditor-dashboard']);
+      } else if (user.role === 'Bodega') {
+        this.router.navigate(['/bodega-dashboard']);
       }
       return true;
     }
@@ -79,6 +87,11 @@ export class AuthService {
     return user && user.role === 'Auditor';
   }
 
+  isBodega(): boolean {
+    const user = this.getCurrentUser();
+    return user && user.role === 'Bodega';
+  }
+
   isRoleAllowed(allowedRoles: string[]): boolean {
     const user = this.getCurrentUser();
     return user && allowedRoles.includes(user.role);
@@ -94,6 +107,15 @@ export class AuthService {
     if (userIndex !== -1) {
       users[userIndex] = updatedUser;
       localStorage.setItem('users', JSON.stringify(users));
+    }
+  }
+
+  updateNotificationStatus(notificationId: number, status: string) {
+    const notifications = JSON.parse(localStorage.getItem('notifications') || '[]') as Notification[];
+    const notification = notifications.find(n => n.id === notificationId);
+    if (notification) {
+      notification.status = status;
+      localStorage.setItem('notifications', JSON.stringify(notifications));
     }
   }
 }

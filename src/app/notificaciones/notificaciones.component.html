@@ -1,0 +1,44 @@
+<div class="container mt-3">
+  <h2>Notificaciones</h2>
+  <div *ngFor="let request of modificationRequests">
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Solicitud de modificación</h5>
+        <p class="card-text"><strong>Solicitado por:</strong> {{ request.requestedBy }}</p>
+        <p class="card-text"><strong>Estado:</strong> {{ request.status }}</p>
+        <p class="card-text"><strong>Producto original:</strong></p>
+        <ul>
+          <li><strong>Código:</strong> {{ request.originalProduct.code }}</li>
+          <li><strong>Nombre:</strong> {{ request.originalProduct.name }}</li>
+          <li><strong>Descripción:</strong> {{ request.originalProduct.description }}</li>
+          <li><strong>Modelo:</strong> {{ request.originalProduct.model }}</li>
+          <li><strong>Marca:</strong> {{ request.originalProduct.brand }}</li>
+          <li><strong>Material:</strong> {{ request.originalProduct.material }}</li>
+          <li><strong>Color:</strong> {{ request.originalProduct.color }}</li>
+          <li><strong>Familia:</strong> {{ request.originalProduct.family }}</li>
+          <li><strong>Valor:</strong> {{ request.originalProduct.value }}</li>
+          <li><strong>Moneda:</strong> {{ request.originalProduct.currency }}</li>
+          <li><strong>Unidad:</strong> {{ request.originalProduct.unit }}</li>
+          <li><strong>Ubicación:</strong> {{ request.originalProduct.location }}</li>
+        </ul>
+        <p class="card-text"><strong>Cambios solicitados:</strong></p>
+        <ul>
+          <li *ngIf="request.requestedChanges.name"><strong>Nombre:</strong> {{ request.requestedChanges.name }}</li>
+          <li *ngIf="request.requestedChanges.description"><strong>Descripción:</strong> {{ request.requestedChanges.description }}</li>
+          <li *ngIf="request.requestedChanges.model"><strong>Modelo:</strong> {{ request.requestedChanges.model }}</li>
+          <li *ngIf="request.requestedChanges.brand"><strong>Marca:</strong> {{ request.requestedChanges.brand }}</li>
+          <li *ngIf="request.requestedChanges.material"><strong>Material:</strong> {{ request.requestedChanges.material }}</li>
+          <li *ngIf="request.requestedChanges.color"><strong>Color:</strong> {{ request.requestedChanges.color }}</li>
+          <li *ngIf="request.requestedChanges.family"><strong>Familia:</strong> {{ request.requestedChanges.family }}</li>
+          <li *ngIf="request.requestedChanges.value"><strong>Valor:</strong> {{ request.requestedChanges.value }}</li>
+          <li *ngIf="request.requestedChanges.currency"><strong>Moneda:</strong> {{ request.requestedChanges.currency }}</li>
+          <li *ngIf="request.requestedChanges.unit"><strong>Unidad:</strong> {{ request.requestedChanges.unit }}</li>
+          <li *ngIf="request.requestedChanges.location"><strong>Ubicación:</strong> {{ request.requestedChanges.location }}</li>
+        </ul>
+        <button *ngIf="request.status === 'pending'" class="btn btn-success" (click)="acceptModification(request)">Aceptar</button>
+        <button *ngIf="request.status === 'pending'" class="btn btn-danger" (click)="rejectModification(request)">Rechazar</button>
+        <p *ngIf="request.responseMessage"><strong>Respuesta:</strong> {{ request.responseMessage }}</p>
+      </div>
+    </div>
+  </div>
+</div>

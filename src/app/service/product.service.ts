@@ -35,6 +35,17 @@ export interface Movimiento {
   bodegaDestino?: string;
 }
 
+export interface ModificationRequest {
+  product: Product;
+  requestedChanges: Partial<Product>;
+  status: string; // pending, accepted, rejected
+  requestedBy: string;
+  requestedAt: string;
+  handledBy?: string;
+  handledAt?: string;
+  responseMessage?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -108,4 +119,5 @@ export class ProductService {
     localStorage.setItem('historial', JSON.stringify(this.historial));
     this.historialSubject.next(this.historial);
   }
+  
 }

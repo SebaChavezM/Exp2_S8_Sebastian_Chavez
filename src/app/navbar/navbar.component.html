@@ -15,8 +15,11 @@
         <li class="nav-item" *ngIf="authService.isAuditor()">
           <a class="nav-link" routerLink="/auditor-dashboard">Auditor Dashboard</a>
         </li>
-        <li class="nav-item" *ngIf="authService.isAuthenticated()">
-          <a class="nav-link" routerLink="#">Notificaciones</a>
+        <li class="nav-item" *ngIf="authService.isBodega()">
+          <a class="nav-link" routerLink="/bodega-dashboard">Bodega Dashboard</a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isRoleAllowed(['Admin', 'Área', 'Auditor', 'Bodega'])">
+          <a class="nav-link" routerLink="/notificaciones">Notificaciones</a>
         </li>
         <li class="nav-item" *ngIf="authService.isAuthenticated()">
           <a class="nav-link" routerLink="/user-profile">Cuenta</a>
