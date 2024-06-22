@@ -1,5 +1,3 @@
-// src/app/service/product.service.ts
-
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -88,6 +86,7 @@ export class ProductService {
     if (productIndex !== -1) {
       this.products[productIndex] = { ...this.products[productIndex], ...updatedProduct };
       this.updateLocalStorage();
+      this.productsSubject.next(this.products);  // Notify all subscribers
     }
   }
 

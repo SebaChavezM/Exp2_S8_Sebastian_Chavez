@@ -1,4 +1,3 @@
-// src/app/notificaciones/notificaciones.component.ts
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { ProductService, Product, PartialProduct } from '../service/product.service';
