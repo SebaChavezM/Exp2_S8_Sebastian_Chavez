@@ -1,6 +1,7 @@
+// src/app/notificaciones/notificaciones.component.ts
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { ProductService } from '../service/product.service';
+import { ProductService, Product, PartialProduct } from '../service/product.service';
 import { Modal } from 'bootstrap';
 import { CommonModule } from '@angular/common';
 
@@ -9,33 +10,8 @@ interface Notification {
   status: string;
   message: string;
   solicitadaPor: string;
-  productoOriginal: {
-    code: string;
-    name: string;
-    description: string;
-    model: string;
-    brand: string;
-    material: string;
-    color: string;
-    family: string;
-    value: number;
-    currency: string;
-    unit: string;
-    location: string;
-  };
-  cambiosSolicitados: {
-    name: string;
-    description: string;
-    model: string;
-    brand: string;
-    material: string;
-    color: string;
-    family: string;
-    value: number;
-    currency: string;
-    unit: string;
-    location: string;
-  };
+  productoOriginal: PartialProduct;
+  cambiosSolicitados: PartialProduct;
 }
 
 @Component({
@@ -48,16 +24,17 @@ interface Notification {
 export class NotificacionesComponent implements OnInit {
   notifications: Notification[] = [];
   selectedNotification: Notification | null = null;
+  isBodega: boolean = false;
 
   constructor(private authService: AuthService, private productService: ProductService) {}
 
   ngOnInit(): void {
     this.loadNotifications();
+    this.isBodega = this.authService.isBodega();
   }
 
   loadNotifications() {
-    this.notifications = this.authService.getNotifications();
-    console.log(this.notifications); // Añadir un log para verificar que se cargan las notificaciones
+    this.notifications = this.productService.getNotifications();
   }
 
   openModal(notification: Notification) {
@@ -71,7 +48,9 @@ export class NotificacionesComponent implements OnInit {
 
   acceptModification() {
     if (this.selectedNotification) {
-      this.authService.updateNotificationStatus(this.selectedNotification.id, 'accepted');
+      const productCode = this.selectedNotification.productoOriginal.code as string;
+      this.productService.updateProduct(productCode, this.selectedNotification.cambiosSolicitados);
+      this.productService.updateNotificationStatus(this.selectedNotification.id, 'accepted');
       this.selectedNotification.status = 'accepted';
       this.saveNotifications();
       this.closeModal();
@@ -80,7 +59,7 @@ export class NotificacionesComponent implements OnInit {
 
   rejectModification() {
     if (this.selectedNotification) {
-      this.authService.updateNotificationStatus(this.selectedNotification.id, 'rejected');
+      this.productService.updateNotificationStatus(this.selectedNotification.id, 'rejected');
       this.selectedNotification.status = 'rejected';
       this.saveNotifications();
       this.closeModal();
@@ -88,7 +67,12 @@ export class NotificacionesComponent implements OnInit {
   }
 
   saveNotifications() {
-    localStorage.setItem('notifications', JSON.stringify(this.notifications));
+    this.productService.updateNotifications(this.notifications);
+  }
+
+  hasChanged(field: keyof Product): boolean {
+    if (!this.selectedNotification) return false;
+    return this.selectedNotification.productoOriginal[field] !== this.selectedNotification.cambiosSolicitados[field];
   }
 
   closeModal() {
@@ -98,6 +82,34 @@ export class NotificacionesComponent implements OnInit {
       if (modal) {
         modal.hide();
       }
+    }
+  }
+
+  translateStatus(status: string | undefined): string {
+    if (!status) return '';
+    switch (status) {
+      case 'pending':
+        return 'Pendiente';
+      case 'accepted':
+        return 'Aceptado';
+      case 'rejected':
+        return 'Rechazado';
+      default:
+        return '';
+    }
+  }
+
+  getStatusClass(status: string | undefined): string {
+    if (!status) return '';
+    switch (status) {
+      case 'pending':
+        return 'text-warning';
+      case 'accepted':
+        return 'text-success';
+      case 'rejected':
+        return 'text-danger';
+      default:
+        return '';
     }
   }
 }

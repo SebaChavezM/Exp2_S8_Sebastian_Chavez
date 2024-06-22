@@ -1,3 +1,5 @@
+// src/app/service/product.service.ts
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -35,13 +37,19 @@ export interface Movimiento {
   bodegaDestino?: string;
 }
 
+export type PartialProduct = {
+  [P in keyof Product]?: Product[P];
+} & {
+  [key: string]: any;
+};
+
 interface Notification {
   id: number;
   status: string;
   message: string;
   solicitadaPor: string;
-  productoOriginal: any; // Puedes cambiar el tipo según tus necesidades
-  cambiosSolicitados: any; // Puedes cambiar el tipo según tus necesidades
+  productoOriginal: PartialProduct;
+  cambiosSolicitados: PartialProduct;
 }
 
 @Injectable({
@@ -62,6 +70,7 @@ export class ProductService {
   constructor() {
     this.productsSubject.next(this.products);
     this.historialSubject.next(this.historial);
+    this.notificationsSubject.next(this.notifications);
   }
 
   addProduct(product: Product) {
@@ -74,9 +83,12 @@ export class ProductService {
     this.updateLocalStorage();
   }
 
-  updateProduct(index: number, product: Product) {
-    this.products[index] = product;
-    this.updateLocalStorage();
+  updateProduct(code: string, updatedProduct: PartialProduct) {
+    const productIndex = this.products.findIndex(p => p.code === code);
+    if (productIndex !== -1) {
+      this.products[productIndex] = { ...this.products[productIndex], ...updatedProduct };
+      this.updateLocalStorage();
+    }
   }
 
   getNextIngresoNumber(): number {
@@ -123,8 +135,7 @@ export class ProductService {
   // Notificaciones
   addNotification(notification: Notification) {
     this.notifications.push(notification);
-    localStorage.setItem('notifications', JSON.stringify(this.notifications));
-    this.notificationsSubject.next(this.notifications);
+    this.saveNotificationsToLocalStorage();
   }
 
   getNotifications(): Notification[] {
@@ -132,11 +143,21 @@ export class ProductService {
   }
 
   updateNotificationStatus(notificationId: number, status: string) {
-    const notifications = this.getNotifications();
-    const notification = notifications.find(n => n.id === notificationId);
-    if (notification) {
-      notification.status = status;
-      localStorage.setItem('notifications', JSON.stringify(notifications));
+    const notificationIndex = this.notifications.findIndex(n => n.id === notificationId);
+    if (notificationIndex !== -1) {
+      this.notifications[notificationIndex].status = status;
+      this.saveNotificationsToLocalStorage();
     }
+  }
+
+  private saveNotificationsToLocalStorage() {
+    localStorage.setItem('notifications', JSON.stringify(this.notifications));
+    this.notificationsSubject.next(this.notifications);
+  }
+
+  // Nuevo método para actualizar las notificaciones
+  updateNotifications(notifications: Notification[]) {
+    this.notifications = notifications;
+    this.saveNotificationsToLocalStorage();
   }
 }

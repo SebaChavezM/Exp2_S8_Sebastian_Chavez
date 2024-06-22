@@ -457,7 +457,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-              <form id="editProductForm" (ngSubmit)="onRequestModification()">
+              <form id="editProductForm" (ngSubmit)="onRequestModification()" #editProductForm="ngForm">
                   <div class="mb-3">
                       <label for="editProductCode" class="form-label">Código</label>
                       <input type="text" class="form-control" id="editProductCode" [(ngModel)]="selectedProductToEdit.code" name="code" readonly>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, FormsModule } from '@angular/forms';
+import { NgForm, FormsModule, ReactiveFormsModule } from '@angular/forms'; // Añadir ReactiveFormsModule
 import { CommonModule } from '@angular/common';
 import * as bootstrap from 'bootstrap';
-import { ProductService, Product, Movimiento } from '../service/product.service';
+import { ProductService, Product, Movimiento, PartialProduct } from '../service/product.service';
 import { AuthService } from '../auth/auth.service';
 
 interface Bodega {
@@ -10,20 +10,12 @@ interface Bodega {
   products: Product[];
 }
 
-interface ModificationRequest {
-  originalProduct: Product;
-  requestedChanges: Partial<Product>;
-  status: 'pending' | 'accepted' | 'rejected';
-  requestedBy: string;
-  responseMessage?: string;
-}
-
 @Component({
   selector: 'app-bodega-dashboard',
   templateUrl: './bodega-dashboard.component.html',
   styleUrl: './bodega-dashboard.component.css',
   standalone: true,
-  imports: [FormsModule, CommonModule]
+  imports: [FormsModule, ReactiveFormsModule, CommonModule] // Añadir ReactiveFormsModule
 })
 export class BodegaDashboardComponent implements OnInit {
   products: Product[] = [];
@@ -89,6 +81,8 @@ export class BodegaDashboardComponent implements OnInit {
   selectedBodegaOrigen: Bodega | null = null;
   selectedBodegaDestino: Bodega | null = null;
   selectedProductTraslado: Product | null = null;
+
+  originalProduct: Product | null = null;
 
   constructor(private productService: ProductService, private authService: AuthService) {}
 
@@ -177,13 +171,6 @@ export class BodegaDashboardComponent implements OnInit {
     this.selectedProduct = this.selectedBodega.products[index];
     const productInfoModal = new bootstrap.Modal(document.getElementById('productInfoModal')!);
     productInfoModal.show();
-  }
-
-  onEditProduct(index: number) {
-    this.selectedProductIndexToEdit = index;
-    this.selectedProductToEdit = { ...this.selectedBodega.products[index] };
-    const editProductModal = new bootstrap.Modal(document.getElementById('editProductModal')!);
-    editProductModal.show();
   }
 
   loadBodegas() {
@@ -329,7 +316,7 @@ export class BodegaDashboardComponent implements OnInit {
       const product = this.selectedBodega.products.find(p => p.code === item.product.code);
       if (product) {
         product.stock += item.cantidad;
-        this.productService.updateProduct(this.products.indexOf(product), product);
+        this.productService.updateProduct(product.code, product);
         this.productService.addMovimiento({
           tipo: 'Ingreso',
           numero: this.registroNumeroIngreso,
@@ -393,7 +380,7 @@ export class BodegaDashboardComponent implements OnInit {
       const product = this.products.find(p => p.code === item.product.code);
       if (product) {
         product.stock -= item.cantidad;
-        this.productService.updateProduct(this.products.indexOf(product), product);
+        this.productService.updateProduct(product.code, product);
         this.productService.addMovimiento({
           tipo: 'Salida',
           numero: this.registroNumeroSalida,
@@ -522,32 +509,68 @@ export class BodegaDashboardComponent implements OnInit {
   }
 
   onRequestModification() {
+    if (!this.originalProduct) {
+      return;
+    }
+
+    const cambiosSolicitados: any = {};
+
+    if (this.selectedProductToEdit.name !== this.originalProduct.name) {
+      cambiosSolicitados.name = this.selectedProductToEdit.name;
+    }
+    if (this.selectedProductToEdit.description !== this.originalProduct.description) {
+      cambiosSolicitados.description = this.selectedProductToEdit.description;
+    }
+    if (this.selectedProductToEdit.model !== this.originalProduct.model) {
+      cambiosSolicitados.model = this.selectedProductToEdit.model;
+    }
+    if (this.selectedProductToEdit.brand !== this.originalProduct.brand) {
+      cambiosSolicitados.brand = this.selectedProductToEdit.brand;
+    }
+    if (this.selectedProductToEdit.material !== this.originalProduct.material) {
+      cambiosSolicitados.material = this.selectedProductToEdit.material;
+    }
+    if (this.selectedProductToEdit.color !== this.originalProduct.color) {
+      cambiosSolicitados.color = this.selectedProductToEdit.color;
+    }
+    if (this.selectedProductToEdit.family !== this.originalProduct.family) {
+      cambiosSolicitados.family = this.selectedProductToEdit.family;
+    }
+    if (this.selectedProductToEdit.value !== this.originalProduct.value) {
+      cambiosSolicitados.value = this.selectedProductToEdit.value;
+    }
+    if (this.selectedProductToEdit.currency !== this.originalProduct.currency) {
+      cambiosSolicitados.currency = this.selectedProductToEdit.currency;
+    }
+    if (this.selectedProductToEdit.unit !== this.originalProduct.unit) {
+      cambiosSolicitados.unit = this.selectedProductToEdit.unit;
+    }
+    if (this.selectedProductToEdit.location !== this.originalProduct.location) {
+      cambiosSolicitados.location = this.selectedProductToEdit.location;
+    }
+
     const modificationRequest = {
-      id: new Date().getTime(), // ID único basado en el timestamp actual
+      id: new Date().getTime(),
       status: 'pending',
       message: 'Solicitud de modificación de producto',
       solicitadaPor: `${this.authService.getCurrentUser().firstName} ${this.authService.getCurrentUser().lastName}`,
-      productoOriginal: this.selectedProductToEdit, // Asegúrate de tener el producto original seleccionado
-      cambiosSolicitados: {
-        name: this.selectedProductToEdit.name,
-        description: this.selectedProductToEdit.description,
-        model: this.selectedProductToEdit.model,
-        brand: this.selectedProductToEdit.brand,
-        material: this.selectedProductToEdit.material,
-        color: this.selectedProductToEdit.color,
-        family: this.selectedProductToEdit.family,
-        value: this.selectedProductToEdit.value,
-        currency: this.selectedProductToEdit.currency,
-        unit: this.selectedProductToEdit.unit,
-        location: this.selectedProductToEdit.location,
-      }
+      productoOriginal: this.originalProduct as PartialProduct,
+      cambiosSolicitados: cambiosSolicitados
     };
-  
-    // Añadir la solicitud de modificación a las notificaciones
+
     this.productService.addNotification(modificationRequest);
-    // Cerrar el modal (opcional, dependiendo de tu implementación de UI)
+
     const editProductModal = bootstrap.Modal.getInstance(document.getElementById('editProductModal')!);
     editProductModal?.hide();
   }
-  
+
+
+  onEditProduct(index: number) {
+    this.selectedProductIndexToEdit = index;
+    this.selectedProductToEdit = { ...this.selectedBodega.products[index] };
+    this.originalProduct = { ...this.selectedBodega.products[index] }; // Guardar el producto original
+    const editProductModal = new bootstrap.Modal(document.getElementById('editProductModal')!);
+    editProductModal.show();
+  }
+
 }

@@ -490,7 +490,7 @@ onConfirmarIngreso() {
     const product = this.selectedBodega.products.find(p => p.code === item.product.code);
     if (product) {
       product.stock += item.cantidad;
-      this.productService.updateProduct(this.products.indexOf(product), product);
+      this.productService.updateProduct(product.code, product);
       this.productService.addMovimiento({
         tipo: 'Ingreso',
         numero: this.registroNumeroIngreso,
@@ -553,7 +553,7 @@ onConfirmarSalida() {
     if (product) {
       if (product.stock >= item.cantidad) {
         product.stock -= item.cantidad;
-        this.productService.updateProduct(this.products.indexOf(product), product);
+        this.productService.updateProduct(product.code, product);
         this.productService.addMovimiento({
           tipo: 'Salida',
           numero: this.registroNumeroSalida,
