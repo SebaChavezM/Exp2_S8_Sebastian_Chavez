@@ -14,6 +14,7 @@ import { NotificationService } from '../service/notificacion.service';
 export class NavbarComponent implements OnInit {
   pendingNotificationsCount: number = 0;
   isSidebarCollapsed = false;
+  currentOpenDropdown: string | null = null;
 
   constructor(
     public authService: AuthService,
@@ -26,18 +27,28 @@ export class NavbarComponent implements OnInit {
     this.notificationService.pendingCount$.subscribe(count => {
       this.pendingNotificationsCount = count;
     });
+
+    // Verifica el tamaño de la pantalla al iniciar
+    this.checkScreenSize();
+    window.addEventListener('resize', this.checkScreenSize.bind(this));
+  }
+
+  checkScreenSize(): void {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 768) {
+      this.isSidebarCollapsed = true;
+    } else {
+      this.isSidebarCollapsed = false;
+    }
   }
 
   toggleSidebar(): void {
     this.isSidebarCollapsed = !this.isSidebarCollapsed;
     const sidebar = document.getElementById('sidebar');
-    const pageContent = document.getElementById('page-content-wrapper');
     if (this.isSidebarCollapsed) {
-      sidebar?.classList.add('collapsed');
-      pageContent?.classList.add('full-width');
+      sidebar?.classList.add('show');
     } else {
-      sidebar?.classList.remove('collapsed');
-      pageContent?.classList.remove('full-width');
+      sidebar?.classList.remove('show');
     }
   }
 
@@ -84,5 +95,21 @@ export class NavbarComponent implements OnInit {
 
   isLoginPage(): boolean {
     return this.router.url === '/login';
+  }
+
+  toggleDropdown(dropdownId: string): void {
+    if (this.currentOpenDropdown && this.currentOpenDropdown !== dropdownId) {
+      const currentDropdown = document.getElementById(this.currentOpenDropdown);
+      if (currentDropdown) {
+        currentDropdown.classList.remove('show');
+      }
+    }
+
+    const dropdown = document.getElementById(dropdownId);
+    if (dropdown) {
+      dropdown.classList.toggle('show');
+    }
+    
+    this.currentOpenDropdown = dropdownId;
   }
 }

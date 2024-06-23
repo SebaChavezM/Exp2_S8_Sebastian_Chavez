@@ -1,5 +1,5 @@
-th, td 
-{
+/* Estilos existentes */
+th, td {
   text-align: center;
   vertical-align: middle;
 }
@@ -32,3 +32,98 @@ th, td
   overflow-y: auto;
 }
 
+/* Nuevos estilos generales */
+body {
+  padding-top: 70px; /* Ajusta esto según la altura de tu navbar */
+}
+
+.navbar {
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  z-index: 1000; /* Asegúrate de que el navbar esté siempre por encima */
+}
+
+#sidebar {
+  position: fixed;
+  top: 70px; /* Ajusta esto según la altura de tu navbar */
+  left: 0;
+  bottom: 0;
+  width: 250px;
+  background-color: #f8f9fa;
+  border-right: 1px solid #ddd;
+  transition: all 0.3s ease;
+  z-index: 999; /* Asegúrate de que el sidebar esté siempre por encima del contenido */
+}
+
+#sidebar.collapsed {
+  width: 0;
+  overflow: hidden;
+}
+
+#page-content-wrapper {
+  margin-left: 250px;
+  transition: all 0.3s ease;
+  padding-top: 20px; /* Añadir margen superior */
+}
+
+#page-content-wrapper.full-width {
+  margin-left: 0;
+}
+
+.sidebar-header {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+}
+
+.list-group-item {
+  cursor: pointer;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  #sidebar {
+    top: 0;
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  #page-content-wrapper {
+    margin-left: 0;
+  }
+
+  .navbar {
+    margin-bottom: 1rem;
+  }
+}
+
+.container {
+  max-width: 960px; /* Ajusta esto según tus necesidades */
+  margin: auto;
+  margin-top: 20px; /* Añadir margen superior al contenedor */
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-content {
+  max-width: 100%;
+}
+
+/* Estilo adicional para centrado del contenido */
+.table-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.table-container .table {
+  width: 100%;
+  max-width: 960px; /* Ajusta esto según tus necesidades */
+}

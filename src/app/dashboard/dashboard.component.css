@@ -27,3 +27,18 @@ th, td
   max-height: 900px;
   overflow-y: auto;
 }
+
+.main-content {
+display: flex;
+justify-content: center;
+align-items: flex-start;
+margin-left: 240px;
+padding-top: 70px;
+width: calc(100% - 240px);
+}
+
+.container {
+max-width: 90%;
+width: 100%;
+}
+  

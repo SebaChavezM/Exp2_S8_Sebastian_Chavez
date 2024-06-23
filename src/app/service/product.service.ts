@@ -54,9 +54,8 @@ interface Notification {
   providedIn: 'root',
 })
 export class ProductService {
-  private productsSubject: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
+  private productsSubject: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>(this.loadProductsFromLocalStorage());
   products$ = this.productsSubject.asObservable();
-  private products: Product[] = JSON.parse(localStorage.getItem('products')!) || [];
   private nextIngresoNumber: number = +localStorage.getItem('nextIngresoNumber')! || 1;
   private nextSalidaNumber: number = +localStorage.getItem('nextSalidaNumber')! || 1;
   private historial: Movimiento[] = JSON.parse(localStorage.getItem('historial')!) || [];
@@ -65,27 +64,35 @@ export class ProductService {
   private notificationsSubject: BehaviorSubject<Notification[]> = new BehaviorSubject<Notification[]>(this.notifications);
   historial$ = this.historialSubject.asObservable();
 
-  constructor() {
-    this.productsSubject.next(this.products);
-    this.historialSubject.next(this.historial);
-    this.notificationsSubject.next(this.notifications);
+  constructor() {}
+
+  private loadProductsFromLocalStorage(): Product[] {
+    return JSON.parse(localStorage.getItem('products')!) || [];
+  }
+
+  private saveProductsToLocalStorage(products: Product[]): void {
+    localStorage.setItem('products', JSON.stringify(products));
+    this.productsSubject.next(products);
   }
 
   addProduct(product: Product) {
-    this.products.push(product);
-    this.updateLocalStorage();
+    const currentProducts = this.productsSubject.getValue();
+    currentProducts.push(product);
+    this.saveProductsToLocalStorage(currentProducts);
   }
 
   deleteProduct(index: number) {
-    this.products.splice(index, 1);
-    this.updateLocalStorage();
+    const currentProducts = this.productsSubject.getValue();
+    currentProducts.splice(index, 1);
+    this.saveProductsToLocalStorage(currentProducts);
   }
 
   updateProduct(code: string, updatedProduct: PartialProduct) {
-    const productIndex = this.products.findIndex(p => p.code === code);
+    const currentProducts = this.productsSubject.getValue();
+    const productIndex = currentProducts.findIndex(p => p.code === code);
     if (productIndex !== -1) {
-      this.products[productIndex] = { ...this.products[productIndex], ...updatedProduct };
-      this.updateLocalStorage();
+      currentProducts[productIndex] = { ...currentProducts[productIndex], ...updatedProduct };
+      this.saveProductsToLocalStorage(currentProducts);
     }
   }
 
@@ -113,11 +120,6 @@ export class ProductService {
 
   saveNextSalidaNumber() {
     localStorage.setItem('nextSalidaNumber', this.nextSalidaNumber.toString());
-  }
-
-  private updateLocalStorage() {
-    localStorage.setItem('products', JSON.stringify(this.products));
-    this.productsSubject.next(this.products);
   }
 
   addMovimiento(movimiento: Movimiento) {
