@@ -1,6 +1,8 @@
+// src/app/notificaciones/notificaciones.component.ts
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { ProductService, Product, PartialProduct } from '../service/product.service';
+import { ProductService, Product } from '../service/product.service';
+import { NotificationService } from '../service/notificacion.service';
 import { Modal } from 'bootstrap';
 import { CommonModule } from '@angular/common';
 
@@ -9,8 +11,8 @@ interface Notification {
   status: string;
   message: string;
   solicitadaPor: string;
-  productoOriginal: PartialProduct;
-  cambiosSolicitados: PartialProduct;
+  productoOriginal: Partial<Product>;
+  cambiosSolicitados: Partial<Product>;
 }
 
 @Component({
@@ -24,8 +26,9 @@ export class NotificacionesComponent implements OnInit {
   notifications: Notification[] = [];
   selectedNotification: Notification | null = null;
   isBodega: boolean = false;
+  pendingNotificationsCount: number = 0;
 
-  constructor(private authService: AuthService, private productService: ProductService) {}
+  constructor(private authService: AuthService, private productService: ProductService, private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     this.loadNotifications();
@@ -34,8 +37,15 @@ export class NotificacionesComponent implements OnInit {
 
   loadNotifications() {
     this.notifications = this.productService.getNotifications();
+    this.updatePendingNotificationsCount();
   }
 
+  updatePendingNotificationsCount() {
+    const count = this.notifications.filter(notification => notification.status === 'pending').length;
+    this.pendingNotificationsCount = count;
+    this.notificationService.setPendingCount(count);
+  }
+  
   openModal(notification: Notification) {
     this.selectedNotification = notification;
     const modalElement = document.getElementById('notificationModal');
@@ -53,6 +63,7 @@ export class NotificacionesComponent implements OnInit {
       this.selectedNotification.status = 'accepted';
       this.saveNotifications();
       this.closeModal();
+      this.updatePendingNotificationsCount();
     }
   }
 
@@ -62,6 +73,7 @@ export class NotificacionesComponent implements OnInit {
       this.selectedNotification.status = 'rejected';
       this.saveNotifications();
       this.closeModal();
+      this.updatePendingNotificationsCount();
     }
   }
 

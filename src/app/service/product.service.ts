@@ -86,7 +86,6 @@ export class ProductService {
     if (productIndex !== -1) {
       this.products[productIndex] = { ...this.products[productIndex], ...updatedProduct };
       this.updateLocalStorage();
-      this.productsSubject.next(this.products);  // Notify all subscribers
     }
   }
 

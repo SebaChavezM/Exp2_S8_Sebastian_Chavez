@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
+import { NotificationService } from '../service/notificacion.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,11 +11,39 @@ import { RouterModule, Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule]
 })
-export class NavbarComponent {
-  constructor(public authService: AuthService, private router: Router) {}
+export class NavbarComponent implements OnInit {
+  pendingNotificationsCount: number = 0;
+  isSidebarCollapsed = false;
+
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    private notificationService: NotificationService // Inyecta el servicio
+  ) {}
+
+  ngOnInit(): void {
+    // Suscríbete a los cambios en el contador de notificaciones pendientes
+    this.notificationService.pendingCount$.subscribe(count => {
+      this.pendingNotificationsCount = count;
+    });
+  }
+
+  toggleSidebar(): void {
+    this.isSidebarCollapsed = !this.isSidebarCollapsed;
+    const sidebar = document.getElementById('sidebar');
+    const pageContent = document.getElementById('page-content-wrapper');
+    if (this.isSidebarCollapsed) {
+      sidebar?.classList.add('collapsed');
+      pageContent?.classList.add('full-width');
+    } else {
+      sidebar?.classList.remove('collapsed');
+      pageContent?.classList.remove('full-width');
+    }
+  }
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['/login']); // Redirige al login después de cerrar sesión
   }
 
   isRoleAllowed(allowedRoles: string[]): boolean {
@@ -28,5 +57,32 @@ export class NavbarComponent {
       currentUrl.includes('/area-dashboard') ||
       currentUrl.includes('/bodega-dashboard')
     );
+  }
+
+  navigateToHome(): void {
+    const role = this.authService.getCurrentUser()?.role;
+    let route = '';
+    switch (role) {
+      case 'Admin':
+        route = '/admin-dashboard';
+        break;
+      case 'Área':
+        route = '/area-dashboard';
+        break;
+      case 'Auditor':
+        route = '/auditor-dashboard';
+        break;
+      case 'Bodega':
+        route = '/bodega-dashboard';
+        break;
+      default:
+        route = '/';
+        break;
+    }
+    this.router.navigate([route]);
+  }
+
+  isLoginPage(): boolean {
+    return this.router.url === '/login';
   }
 }

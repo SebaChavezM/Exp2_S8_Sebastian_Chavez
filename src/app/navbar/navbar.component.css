@@ -1,6 +1,90 @@
-.navbar-text img {
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 10px;
-    margin-left: 10px;
-  }
+/* src/app/navbar/navbar.component.css */
+.custom-navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.nav-item .nav-link {
+  color: #000;
+}
+
+.nav-item .nav-link .bi-bell {
+  font-size: 1.5rem;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.vr {
+  border-left: 1px solid #e5e5e5;
+  height: 40px;
+}
+
+.company-logo {
+  width: 50px;
+  height: auto;
+}
+
+.sidebar-header h4 {
+  margin: 0;
+}
+
+.list-group-item-action {
+  cursor: pointer;
+}
+
+.list-group-item-action i {
+  margin-right: 10px;
+}
+
+#sidebar {
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  padding-top: 70px; /* Adjust based on navbar height */
+}
+
+#page-content-wrapper {
+  margin-left: 250px;
+  padding: 20px;
+}
+
+.collapsed {
+  width: 80px;
+}
+
+.collapsed #page-content-wrapper {
+  margin-left: 80px;
+}
+
+.collapsed .list-group-item-action div {
+  display: none;
+}
+
+.collapsed .list-group-item-action {
+  justify-content: center;
+}
+
+.navbar-text {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.navbar-text .text-success {
+  margin-top: -5px;
+}
+
+.dropdown-menu-end {
+  min-width: 200px;
+}

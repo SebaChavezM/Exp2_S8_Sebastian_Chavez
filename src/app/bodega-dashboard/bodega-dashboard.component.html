@@ -11,23 +11,6 @@
     <div class="tab-pane fade show active" id="bodegaContent" role="tabpanel">
       <div class="d-flex justify-content-between align-items-center">
         <h2>Inventario - {{ selectedBodega.name }}</h2>
-        <div class="btn-group">
-          <button class="btn btn-success" id="btnAddItem" data-bs-toggle="modal" data-bs-target="#Modal_add_item">
-            <i class="bi bi-plus-square"></i>
-          </button>
-          <button class="btn btn-success" id="btnIngresoBodega" data-bs-toggle="modal" data-bs-target="#ingresoBodegaModal">
-            <i class="bi bi-box-arrow-in-down"></i>
-          </button>
-          <button class="btn btn-success" id="btnAbrirSalidaBodega" data-bs-toggle="modal" data-bs-target="#salidaBodegaModal">
-            <i class="bi bi-box-arrow-up"></i>
-          </button>
-          <button class="btn btn-success" id="btnTrasladoBodega" data-bs-toggle="modal" data-bs-target="#trasladoBodegaModal">
-            <i class="bi bi-arrow-left-right"></i>
-          </button>
-          <button class="btn btn-success" id="btnAbrirHistorial" data-bs-toggle="modal" data-bs-target="#detalleHistorialModal">
-            <i class="bi bi-clock-history"></i>
-          </button>
-        </div>
       </div>
       <input type="text" class="form-control mt-2" placeholder="Buscar productos..." [(ngModel)]="searchProductTerm" (input)="onSearchProduct($event)">
       <table id="productTable" class="table table-striped table-bordered caption-top mt-2">
