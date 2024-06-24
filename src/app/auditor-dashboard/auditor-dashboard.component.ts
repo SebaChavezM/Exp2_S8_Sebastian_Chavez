@@ -4,6 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../service/product.service';
 import * as bootstrap from 'bootstrap';
 
+/**
+ * Componente del panel de control del auditor.
+ * 
+ * @export
+ * @class AuditorDashboardComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-auditor-dashboard',
   templateUrl: './auditor-dashboard.component.html',
@@ -12,13 +19,52 @@ import * as bootstrap from 'bootstrap';
   imports: [CommonModule, FormsModule]
 })
 export class AuditorDashboardComponent implements OnInit {
+
+  /**
+   * Lista de productos.
+   * 
+   * @type {Product[]}
+   * @memberof AuditorDashboardComponent
+   */
   products: Product[] = [];
+
+  /**
+   * Lista de productos filtrados.
+   * 
+   * @type {Product[]}
+   * @memberof AuditorDashboardComponent
+   */
   filteredProducts: Product[] = [];
+
+  /**
+   * Término de búsqueda de productos.
+   * 
+   * @type {string}
+   * @memberof AuditorDashboardComponent
+   */
   searchProductTerm: string = '';
+
+  /**
+   * Producto seleccionado.
+   * 
+   * @type {(Product | null)}
+   * @memberof AuditorDashboardComponent
+   */
   selectedProduct: Product | null = null;
 
+  /**
+   * Crea una instancia de AuditorDashboardComponent.
+   * 
+   * @param {ProductService} productService Servicio de productos
+   * @memberof AuditorDashboardComponent
+   */
   constructor(private productService: ProductService) {}
 
+  /**
+   * Método que se ejecuta al inicializar el componente.
+   * 
+   * @memberof AuditorDashboardComponent
+   */
   ngOnInit(): void {
     this.productService.products$.subscribe(products => {
       this.products = products;
@@ -26,6 +72,12 @@ export class AuditorDashboardComponent implements OnInit {
     });
   }
 
+  /**
+   * Filtra los productos según el término de búsqueda ingresado.
+   * 
+   * @param {any} event Evento de entrada de búsqueda
+   * @memberof AuditorDashboardComponent
+   */
   onSearchProduct(event: any) {
     this.searchProductTerm = event.target.value.toLowerCase();
     if (this.searchProductTerm) {
@@ -39,6 +91,12 @@ export class AuditorDashboardComponent implements OnInit {
     }
   }
 
+  /**
+   * Muestra la información del producto seleccionado en un modal.
+   * 
+   * @param {number} index Índice del producto seleccionado en la lista
+   * @memberof AuditorDashboardComponent
+   */
   onViewProductInfo(index: number) {
     this.selectedProduct = this.products[index];
     const productInfoModal = new bootstrap.Modal(document.getElementById('productInfoModal')!);

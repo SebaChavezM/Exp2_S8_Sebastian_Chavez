@@ -4,6 +4,13 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { NotificationService } from '../service/notificacion.service';
 
+/**
+ * Componente de la barra de navegación.
+ *
+ * @export
+ * @class NavbarComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -12,36 +19,73 @@ import { NotificationService } from '../service/notificacion.service';
   imports: [CommonModule, RouterModule]
 })
 export class NavbarComponent implements OnInit {
+  /**
+   * Número de notificaciones pendientes.
+   *
+   * @type {number}
+   * @memberof NavbarComponent
+   */
   pendingNotificationsCount: number = 0;
+
+  /**
+   * Estado del sidebar (colapsado o no).
+   *
+   * @type {boolean}
+   * @memberof NavbarComponent
+   */
   isSidebarCollapsed = false;
+
+  /**
+   * ID del dropdown actualmente abierto.
+   *
+   * @type {(string | null)}
+   * @memberof NavbarComponent
+   */
   currentOpenDropdown: string | null = null;
 
+  /**
+   * Crea una instancia de NavbarComponent.
+   * 
+   * @param {AuthService} authService Servicio de autenticación.
+   * @param {Router} router Servicio de navegación.
+   * @param {NotificationService} notificationService Servicio de notificaciones.
+   * @memberof NavbarComponent
+   */
   constructor(
     public authService: AuthService,
     private router: Router,
-    private notificationService: NotificationService // Inyecta el servicio
+    private notificationService: NotificationService 
   ) {}
 
+  /**
+   * Inicializa el componente y configura las suscripciones necesarias.
+   *
+   * @memberof NavbarComponent
+   */
   ngOnInit(): void {
-    // Suscríbete a los cambios en el contador de notificaciones pendientes
     this.notificationService.pendingCount$.subscribe(count => {
       this.pendingNotificationsCount = count;
     });
 
-    // Verifica el tamaño de la pantalla al iniciar
     this.checkScreenSize();
     window.addEventListener('resize', this.checkScreenSize.bind(this));
   }
 
+  /**
+   * Verifica el tamaño de la pantalla para determinar si el sidebar debe estar colapsado.
+   *
+   * @memberof NavbarComponent
+   */
   checkScreenSize(): void {
     const screenWidth = window.innerWidth;
-    if (screenWidth <= 768) {
-      this.isSidebarCollapsed = true;
-    } else {
-      this.isSidebarCollapsed = false;
-    }
+    this.isSidebarCollapsed = screenWidth <= 768;
   }
 
+  /**
+   * Alterna el estado del sidebar entre colapsado y expandido.
+   *
+   * @memberof NavbarComponent
+   */
   toggleSidebar(): void {
     this.isSidebarCollapsed = !this.isSidebarCollapsed;
     const sidebar = document.getElementById('sidebar');
@@ -52,15 +96,33 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  logout() {
+  /**
+   * Cierra la sesión del usuario y lo redirige a la página de inicio de sesión.
+   *
+   * @memberof NavbarComponent
+   */
+  logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']); // Redirige al login después de cerrar sesión
+    this.router.navigate(['/login']);
   }
 
+  /**
+   * Verifica si el rol del usuario está permitido.
+   *
+   * @param {string[]} allowedRoles Roles permitidos.
+   * @returns {boolean} True si el rol está permitido, de lo contrario false.
+   * @memberof NavbarComponent
+   */
   isRoleAllowed(allowedRoles: string[]): boolean {
     return this.authService.isRoleAllowed(allowedRoles);
   }
 
+  /**
+   * Verifica si la URL actual corresponde a un dashboard.
+   *
+   * @returns {boolean} True si la URL actual es de un dashboard, de lo contrario false.
+   * @memberof NavbarComponent
+   */
   isOnDashboard(): boolean {
     const currentUrl = this.router.url;
     return (
@@ -70,6 +132,11 @@ export class NavbarComponent implements OnInit {
     );
   }
 
+  /**
+   * Navega a la página principal según el rol del usuario.
+   *
+   * @memberof NavbarComponent
+   */
   navigateToHome(): void {
     const role = this.authService.getCurrentUser()?.role;
     let route = '';
@@ -93,22 +160,30 @@ export class NavbarComponent implements OnInit {
     this.router.navigate([route]);
   }
 
+  /**
+   * Verifica si la URL actual es la página de inicio de sesión.
+   *
+   * @returns {boolean} True si la URL actual es la página de inicio de sesión, de lo contrario false.
+   * @memberof NavbarComponent
+   */
   isLoginPage(): boolean {
     return this.router.url === '/login';
   }
 
+  /**
+   * Alterna la visibilidad de un dropdown.
+   *
+   * @param {string} dropdownId ID del dropdown a alternar.
+   * @memberof NavbarComponent
+   */
   toggleDropdown(dropdownId: string): void {
     if (this.currentOpenDropdown && this.currentOpenDropdown !== dropdownId) {
       const currentDropdown = document.getElementById(this.currentOpenDropdown);
-      if (currentDropdown) {
-        currentDropdown.classList.remove('show');
-      }
+      currentDropdown?.classList.remove('show');
     }
 
     const dropdown = document.getElementById(dropdownId);
-    if (dropdown) {
-      dropdown.classList.toggle('show');
-    }
+    dropdown?.classList.toggle('show');
     
     this.currentOpenDropdown = dropdownId;
   }

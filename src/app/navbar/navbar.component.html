@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg custom-navbar fixed-top">
   <div class="container-fluid d-flex align-items-center">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <i class="bi bi-list"></i>
     </button>
     <a class="navbar-brand me-auto" href="#">ERP</a>
@@ -16,7 +16,7 @@
     <div class="vr mx-3"></div>
     <div class="dropdown">
       <a class="nav-link d-flex align-items-center" id="userDropdown" role="button" aria-expanded="false">
-        <img [src]="authService.getCurrentUser()?.profilePicture || 'assets/img/fondos/profile picture.webp'" class="rounded-circle me-2" alt="Profile Picture" width="40" height="40">
+        <img [src]="authService.getCurrentUser()?.profilePicture || 'assets/img/fondos/profile picture.webp'" class="rounded-circle me-2" alt="Profile Picture" width="50" height="50">
         <div class="d-flex flex-column align-items-start">
           <span>{{ authService.getCurrentUser()?.firstName }} {{ authService.getCurrentUser()?.lastName }}</span>
           <span class="text-success">{{ authService.getCurrentUser()?.role }}</span>
@@ -26,59 +26,62 @@
   </div>
 </nav>
 
-<div *ngIf="!isLoginPage()" id="sidebar" class="bg-light border-end">
+<div *ngIf="!isLoginPage()" id="sidebar" class="sidebar bg-light border-end">
   <div class="sidebar-header d-flex align-items-center justify-content-center py-3">
-    <img src="../../assets/img/logos/Logo_grande-removebg-preview.png" alt="Company Logo" class="company-logo">
+    <img src="../../assets/img/logos/favicon.png" alt="Company Logo" class="company-logo">
     <h6 class="ms-2">PRAXA INGENIERIA SPA</h6>
   </div>
-  <hr>
   <ul class="list-group list-group-flush">
     <li class="list-group-item list-group-item-action" (click)="navigateToHome()">
       <div>
-        <i class="bi bi-building"></i> Inicio
+        <i class="bi bi-building"></i> <span>Inicio</span>
       </div>
     </li>
     <li *ngIf="authService.isRoleAllowed(['Admin', 'Área', 'Bodega'])" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" (click)="toggleDropdown('operacionesSubmenu')" role="button">
       <div>
-        <i class="bi bi-box-seam"></i> Bodega
+        <i class="bi bi-box-seam"></i> <span>Bodega</span>
       </div>
       <i class="bi bi-chevron-down"></i>
     </li>
     <div *ngIf="authService.isRoleAllowed(['Admin', 'Área', 'Bodega'])" class="collapse" id="operacionesSubmenu">
       <a class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#Modal_add_item">
-        <i class="bi bi-plus-square"></i> Crear Producto
+        <i class="bi bi-plus-square"></i> <span>Crear Producto</span>
       </a>
       <a class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#ingresoBodegaModal">
-        <i class="bi bi-box-arrow-in-down"></i> Ingreso a Bodega
+        <i class="bi bi-box-arrow-in-down"></i> <span>Ingreso a Bodega</span>
       </a>
       <a class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#salidaBodegaModal">
-        <i class="bi bi-box-arrow-up"></i> Salida de Bodega
+        <i class="bi bi-box-arrow-up"></i> <span>Salida de Bodega</span>
       </a>
       <a class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#trasladoBodegaModal">
-        <i class="bi bi-arrow-left-right"></i> Traslado de Bodega
+        <i class="bi bi-arrow-left-right"></i> <span>Traslado de Bodega</span>
       </a>
       <a class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#detalleHistorialModal">
-        <i class="bi bi-clock-history"></i> Historial
+        <i class="bi bi-clock-history"></i> <span>Historial</span>
       </a>
     </div>
     <li *ngIf="authService.isRoleAllowed(['Admin', 'Área', 'Bodega'])" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" (click)="toggleDropdown('ventasSubmenu')" role="button">
       <div>
-        <i class="bi bi-cart"></i> Ventas
+        <i class="bi bi-journal-bookmark"></i> <span>Compras</span>
       </div>
       <i class="bi bi-chevron-down"></i>
     </li>
     <div *ngIf="authService.isRoleAllowed(['Admin', 'Área', 'Bodega'])" class="collapse" id="ventasSubmenu">
-      <a routerLink="/ventas" class="list-group-item list-group-item-action bg-light ps-5">Todas las Ventas</a>
-      <a routerLink="/ventas/nueva" class="list-group-item list-group-item-action bg-light ps-5">Nueva Venta</a>
+      <a class="list-group-item list-group-item-action bg-light ps-5">
+        <i class="bi bi-journal-plus"></i> <span>Órdenes de Compra</span>
+      </a>
+      <a class="list-group-item list-group-item-action bg-light ps-5">
+        <i class="bi bi-journal-check"></i> <span>Recepción de Facturas</span>
+      </a>
     </div>
     <li class="list-group-item list-group-item-action" routerLink="/user-profile">
       <div>
-        <i class="bi bi-person-badge"></i> Cuenta
+        <i class="bi bi-person-badge"></i> <span>Cuenta</span>
       </div>
     </li>
     <li class="list-group-item list-group-item-action" (click)="logout()">
       <div>
-        <i class="bi bi-box-arrow-left"></i> Salir
+        <i class="bi bi-box-arrow-left"></i> <span>Salir</span>
       </div>
     </li>
   </ul>

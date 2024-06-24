@@ -5,11 +5,23 @@ import * as bootstrap from 'bootstrap';
 import { ProductService, Product, Movimiento } from '../service/product.service';
 import { AuthService } from '../auth/auth.service';
 
+/**
+ * Interfaz para la estructura de Bodega.
+ * 
+ * @interface Bodega
+ */
 interface Bodega {
   name: string;
   products: Product[];
 }
 
+/**
+ * Componente del panel de control del área.
+ * 
+ * @export
+ * @class AreaDashboardComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-area-dashboard',
   templateUrl: './area-dashboard.component.html',
@@ -17,19 +29,109 @@ interface Bodega {
   standalone: true,
   imports: [FormsModule, CommonModule]
 })
-export class AreaDashboardComponent  implements OnInit {
+export class AreaDashboardComponent implements OnInit {
+  /**
+   * Lista de productos.
+   * 
+   * @type {Product[]}
+   * @memberof AreaDashboardComponent
+   */
   products: Product[] = [];
+
+  /**
+   * Lista de todos los productos.
+   * 
+   * @type {Product[]}
+   * @memberof AreaDashboardComponent
+   */
   allProducts: Product[] = [];
+
+  /**
+   * Lista de productos filtrados.
+   * 
+   * @type {Product[]}
+   * @memberof AreaDashboardComponent
+   */
   filteredProducts: Product[] = [];
+
+  /**
+   * Historial de movimientos.
+   * 
+   * @type {Movimiento[]}
+   * @memberof AreaDashboardComponent
+   */
   historial: Movimiento[] = [];
+
+  /**
+   * Índice del producto seleccionado para eliminar.
+   * 
+   * @type {number}
+   * @memberof AreaDashboardComponent
+   */
   selectedProductIndexToDelete: number = -1;
+
+  /**
+   * Índice del producto seleccionado para editar.
+   * 
+   * @type {number}
+   * @memberof AreaDashboardComponent
+   */
   selectedProductIndexToEdit: number = -1;
+
+  /**
+   * Producto seleccionado.
+   * 
+   * @type {(Product | null)}
+   * @memberof AreaDashboardComponent
+   */
   selectedProduct: Product | null = null;
+
+  /**
+   * Producto seleccionado para salida.
+   * 
+   * @type {(Product | null)}
+   * @memberof AreaDashboardComponent
+   */
   selectedProductSalida: Product | null = null;
+
+  /**
+   * Lista de bodegas.
+   * 
+   * @type {Bodega[]}
+   * @memberof AreaDashboardComponent
+   */
   bodegas: Bodega[] = [];
+
+  /**
+   * Bodega seleccionada.
+   * 
+   * @type {Bodega}
+   * @memberof AreaDashboardComponent
+   */
   selectedBodega: Bodega = { name: 'Bodega Principal', products: [] };
+
+  /**
+   * Nombre de la nueva bodega.
+   * 
+   * @type {string}
+   * @memberof AreaDashboardComponent
+   */
   newBodegaName: string = '';
+
+  /**
+   * Término de búsqueda de productos.
+   * 
+   * @type {string}
+   * @memberof AreaDashboardComponent
+   */
   searchProductTerm: string = '';
+
+  /**
+   * Nuevo producto a agregar.
+   * 
+   * @type {Product}
+   * @memberof AreaDashboardComponent
+   */
   newProduct: Product = {
     code: '',
     name: '',
@@ -46,6 +148,7 @@ export class AreaDashboardComponent  implements OnInit {
     stock: 0,
     bodega: 'Bodega Principal'
   };
+
   ingresoItems: any[] = [];
   salidaItems: any[] = [];
   cantidadIngreso: number = 1;
@@ -57,6 +160,13 @@ export class AreaDashboardComponent  implements OnInit {
   registroNumeroSalida: number = 0;
   today: string = '';
   selectedMovimiento: Movimiento | null = null;
+
+  /**
+   * Producto seleccionado para editar.
+   * 
+   * @type {Product}
+   * @memberof AreaDashboardComponent
+   */
   selectedProductToEdit: Product = {
     code: '',
     name: '',
@@ -82,8 +192,20 @@ export class AreaDashboardComponent  implements OnInit {
   selectedBodegaDestino: Bodega | null = null;
   selectedProductTraslado: Product | null = null;
 
+  /**
+   * Crea una instancia de AreaDashboardComponent.
+   * 
+   * @param {ProductService} productService Servicio de productos
+   * @param {AuthService} authService Servicio de autenticación
+   * @memberof AreaDashboardComponent
+   */
   constructor(private productService: ProductService, private authService: AuthService) {}
 
+  /**
+   * Método que se ejecuta al inicializar el componente.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   ngOnInit(): void {
     this.productService.products$.subscribe(products => {
       this.products = products;
@@ -107,28 +229,64 @@ export class AreaDashboardComponent  implements OnInit {
     this.filteredProducts = this.selectedBodega.products;
   }
 
+  /**
+   * Normaliza el código del producto.
+   * 
+   * @param {string} code Código del producto
+   * @return {string} Código normalizado
+   * @memberof AreaDashboardComponent
+   */
   normalizeCode(code: string): string {
     return code.trim().toUpperCase();
   }
 
+  /**
+   * Verifica si un producto existe en la bodega seleccionada.
+   * 
+   * @param {string} code Código del producto
+   * @return {boolean} Verdadero si el producto existe, falso en caso contrario
+   * @memberof AreaDashboardComponent
+   */
   productExists(code: string): boolean {
     const normalizedCode = this.normalizeCode(code);
     return this.selectedBodega.products.some(product => this.normalizeCode(product.code) === normalizedCode);
   }
 
+  /**
+   * Convierte el valor del input a mayúsculas.
+   * 
+   * @param {Event} event Evento de entrada
+   * @memberof AreaDashboardComponent
+   */
   toUpperCase(event: Event): void {
     const input = event.target as HTMLInputElement;
     input.value = input.value.toUpperCase();
   }
 
+  /**
+   * Verifica si el código del producto existe.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   checkProductCode() {
     this.productCodeExists = this.productExists(this.newProduct.code);
   }
 
+  /**
+   * Carga los usuarios desde el almacenamiento local.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   loadUsers() {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
   }
 
+  /**
+   * Filtra los productos según el término de búsqueda ingresado.
+   * 
+   * @param {any} event Evento de entrada de búsqueda
+   * @memberof AreaDashboardComponent
+   */
   onSearchProduct(event: any) {
     this.searchProductTerm = event.target.value.toLowerCase();
     if (this.searchProductTerm) {
@@ -142,6 +300,12 @@ export class AreaDashboardComponent  implements OnInit {
     }
   }
 
+  /**
+   * Elimina el producto seleccionado.
+   * 
+   * @param {number} index Índice del producto a eliminar
+   * @memberof AreaDashboardComponent
+   */
   onDeleteProduct(index: number) {
     this.selectedProductIndexToDelete = index;
     this.productToDelete = this.selectedBodega.products[index];
@@ -149,6 +313,11 @@ export class AreaDashboardComponent  implements OnInit {
     confirmDeleteModal.show();
   }
 
+  /**
+   * Confirma la eliminación del producto.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   onConfirmDelete() {
     if (this.selectedProductIndexToDelete !== -1) {
       this.selectedBodega.products.splice(this.selectedProductIndexToDelete, 1);
@@ -160,17 +329,36 @@ export class AreaDashboardComponent  implements OnInit {
     }
   }
 
+  /**
+   * Actualiza el producto en la bodega seleccionada.
+   * 
+   * @param {number} index Índice del producto a actualizar
+   * @param {Product} product Producto a actualizar
+   * @memberof AreaDashboardComponent
+   */
   onUpdateProduct(index: number, product: Product) {
     this.selectedBodega.products[index] = product;
     this.saveBodegas();
   }
 
+  /**
+   * Muestra la información del producto seleccionado en un modal.
+   * 
+   * @param {number} index Índice del producto a ver
+   * @memberof AreaDashboardComponent
+   */
   onViewProductInfo(index: number) {
     this.selectedProduct = this.selectedBodega.products[index];
     const productInfoModal = new bootstrap.Modal(document.getElementById('productInfoModal')!);
     productInfoModal.show();
   }
 
+  /**
+   * Edita el producto seleccionado.
+   * 
+   * @param {number} index Índice del producto a editar
+   * @memberof AreaDashboardComponent
+   */
   onEditProduct(index: number) {
     this.selectedProductIndexToEdit = index;
     this.selectedProductToEdit = { ...this.selectedBodega.products[index] };
@@ -178,6 +366,11 @@ export class AreaDashboardComponent  implements OnInit {
     editProductModal.show();
   }
 
+  /**
+   * Carga las bodegas desde el almacenamiento local.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   loadBodegas() {
     const bodegas = localStorage.getItem('bodegas');
     if (bodegas) {
@@ -187,24 +380,45 @@ export class AreaDashboardComponent  implements OnInit {
     }
   } 
 
+  /**
+   * Guarda las bodegas en el almacenamiento local.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   saveBodegas() {
     localStorage.setItem('bodegas', JSON.stringify(this.bodegas));
   }
 
+  /**
+   * Carga todos los productos de todas las bodegas.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   loadAllProducts() {
     this.allProducts = this.bodegas.reduce((acc: Product[], bodega: Bodega) => {
       return acc.concat(bodega.products);
     }, []);
   }
 
+  /**
+   * Selecciona una bodega.
+   * 
+   * @param {Bodega} bodega Bodega a seleccionar
+   * @memberof AreaDashboardComponent
+   */
   selectBodega(bodega: Bodega) {
     this.selectedBodega = bodega;
     this.filteredProducts = bodega.products;
   }
 
+  /**
+   * Guarda el producto editado.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   onSaveEditProduct() {
     if (this.selectedProductToEdit && this.selectedProductIndexToEdit !== -1) {
-      this.selectedProductToEdit.bodega = this.selectedBodega.name; // Corregido aquí
+      this.selectedProductToEdit.bodega = this.selectedBodega.name;
       this.selectedBodega.products[this.selectedProductIndexToEdit] = this.selectedProductToEdit;
       this.saveBodegas();
       this.selectedProductToEdit = {
@@ -229,6 +443,12 @@ export class AreaDashboardComponent  implements OnInit {
     }
   }
 
+  /**
+   * Agrega un nuevo producto a la bodega seleccionada.
+   * 
+   * @param {NgForm} form Formulario del producto
+   * @memberof AreaDashboardComponent
+   */
   onAddProduct(form: NgForm) {
     form.form.markAllAsTouched();
     if (form.valid) {
@@ -260,7 +480,7 @@ export class AreaDashboardComponent  implements OnInit {
         if (formElement) {
           formElement.classList.remove('was-validated');
         }
-        this.loadAllProducts(); // Recargar todos los productos después de agregar uno nuevo
+        this.loadAllProducts();
       } else {
         alert('El código del producto ya existe. Por favor, ingrese un código diferente.');
       }
@@ -272,6 +492,12 @@ export class AreaDashboardComponent  implements OnInit {
     }
   }
 
+  /**
+   * Agrega una nueva bodega.
+   * 
+   * @param {NgForm} form Formulario de la bodega
+   * @memberof AreaDashboardComponent
+   */
   addBodega(form: NgForm) {
     if (this.newBodegaName) {
       this.bodegas.push({ name: this.newBodegaName, products: [] });
@@ -282,7 +508,14 @@ export class AreaDashboardComponent  implements OnInit {
     }
   }
 
-  resetForm(form: NgForm, type:'product') {
+  /**
+   * Reinicia el formulario.
+   * 
+   * @param {NgForm} form Formulario a reiniciar
+   * @param {'product'} type Tipo de formulario (producto)
+   * @memberof AreaDashboardComponent
+   */
+  resetForm(form: NgForm, type: 'product') {
     form.resetForm();
     if (type === 'product') {
       this.newProduct = {
@@ -309,6 +542,11 @@ export class AreaDashboardComponent  implements OnInit {
     }
   }
 
+  /**
+   * Agrega un producto a la lista de ingreso.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   onAddProductoToIngreso() {
     if (!this.selectedProduct) {
       alert('Por favor, seleccione un producto.');
@@ -328,10 +566,21 @@ export class AreaDashboardComponent  implements OnInit {
     this.cantidadIngreso = 1;
   }
 
+  /**
+   * Elimina un producto de la lista de ingreso.
+   * 
+   * @param {number} index Índice del producto a eliminar
+   * @memberof AreaDashboardComponent
+   */
   onEliminarItem(index: number) {
     this.ingresoItems.splice(index, 1);
   }
 
+  /**
+   * Confirma el ingreso de productos a la bodega.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   onConfirmarIngreso() {
     this.ingresoItems.forEach(item => {
       const product = this.selectedBodega.products.find(p => p.code === item.product.code);
@@ -367,6 +616,11 @@ export class AreaDashboardComponent  implements OnInit {
     }
   }
 
+  /**
+   * Agrega un producto a la lista de salida.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   onAddProductoToSalida() {
     const selectedProductCode = this.selectedProductSalida?.code;
     if (!selectedProductCode) return;
@@ -387,15 +641,31 @@ export class AreaDashboardComponent  implements OnInit {
     }
   }
 
+  /**
+   * Muestra el modal para agregar una nueva bodega.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   openAddBodegaModal() {
     const addBodegaModal = new bootstrap.Modal(document.getElementById('addBodegaModal')!);
     addBodegaModal.show();
   }
 
+  /**
+   * Elimina un producto de la lista de salida.
+   * 
+   * @param {number} index Índice del producto a eliminar
+   * @memberof AreaDashboardComponent
+   */
   onEliminarItemSalida(index: number) {
     this.salidaItems.splice(index, 1);
   }
 
+  /**
+   * Confirma la salida de productos de la bodega.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   onConfirmarSalida() {
     this.salidaItems.forEach(item => {
       const product = this.products.find(p => p.code === item.product.code);
@@ -432,11 +702,22 @@ export class AreaDashboardComponent  implements OnInit {
     }
   }
 
+  /**
+   * Abre el historial de movimientos en un modal.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   onAbrirHistorial(): void {
     const detalleHistorialModal = new bootstrap.Modal(document.getElementById('detalleHistorialModal')!);
     detalleHistorialModal.show();
   }
 
+  /**
+   * Muestra los detalles de un movimiento en un modal.
+   * 
+   * @param {Movimiento} movimiento Movimiento a ver
+   * @memberof AreaDashboardComponent
+   */
   onVerDetallesMovimiento(movimiento: Movimiento) {
     this.selectedMovimiento = movimiento;
     const detalleMovimientoModal = new bootstrap.Modal(document.getElementById('detalleMovimientoModal')!);
@@ -445,6 +726,11 @@ export class AreaDashboardComponent  implements OnInit {
     detalleHistorialModal?.hide();
   }
 
+  /**
+   * Vuelve al historial de movimientos desde el modal de detalles.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   onVolverHistorial(): void {
     const detalleMovimientoModal = bootstrap.Modal.getInstance(document.getElementById('detalleMovimientoModal')!);
     detalleMovimientoModal?.hide();
@@ -452,6 +738,11 @@ export class AreaDashboardComponent  implements OnInit {
     detalleHistorialModal.show();
   }
 
+  /**
+   * Agrega un producto a la lista de traslado.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   onAddProductoToTraslado() {
     if (!this.selectedProductTraslado) {
       alert('Por favor, seleccione un producto.');
@@ -469,11 +760,22 @@ export class AreaDashboardComponent  implements OnInit {
     });
     this.selectedProductTraslado = null;
   }
-  
+
+  /**
+   * Elimina un producto de la lista de traslado.
+   * 
+   * @param {number} index Índice del producto a eliminar
+   * @memberof AreaDashboardComponent
+   */
   onEliminarItemTraslado(index: number) {
     this.trasladoItems.splice(index, 1);
   }
-  
+
+  /**
+   * Confirma el traslado de productos entre bodegas.
+   * 
+   * @memberof AreaDashboardComponent
+   */
   onConfirmarTraslado() {
     if (!this.selectedBodegaOrigen || !this.selectedBodegaDestino || this.selectedBodegaOrigen === this.selectedBodegaDestino) {
       alert('Seleccione bodegas válidas.');

@@ -1,129 +1,233 @@
-/* Estilos existentes */
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* Estilos generales */
 th, td {
   text-align: center;
-  vertical-align: middle;
 }
 
+/* Contenedor de la tabla de inventario */
 .inventory-table-container {
-  padding: 20px;
+  margin: 80px 15px 15px 15px;
+  padding: 1em;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  max-height: 850px;
+  overflow-y: auto;
 }
 
-.table {
+/* Contenedor del título y la barra de búsqueda */
+.caption-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.caption-title {
+  flex: 1;
+}
+
+.search-bar {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.add-button {
+  flex: 1;
+  text-align: right;
+}
+
+/* Estilos de la tabla */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
   border-radius: 10px;
   overflow: hidden;
 }
 
-.table-bordered {
-  border: 1px solid #dee2e6;
+table thead th {
+  background-color: #343a40;
+  color: #ffffff;
+  border-bottom: 2px solid #dee2e6;
 }
 
-.table th, .table td {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+table tbody tr {
+  border-bottom: 1px solid #dee2e6;
 }
 
-.changed {
-  color: red;
+table td {
+  padding: 10px;
+  border-right: 1px solid #dee2e6;
 }
 
-#detalleHistorialModal .modal-body {
-  max-height: 900px;
-  overflow-y: auto;
+table td:last-child {
+  border-right: none;
 }
 
-/* Nuevos estilos generales */
-body {
-  padding-top: 70px; /* Ajusta esto según la altura de tu navbar */
+table tr:last-child td {
+  border-bottom: none;
 }
 
-.navbar {
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
-  z-index: 1000; /* Asegúrate de que el navbar esté siempre por encima */
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-#sidebar {
-  position: fixed;
-  top: 70px; /* Ajusta esto según la altura de tu navbar */
-  left: 0;
-  bottom: 0;
-  width: 250px;
-  background-color: #f8f9fa;
-  border-right: 1px solid #ddd;
-  transition: all 0.3s ease;
-  z-index: 999; /* Asegúrate de que el sidebar esté siempre por encima del contenido */
+/* Estilos para el modal */
+#cuentaModal .modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-#sidebar.collapsed {
-  width: 0;
-  overflow: hidden;
+#cuentaModal .modal-body .d-flex {
+  width: 100%;
 }
 
-#page-content-wrapper {
-  margin-left: 250px;
-  transition: all 0.3s ease;
-  padding-top: 20px; /* Añadir margen superior */
+#cuentaModal .modal-body .mb-3 h5 {
+  margin-bottom: 0.5rem;
 }
 
-#page-content-wrapper.full-width {
-  margin-left: 0;
-}
-
-.sidebar-header {
-  padding: 1rem;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd;
-}
-
-.list-group-item {
-  cursor: pointer;
-}
-
-/* Ajustes responsivos */
-@media (max-width: 768px) {
-  #sidebar {
-    top: 0;
-    width: 100%;
-    height: auto;
-    position: relative;
-    border-right: none;
-    border-bottom: 1px solid #ddd;
+@media (max-width: 576px) {
+  #cuentaModal .modal-body .d-flex {
+    flex-direction: column;
+    align-items: center;
   }
 
-  #page-content-wrapper {
-    margin-left: 0;
-  }
-
-  .navbar {
+  #cuentaModal .modal-body .d-flex img {
     margin-bottom: 1rem;
   }
 }
 
-.container {
-  max-width: 960px; /* Ajusta esto según tus necesidades */
-  margin: auto;
-  margin-top: 20px; /* Añadir margen superior al contenedor */
+/* Ajustes para la barra de título y búsqueda en dispositivos móviles */
+@media (max-width: 768px) {
+  .caption-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .add-button {
+    margin-top: 10px;
+    justify-content: flex-start;
+  }
 }
 
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Ajustes específicos para dispositivos móviles */
+@media (max-width: 767px) {
+  .caption-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .add-button {
+    margin-top: 10px;
+    justify-content: flex-start;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table tbody, .table tr, .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  .table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 1rem;
+    font-weight: bold;
+    text-align: left;
+  }
 }
 
-.modal-content {
-  max-width: 100%;
+/* Estilos adicionales para la tabla de notificaciones */
+#page-content-wrapper .table {
+  margin-top: 80px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
-/* Estilo adicional para centrado del contenido */
-.table-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+#page-content-wrapper .table th, #page-content-wrapper .table td {
+  border: none;
+  padding: 15px;
 }
 
-.table-container .table {
-  width: 100%;
-  max-width: 960px; /* Ajusta esto según tus necesidades */
+#page-content-wrapper .table th {
+  background-color: #ee7712;
+  color: #ecf0f1;
+}
+
+#page-content-wrapper .table tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+#page-content-wrapper .table tr:hover {
+  background-color: #dcdcdc;
+}
+
+#page-content-wrapper .btn-primary {
+  background-color: #ee7712;
+  border: none;
+}
+
+#page-content-wrapper .btn-primary:hover {
+  background-color: #d3550c;
+}
+
+/* Estilos para el modal de notificaciones */
+#notificationModal .modal-header {
+  border-bottom: none;
+}
+
+#notificationModal .modal-header .btn-close {
+  background-color: transparent;
+}
+
+#notificationModal .modal-body p {
+  margin-bottom: 10px;
+}
+
+#notificationModal .modal-body ul {
+  padding-left: 20px;
+}
+
+#notificationModal .modal-footer {
+  border-top: none;
+}
+
+#notificationModal .btn-success {
+  background-color: #27ae60;
+  border: none;
+}
+
+#notificationModal .btn-danger {
+  background-color: #c0392b;
+  border: none;
 }
