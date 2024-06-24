@@ -6,9 +6,12 @@ import { NavbarComponent } from './navbar/navbar.component';
   selector: 'app-root',
   template: `
     <app-navbar></app-navbar>
+    <h1>Hello, {{ title }}</h1>
     <router-outlet></router-outlet>
   `,
   standalone: true,
   imports: [RouterModule, NavbarComponent]
 })
-export class AppComponent {}
+export class AppComponent {
+  title = 'erp-praxa';
+}
