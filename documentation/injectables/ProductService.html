@@ -119,6 +119,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Servicio para la gestión de productos y movimientos de inventario.</p>
+
+            </p>
 
 
 
@@ -212,9 +219,11 @@
                                 <a href="#loadProductsFromLocalStorage" >loadProductsFromLocalStorage</a>
                             </li>
                             <li>
+                                    <span class="modifier">Private</span>
                                 <a href="#saveNextIngresoNumber" >saveNextIngresoNumber</a>
                             </li>
                             <li>
+                                    <span class="modifier">Private</span>
                                 <a href="#saveNextSalidaNumber" >saveNextSalidaNumber</a>
                             </li>
                             <li>
@@ -261,7 +270,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/service/product.service.ts:65</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">src/app/service/product.service.ts:83</a></div>
                             </td>
                         </tr>
 
@@ -294,14 +303,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="125"
-                                    class="link-to-prism">src/app/service/product.service.ts:125</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="216"
+                                    class="link-to-prism">src/app/service/product.service.ts:216</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Agrega un movimiento de inventario.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -312,6 +323,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -326,6 +338,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Movimiento a agregar.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -361,14 +377,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="136"
-                                    class="link-to-prism">src/app/service/product.service.ts:136</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="238"
+                                    class="link-to-prism">src/app/service/product.service.ts:238</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Agrega una notificación.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -379,6 +397,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -393,6 +412,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Notificación a agregar.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -428,14 +451,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="78"
-                                    class="link-to-prism">src/app/service/product.service.ts:78</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="116"
+                                    class="link-to-prism">src/app/service/product.service.ts:116</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Agrega un nuevo producto.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -446,6 +471,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -460,6 +486,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Producto a agregar.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -495,14 +525,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="84"
-                                    class="link-to-prism">src/app/service/product.service.ts:84</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="128"
+                                    class="link-to-prism">src/app/service/product.service.ts:128</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Elimina un producto por su índice.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -513,6 +545,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -527,6 +560,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Índice del producto a eliminar.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -562,19 +599,25 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="99"
-                                    class="link-to-prism">src/app/service/product.service.ts:99</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="156"
+                                    class="link-to-prism">src/app/service/product.service.ts:156</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Obtiene el próximo número de ingreso.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 
                         </div>
+                            <div class="io-description">
+                                <p>Próximo número de ingreso.</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -599,19 +642,25 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="103"
-                                    class="link-to-prism">src/app/service/product.service.ts:103</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="166"
+                                    class="link-to-prism">src/app/service/product.service.ts:166</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Obtiene el próximo número de salida.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 
                         </div>
+                            <div class="io-description">
+                                <p>Próximo número de salida.</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -636,19 +685,25 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="141"
-                                    class="link-to-prism">src/app/service/product.service.ts:141</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="249"
+                                    class="link-to-prism">src/app/service/product.service.ts:249</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Obtiene todas las notificaciones.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>    <code>Notification[]</code>
 
                         </div>
+                            <div class="io-description">
+                                <p>Lista de notificaciones.</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -673,14 +728,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="107"
-                                    class="link-to-prism">src/app/service/product.service.ts:107</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="175"
+                                    class="link-to-prism">src/app/service/product.service.ts:175</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Incrementa el próximo número de ingreso.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -710,14 +767,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="112"
-                                    class="link-to-prism">src/app/service/product.service.ts:112</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="185"
+                                    class="link-to-prism">src/app/service/product.service.ts:185</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Incrementa el próximo número de salida.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -749,19 +808,25 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="69"
-                                    class="link-to-prism">src/app/service/product.service.ts:69</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="94"
+                                    class="link-to-prism">src/app/service/product.service.ts:94</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Carga los productos desde el almacenamiento local.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="../interfaces/Product.html" target="_self" >Product[]</a></code>
 
                         </div>
+                            <div class="io-description">
+                                <p>Lista de productos.</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -772,6 +837,7 @@
                 <td class="col-md-4">
                     <a name="saveNextIngresoNumber"></a>
                     <span class="name">
+                            <span class="modifier">Private</span>
                         <span ><b>saveNextIngresoNumber</b></span>
                         <a href="#saveNextIngresoNumber"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -779,26 +845,32 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>saveNextIngresoNumber()</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>saveNextIngresoNumber()</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="117"
-                                    class="link-to-prism">src/app/service/product.service.ts:117</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="196"
+                                    class="link-to-prism">src/app/service/product.service.ts:196</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Guarda el próximo número de ingreso en el almacenamiento local.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -809,6 +881,7 @@
                 <td class="col-md-4">
                     <a name="saveNextSalidaNumber"></a>
                     <span class="name">
+                            <span class="modifier">Private</span>
                         <span ><b>saveNextSalidaNumber</b></span>
                         <a href="#saveNextSalidaNumber"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -816,26 +889,32 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>saveNextSalidaNumber()</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>saveNextSalidaNumber()</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="121"
-                                    class="link-to-prism">src/app/service/product.service.ts:121</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="206"
+                                    class="link-to-prism">src/app/service/product.service.ts:206</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Guarda el próximo número de salida en el almacenamiento local.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -862,19 +941,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="153"
-                                    class="link-to-prism">src/app/service/product.service.ts:153</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="274"
+                                    class="link-to-prism">src/app/service/product.service.ts:274</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Guarda las notificaciones en el almacenamiento local.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -901,14 +985,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="73"
-                                    class="link-to-prism">src/app/service/product.service.ts:73</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="105"
+                                    class="link-to-prism">src/app/service/product.service.ts:105</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Guarda los productos en el almacenamiento local.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -919,6 +1005,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -933,6 +1020,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Lista de productos.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -970,19 +1061,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="130"
-                                    class="link-to-prism">src/app/service/product.service.ts:130</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="227"
+                                    class="link-to-prism">src/app/service/product.service.ts:227</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Actualiza el historial de movimientos en el almacenamiento local.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1007,14 +1103,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="159"
-                                    class="link-to-prism">src/app/service/product.service.ts:159</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="285"
+                                    class="link-to-prism">src/app/service/product.service.ts:285</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Actualiza la lista de notificaciones.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1025,6 +1123,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1039,6 +1138,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Lista actualizada de notificaciones.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1074,14 +1177,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="145"
-                                    class="link-to-prism">src/app/service/product.service.ts:145</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="260"
+                                    class="link-to-prism">src/app/service/product.service.ts:260</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Actualiza el estado de una notificación.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1092,6 +1197,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1106,6 +1212,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>ID de la notificación a actualizar.</p>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>status</td>
@@ -1118,6 +1228,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Nuevo estado de la notificación.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1153,14 +1267,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="90"
-                                    class="link-to-prism">src/app/service/product.service.ts:90</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="141"
+                                    class="link-to-prism">src/app/service/product.service.ts:141</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Actualiza un producto por su código.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1171,6 +1287,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1185,6 +1302,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Código del producto a actualizar.</p>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>updatedProduct</td>
@@ -1197,6 +1318,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Datos actualizados del producto.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1243,7 +1368,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/service/product.service.ts:61</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">src/app/service/product.service.ts:79</a></div>
                         </td>
                     </tr>
 
@@ -1268,7 +1393,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/service/product.service.ts:65</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">src/app/service/product.service.ts:83</a></div>
                         </td>
                     </tr>
 
@@ -1300,7 +1425,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/service/product.service.ts:62</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">src/app/service/product.service.ts:80</a></div>
                         </td>
                     </tr>
 
@@ -1332,7 +1457,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/service/product.service.ts:59</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/app/service/product.service.ts:77</a></div>
                         </td>
                     </tr>
 
@@ -1364,7 +1489,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/service/product.service.ts:60</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/service/product.service.ts:78</a></div>
                         </td>
                     </tr>
 
@@ -1396,7 +1521,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/service/product.service.ts:63</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/app/service/product.service.ts:81</a></div>
                         </td>
                     </tr>
 
@@ -1428,7 +1553,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/service/product.service.ts:64</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/app/service/product.service.ts:82</a></div>
                         </td>
                     </tr>
 
@@ -1453,7 +1578,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/service/product.service.ts:58</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/service/product.service.ts:76</a></div>
                         </td>
                     </tr>
 
@@ -1485,7 +1610,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/service/product.service.ts:57</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">src/app/service/product.service.ts:75</a></div>
                         </td>
                     </tr>
 
@@ -1501,6 +1626,9 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { BehaviorSubject } from &#x27;rxjs&#x27;;
 
+/**
+ * Interfaz para definir un producto.
+ */
 export interface Product {
   code: string;
   name: string;
@@ -1518,6 +1646,9 @@ export interface Product {
   bodega: string;
 }
 
+/**
+ * Interfaz para definir un movimiento de inventario.
+ */
 export interface Movimiento {
   tipo: string;
   numero: number;
@@ -1535,12 +1666,18 @@ export interface Movimiento {
   bodegaDestino?: string;
 }
 
+/**
+ * Tipo que define una versión parcial de un producto.
+ */
 export type PartialProduct &#x3D; {
   [P in keyof Product]?: Product[P];
 } &amp; {
   [key: string]: any;
 };
 
+/**
+ * Interfaz para definir una notificación.
+ */
 interface Notification {
   id: number;
   status: string;
@@ -1550,6 +1687,12 @@ interface Notification {
   cambiosSolicitados: PartialProduct;
 }
 
+/**
+ * Servicio para la gestión de productos y movimientos de inventario.
+ *
+ * @export
+ * @class ProductService
+ */
 @Injectable({
   providedIn: &#x27;root&#x27;,
 })
@@ -1566,28 +1709,61 @@ export class ProductService {
 
   constructor() {}
 
+  /**
+   * Carga los productos desde el almacenamiento local.
+   *
+   * @private
+   * @returns {Product[]} Lista de productos.
+   * @memberof ProductService
+   */
   private loadProductsFromLocalStorage(): Product[] {
     return JSON.parse(localStorage.getItem(&#x27;products&#x27;)!) || [];
   }
 
+  /**
+   * Guarda los productos en el almacenamiento local.
+   *
+   * @private
+   * @param {Product[]} products Lista de productos.
+   * @memberof ProductService
+   */
   private saveProductsToLocalStorage(products: Product[]): void {
     localStorage.setItem(&#x27;products&#x27;, JSON.stringify(products));
     this.productsSubject.next(products);
   }
 
-  addProduct(product: Product) {
+  /**
+   * Agrega un nuevo producto.
+   *
+   * @param {Product} product Producto a agregar.
+   * @memberof ProductService
+   */
+  addProduct(product: Product): void {
     const currentProducts &#x3D; this.productsSubject.getValue();
     currentProducts.push(product);
     this.saveProductsToLocalStorage(currentProducts);
   }
 
-  deleteProduct(index: number) {
+  /**
+   * Elimina un producto por su índice.
+   *
+   * @param {number} index Índice del producto a eliminar.
+   * @memberof ProductService
+   */
+  deleteProduct(index: number): void {
     const currentProducts &#x3D; this.productsSubject.getValue();
     currentProducts.splice(index, 1);
     this.saveProductsToLocalStorage(currentProducts);
   }
 
-  updateProduct(code: string, updatedProduct: PartialProduct) {
+  /**
+   * Actualiza un producto por su código.
+   *
+   * @param {string} code Código del producto a actualizar.
+   * @param {PartialProduct} updatedProduct Datos actualizados del producto.
+   * @memberof ProductService
+   */
+  updateProduct(code: string, updatedProduct: PartialProduct): void {
     const currentProducts &#x3D; this.productsSubject.getValue();
     const productIndex &#x3D; currentProducts.findIndex(p &#x3D;&gt; p.code &#x3D;&#x3D;&#x3D; code);
     if (productIndex !&#x3D;&#x3D; -1) {
@@ -1596,53 +1772,117 @@ export class ProductService {
     }
   }
 
+  /**
+   * Obtiene el próximo número de ingreso.
+   *
+   * @returns {number} Próximo número de ingreso.
+   * @memberof ProductService
+   */
   getNextIngresoNumber(): number {
     return this.nextIngresoNumber;
   }
 
+  /**
+   * Obtiene el próximo número de salida.
+   *
+   * @returns {number} Próximo número de salida.
+   * @memberof ProductService
+   */
   getNextSalidaNumber(): number {
     return this.nextSalidaNumber;
   }
 
-  incrementNextIngresoNumber() {
+  /**
+   * Incrementa el próximo número de ingreso.
+   *
+   * @memberof ProductService
+   */
+  incrementNextIngresoNumber(): void {
     this.nextIngresoNumber++;
     this.saveNextIngresoNumber();
   }
 
-  incrementNextSalidaNumber() {
+  /**
+   * Incrementa el próximo número de salida.
+   *
+   * @memberof ProductService
+   */
+  incrementNextSalidaNumber(): void {
     this.nextSalidaNumber++;
     this.saveNextSalidaNumber();
   }
 
-  saveNextIngresoNumber() {
+  /**
+   * Guarda el próximo número de ingreso en el almacenamiento local.
+   *
+   * @private
+   * @memberof ProductService
+   */
+  private saveNextIngresoNumber(): void {
     localStorage.setItem(&#x27;nextIngresoNumber&#x27;, this.nextIngresoNumber.toString());
   }
 
-  saveNextSalidaNumber() {
+  /**
+   * Guarda el próximo número de salida en el almacenamiento local.
+   *
+   * @private
+   * @memberof ProductService
+   */
+  private saveNextSalidaNumber(): void {
     localStorage.setItem(&#x27;nextSalidaNumber&#x27;, this.nextSalidaNumber.toString());
   }
 
-  addMovimiento(movimiento: Movimiento) {
+  /**
+   * Agrega un movimiento de inventario.
+   *
+   * @param {Movimiento} movimiento Movimiento a agregar.
+   * @memberof ProductService
+   */
+  addMovimiento(movimiento: Movimiento): void {
     this.historial.push(movimiento);
     this.updateHistorialLocalStorage();
   }
 
-  private updateHistorialLocalStorage() {
+  /**
+   * Actualiza el historial de movimientos en el almacenamiento local.
+   *
+   * @private
+   * @memberof ProductService
+   */
+  private updateHistorialLocalStorage(): void {
     localStorage.setItem(&#x27;historial&#x27;, JSON.stringify(this.historial));
     this.historialSubject.next(this.historial);
   }
 
-  // Notificaciones
-  addNotification(notification: Notification) {
+  /**
+   * Agrega una notificación.
+   *
+   * @param {Notification} notification Notificación a agregar.
+   * @memberof ProductService
+   */
+  addNotification(notification: Notification): void {
     this.notifications.push(notification);
     this.saveNotificationsToLocalStorage();
   }
 
+  /**
+   * Obtiene todas las notificaciones.
+   *
+   * @returns {Notification[]} Lista de notificaciones.
+   * @memberof ProductService
+   */
   getNotifications(): Notification[] {
     return JSON.parse(localStorage.getItem(&#x27;notifications&#x27;) || &#x27;[]&#x27;);
   }
 
-  updateNotificationStatus(notificationId: number, status: string) {
+  /**
+   * Actualiza el estado de una notificación.
+   *
+   * @param {number} notificationId ID de la notificación a actualizar.
+   * @param {string} status Nuevo estado de la notificación.
+   * @memberof ProductService
+   */
+  updateNotificationStatus(notificationId: number, status: string): void {
     const notificationIndex &#x3D; this.notifications.findIndex(n &#x3D;&gt; n.id &#x3D;&#x3D;&#x3D; notificationId);
     if (notificationIndex !&#x3D;&#x3D; -1) {
       this.notifications[notificationIndex].status &#x3D; status;
@@ -1650,13 +1890,24 @@ export class ProductService {
     }
   }
 
-  private saveNotificationsToLocalStorage() {
+  /**
+   * Guarda las notificaciones en el almacenamiento local.
+   *
+   * @private
+   * @memberof ProductService
+   */
+  private saveNotificationsToLocalStorage(): void {
     localStorage.setItem(&#x27;notifications&#x27;, JSON.stringify(this.notifications));
     this.notificationsSubject.next(this.notifications);
   }
 
-  // Nuevo método para actualizar las notificaciones
-  updateNotifications(notifications: Notification[]) {
+  /**
+   * Actualiza la lista de notificaciones.
+   *
+   * @param {Notification[]} notifications Lista actualizada de notificaciones.
+   * @memberof ProductService
+   */
+  updateNotifications(notifications: Notification[]): void {
     this.notifications &#x3D; notifications;
     this.saveNotificationsToLocalStorage();
   }

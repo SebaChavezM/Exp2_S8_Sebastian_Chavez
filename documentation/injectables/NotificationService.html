@@ -119,6 +119,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Servicio de notificaciones.</p>
+
+            </p>
 
 
 
@@ -194,14 +201,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="12"
-                                    class="link-to-prism">src/app/service/notificacion.service.ts:12</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="30"
+                                    class="link-to-prism">src/app/service/notificacion.service.ts:30</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Establece el conteo de notificaciones pendientes.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -212,6 +221,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -226,6 +236,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Nuevo conteo de notificaciones pendientes.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -266,7 +280,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/app/service/notificacion.service.ts:9</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/service/notificacion.service.ts:14</a></div>
                         </td>
                     </tr>
 
@@ -291,10 +305,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/service/notificacion.service.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/service/notificacion.service.ts:22</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Observable para el conteo de notificaciones pendientes.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -307,14 +327,33 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { BehaviorSubject } from &#x27;rxjs&#x27;;
 
+/**
+ * Servicio de notificaciones.
+ *
+ * @export
+ * @class NotificationService
+ */
 @Injectable({
   providedIn: &#x27;root&#x27;
 })
 export class NotificationService {
   private pendingCount &#x3D; new BehaviorSubject&lt;number&gt;(0);
+  
+  /**
+   * Observable para el conteo de notificaciones pendientes.
+   *
+   * @type {Observable&lt;number&gt;}
+   * @memberof NotificationService
+   */
   pendingCount$ &#x3D; this.pendingCount.asObservable();
 
-  setPendingCount(count: number) {
+  /**
+   * Establece el conteo de notificaciones pendientes.
+   *
+   * @param {number} count Nuevo conteo de notificaciones pendientes.
+   * @memberof NotificationService
+   */
+  setPendingCount(count: number): void {
     this.pendingCount.next(count);
   }
 }

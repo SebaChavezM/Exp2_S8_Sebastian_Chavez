@@ -124,6 +124,13 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Componente del panel de control del auditor.</p>
+
+    </p>
 
 
     <p class="comment">
@@ -254,17 +261,19 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(productService: <a href="../injectables/ProductService.html" target="_self">ProductService</a>)</code>
+<code>constructor(productService: ProductService)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:18</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:53</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Crea una instancia de AuditorDashboardComponent.</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -273,6 +282,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -280,13 +290,17 @@
                                                         <td>productService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/ProductService.html" target="_self" >ProductService</a></code>
+                                                                    <code>ProductService</code>
                                                         </td>
                                                   
                                                     <td>
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <p>Servicio de productos</p>
+
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -326,14 +340,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="22"
-                                    class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:22</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="68"
+                                    class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:68</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Método que se ejecuta al inicializar el componente.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -363,14 +379,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="29"
-                                    class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:29</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="81"
+                                    class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:81</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Filtra los productos según el término de búsqueda ingresado.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -381,6 +399,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -395,6 +414,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Evento de entrada de búsqueda</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -430,14 +453,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="42"
-                                    class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:42</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="100"
+                                    class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:100</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Muestra la información del producto seleccionado en un modal.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -448,6 +473,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -462,6 +488,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Índice del producto seleccionado en la lista</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -496,7 +526,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Product.html" target="_self" >Product[]</a></code>
+                        <i>Type : </i>    <code>Product[]</code>
 
                     </td>
                 </tr>
@@ -507,10 +537,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:16</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:37</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de productos filtrados.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -527,7 +563,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Product.html" target="_self" >Product[]</a></code>
+                        <i>Type : </i>    <code>Product[]</code>
 
                     </td>
                 </tr>
@@ -538,10 +574,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:29</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de productos.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -569,10 +611,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:45</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Término de búsqueda de productos.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -589,7 +637,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Product.html" target="_self" >Product | null</a></code>
+                        <i>Type : </i>    <code>Product | null</code>
 
                     </td>
                 </tr>
@@ -600,10 +648,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:18</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/auditor-dashboard/auditor-dashboard.component.ts:53</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Producto seleccionado.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -619,6 +673,13 @@ import { FormsModule } from &#x27;@angular/forms&#x27;;
 import { ProductService, Product } from &#x27;../service/product.service&#x27;;
 import * as bootstrap from &#x27;bootstrap&#x27;;
 
+/**
+ * Componente del panel de control del auditor.
+ * 
+ * @export
+ * @class AuditorDashboardComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: &#x27;app-auditor-dashboard&#x27;,
   templateUrl: &#x27;./auditor-dashboard.component.html&#x27;,
@@ -627,13 +688,52 @@ import * as bootstrap from &#x27;bootstrap&#x27;;
   imports: [CommonModule, FormsModule]
 })
 export class AuditorDashboardComponent implements OnInit {
+
+  /**
+   * Lista de productos.
+   * 
+   * @type {Product[]}
+   * @memberof AuditorDashboardComponent
+   */
   products: Product[] &#x3D; [];
+
+  /**
+   * Lista de productos filtrados.
+   * 
+   * @type {Product[]}
+   * @memberof AuditorDashboardComponent
+   */
   filteredProducts: Product[] &#x3D; [];
+
+  /**
+   * Término de búsqueda de productos.
+   * 
+   * @type {string}
+   * @memberof AuditorDashboardComponent
+   */
   searchProductTerm: string &#x3D; &#x27;&#x27;;
+
+  /**
+   * Producto seleccionado.
+   * 
+   * @type {(Product | null)}
+   * @memberof AuditorDashboardComponent
+   */
   selectedProduct: Product | null &#x3D; null;
 
+  /**
+   * Crea una instancia de AuditorDashboardComponent.
+   * 
+   * @param {ProductService} productService Servicio de productos
+   * @memberof AuditorDashboardComponent
+   */
   constructor(private productService: ProductService) {}
 
+  /**
+   * Método que se ejecuta al inicializar el componente.
+   * 
+   * @memberof AuditorDashboardComponent
+   */
   ngOnInit(): void {
     this.productService.products$.subscribe(products &#x3D;&gt; {
       this.products &#x3D; products;
@@ -641,6 +741,12 @@ export class AuditorDashboardComponent implements OnInit {
     });
   }
 
+  /**
+   * Filtra los productos según el término de búsqueda ingresado.
+   * 
+   * @param {any} event Evento de entrada de búsqueda
+   * @memberof AuditorDashboardComponent
+   */
   onSearchProduct(event: any) {
     this.searchProductTerm &#x3D; event.target.value.toLowerCase();
     if (this.searchProductTerm) {
@@ -654,6 +760,12 @@ export class AuditorDashboardComponent implements OnInit {
     }
   }
 
+  /**
+   * Muestra la información del producto seleccionado en un modal.
+   * 
+   * @param {number} index Índice del producto seleccionado en la lista
+   * @memberof AuditorDashboardComponent
+   */
   onViewProductInfo(index: number) {
     this.selectedProduct &#x3D; this.products[index];
     const productInfoModal &#x3D; new bootstrap.Modal(document.getElementById(&#x27;productInfoModal&#x27;)!);
@@ -797,7 +909,7 @@ export class AuditorDashboardComponent implements OnInit {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div class="main-content"><div class="container mt-3">    <div class="d-flex justify-content-between align-items-center">    <h2>Inventario</h2>    </div>    <input type="text" class="form-control mt-2" placeholder="Buscar productos..." [(ngModel)]="searchProductTerm" (input)="onSearchProduct($event)">    <table id="productTable" class="table table-striped table-bordered caption-top mt-2">    <thead class="table-dark">        <tr>        <th scope="col">CÓDIGO</th>        <th scope="col">DESCRIPCIÓN</th>        <th scope="col">UNIDAD</th>        <th scope="col">STOCK</th>        <th scope="col">HERRAMIENTAS</th>        </tr>    </thead>    <tbody>        <tr *ngFor="let product of filteredProducts; let i = index">        <td>{{ product.code }}</td>        <td>{{ product.description }}</td>        <td>{{ product.unit }}</td>        <td>{{ product.stock }}</td>        <td>            <div class="btn-group" role="group" aria-label="Basic example">            <button type="button" class="btn btn-success" (click)="onViewProductInfo(i)">                <i class="bi bi-info-circle"></i>            </button>            </div>        </td>        </tr>    </tbody>    </table></div></div>    <div class="modal fade" id="productInfoModal" tabindex="-1" aria-labelledby="productInfoModalLabel" aria-hidden="true"><div class="modal-dialog">    <div class="modal-content">    <div class="modal-header">        <h5 class="modal-title" id="productInfoModalLabel">Información del Producto</h5>        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>    </div>    <div class="modal-body">        <p><strong>Código:</strong> {{ selectedProduct?.code }}</p>        <p><strong>Descripción:</strong> {{ selectedProduct?.description }}</p>        <p><strong>Modelo:</strong> {{ selectedProduct?.model }}</p>        <p><strong>Marca:</strong> {{ selectedProduct?.brand }}</p>        <p><strong>Material:</strong> {{ selectedProduct?.material }}</p>        <p><strong>Color:</strong> {{ selectedProduct?.color }}</p>        <p><strong>Familia:</strong> {{ selectedProduct?.family }}</p>        <p><strong>Valor:</strong> {{ selectedProduct?.value }}</p>        <p><strong>Moneda:</strong> {{ selectedProduct?.currency }}</p>        <p><strong>Unidad:</strong> {{ selectedProduct?.unit }}</p>        <p><strong>Ubicación:</strong> {{ selectedProduct?.location }}</p>        <p><strong>Stock:</strong> {{ selectedProduct?.stock }}</p>    </div>    </div></div></div></div>'
-    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AreaDashboardComponent', 'selector': 'app-area-dashboard'},{'name': 'AuditorDashboardComponent', 'selector': 'app-auditor-dashboard'},{'name': 'BodegaDashboardComponent', 'selector': 'app-bodega-dashboard'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'NotificacionesComponent', 'selector': 'app-notificaciones'},{'name': 'UserProfileComponent', 'selector': 'app-user-profile-component'}];
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AreaDashboardComponent', 'selector': 'app-area-dashboard'},{'name': 'AuditorDashboardComponent', 'selector': 'app-auditor-dashboard'},{'name': 'BodegaDashboardComponent', 'selector': 'app-bodega-dashboard'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'NotificacionesComponent', 'selector': 'app-notificaciones'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'AuditorDashboardComponent'};
 </script>

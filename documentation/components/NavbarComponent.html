@@ -124,6 +124,13 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Componente de la barra de navegación.</p>
+
+    </p>
 
 
     <p class="comment">
@@ -273,17 +280,19 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>, router: Router, notificationService: <a href="../injectables/NotificationService.html" target="_self">NotificationService</a>)</code>
+<code>constructor(authService: AuthService, router: Router, notificationService: <a href="../interfaces/Notification.html" target="_self">NotificationService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/navbar/navbar.component.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/navbar/navbar.component.ts:44</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Crea una instancia de NavbarComponent.</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -292,6 +301,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -299,13 +309,17 @@
                                                         <td>authService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                                                                    <code>AuthService</code>
                                                         </td>
                                                   
                                                     <td>
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <p>Servicio de autenticación.</p>
+
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>router</td>
@@ -318,18 +332,26 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <p>Servicio de navegación.</p>
+
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>notificationService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/NotificationService.html" target="_self" >NotificationService</a></code>
+                                                                        <code><a href="../interfaces/Notification.html" target="_self" >NotificationService</a></code>
                                                         </td>
                                                   
                                                     <td>
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <p>Servicio de notificaciones.</p>
+
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -369,14 +391,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="36"
-                                    class="link-to-prism">src/app/navbar/navbar.component.ts:36</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="79"
+                                    class="link-to-prism">src/app/navbar/navbar.component.ts:79</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Verifica el tamaño de la pantalla para determinar si el sidebar debe estar colapsado.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -406,19 +430,25 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="96"
-                                    class="link-to-prism">src/app/navbar/navbar.component.ts:96</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="169"
+                                    class="link-to-prism">src/app/navbar/navbar.component.ts:169</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Verifica si la URL actual es la página de inicio de sesión.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
                         </div>
+                            <div class="io-description">
+                                <p>True si la URL actual es la página de inicio de sesión, de lo contrario false.</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -443,19 +473,25 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="64"
-                                    class="link-to-prism">src/app/navbar/navbar.component.ts:64</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="126"
+                                    class="link-to-prism">src/app/navbar/navbar.component.ts:126</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Verifica si la URL actual corresponde a un dashboard.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
                         </div>
+                            <div class="io-description">
+                                <p>True si la URL actual es de un dashboard, de lo contrario false.</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -480,14 +516,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="60"
-                                    class="link-to-prism">src/app/navbar/navbar.component.ts:60</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="116"
+                                    class="link-to-prism">src/app/navbar/navbar.component.ts:116</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Verifica si el rol del usuario está permitido.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -498,6 +536,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -512,6 +551,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Roles permitidos.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -521,7 +564,8 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <p>True si el rol está permitido, de lo contrario false.</p>
+
                             </div>
                 </td>
             </tr>
@@ -547,14 +591,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="55"
-                                    class="link-to-prism">src/app/navbar/navbar.component.ts:55</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="104"
+                                    class="link-to-prism">src/app/navbar/navbar.component.ts:104</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Cierra la sesión del usuario y lo redirige a la página de inicio de sesión.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -584,14 +630,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="73"
-                                    class="link-to-prism">src/app/navbar/navbar.component.ts:73</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="140"
+                                    class="link-to-prism">src/app/navbar/navbar.component.ts:140</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Navega a la página principal según el rol del usuario.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -621,14 +669,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="25"
-                                    class="link-to-prism">src/app/navbar/navbar.component.ts:25</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="65"
+                                    class="link-to-prism">src/app/navbar/navbar.component.ts:65</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Inicializa el componente y configura las suscripciones necesarias.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -658,14 +708,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="100"
-                                    class="link-to-prism">src/app/navbar/navbar.component.ts:100</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="179"
+                                    class="link-to-prism">src/app/navbar/navbar.component.ts:179</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Alterna la visibilidad de un dropdown.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -676,6 +728,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -690,6 +743,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>ID del dropdown a alternar.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -725,14 +782,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="45"
-                                    class="link-to-prism">src/app/navbar/navbar.component.ts:45</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="89"
+                                    class="link-to-prism">src/app/navbar/navbar.component.ts:89</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Alterna el estado del sidebar entre colapsado y expandido.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -762,16 +821,21 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                        <i>Type : </i>    <code>AuthService</code>
 
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/navbar/navbar.component.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/navbar/navbar.component.ts:55</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description">Servicio de autenticación.</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -799,10 +863,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/navbar/navbar.component.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/navbar/navbar.component.ts:44</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>ID del dropdown actualmente abierto.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -824,10 +894,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/navbar/navbar.component.ts:16</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/navbar/navbar.component.ts:36</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Estado del sidebar (colapsado o no).</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -855,10 +931,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/navbar/navbar.component.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/navbar/navbar.component.ts:28</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Número de notificaciones pendientes.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -874,6 +956,13 @@ import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule, Router } from &#x27;@angular/router&#x27;;
 import { NotificationService } from &#x27;../service/notificacion.service&#x27;;
 
+/**
+ * Componente de la barra de navegación.
+ *
+ * @export
+ * @class NavbarComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: &#x27;app-navbar&#x27;,
   templateUrl: &#x27;./navbar.component.html&#x27;,
@@ -882,36 +971,73 @@ import { NotificationService } from &#x27;../service/notificacion.service&#x27;;
   imports: [CommonModule, RouterModule]
 })
 export class NavbarComponent implements OnInit {
+  /**
+   * Número de notificaciones pendientes.
+   *
+   * @type {number}
+   * @memberof NavbarComponent
+   */
   pendingNotificationsCount: number &#x3D; 0;
+
+  /**
+   * Estado del sidebar (colapsado o no).
+   *
+   * @type {boolean}
+   * @memberof NavbarComponent
+   */
   isSidebarCollapsed &#x3D; false;
+
+  /**
+   * ID del dropdown actualmente abierto.
+   *
+   * @type {(string | null)}
+   * @memberof NavbarComponent
+   */
   currentOpenDropdown: string | null &#x3D; null;
 
+  /**
+   * Crea una instancia de NavbarComponent.
+   * 
+   * @param {AuthService} authService Servicio de autenticación.
+   * @param {Router} router Servicio de navegación.
+   * @param {NotificationService} notificationService Servicio de notificaciones.
+   * @memberof NavbarComponent
+   */
   constructor(
     public authService: AuthService,
     private router: Router,
-    private notificationService: NotificationService // Inyecta el servicio
+    private notificationService: NotificationService 
   ) {}
 
+  /**
+   * Inicializa el componente y configura las suscripciones necesarias.
+   *
+   * @memberof NavbarComponent
+   */
   ngOnInit(): void {
-    // Suscríbete a los cambios en el contador de notificaciones pendientes
     this.notificationService.pendingCount$.subscribe(count &#x3D;&gt; {
       this.pendingNotificationsCount &#x3D; count;
     });
 
-    // Verifica el tamaño de la pantalla al iniciar
     this.checkScreenSize();
     window.addEventListener(&#x27;resize&#x27;, this.checkScreenSize.bind(this));
   }
 
+  /**
+   * Verifica el tamaño de la pantalla para determinar si el sidebar debe estar colapsado.
+   *
+   * @memberof NavbarComponent
+   */
   checkScreenSize(): void {
     const screenWidth &#x3D; window.innerWidth;
-    if (screenWidth &lt;&#x3D; 768) {
-      this.isSidebarCollapsed &#x3D; true;
-    } else {
-      this.isSidebarCollapsed &#x3D; false;
-    }
+    this.isSidebarCollapsed &#x3D; screenWidth &lt;&#x3D; 768;
   }
 
+  /**
+   * Alterna el estado del sidebar entre colapsado y expandido.
+   *
+   * @memberof NavbarComponent
+   */
   toggleSidebar(): void {
     this.isSidebarCollapsed &#x3D; !this.isSidebarCollapsed;
     const sidebar &#x3D; document.getElementById(&#x27;sidebar&#x27;);
@@ -922,15 +1048,33 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  logout() {
+  /**
+   * Cierra la sesión del usuario y lo redirige a la página de inicio de sesión.
+   *
+   * @memberof NavbarComponent
+   */
+  logout(): void {
     this.authService.logout();
-    this.router.navigate([&#x27;/login&#x27;]); // Redirige al login después de cerrar sesión
+    this.router.navigate([&#x27;/login&#x27;]);
   }
 
+  /**
+   * Verifica si el rol del usuario está permitido.
+   *
+   * @param {string[]} allowedRoles Roles permitidos.
+   * @returns {boolean} True si el rol está permitido, de lo contrario false.
+   * @memberof NavbarComponent
+   */
   isRoleAllowed(allowedRoles: string[]): boolean {
     return this.authService.isRoleAllowed(allowedRoles);
   }
 
+  /**
+   * Verifica si la URL actual corresponde a un dashboard.
+   *
+   * @returns {boolean} True si la URL actual es de un dashboard, de lo contrario false.
+   * @memberof NavbarComponent
+   */
   isOnDashboard(): boolean {
     const currentUrl &#x3D; this.router.url;
     return (
@@ -940,6 +1084,11 @@ export class NavbarComponent implements OnInit {
     );
   }
 
+  /**
+   * Navega a la página principal según el rol del usuario.
+   *
+   * @memberof NavbarComponent
+   */
   navigateToHome(): void {
     const role &#x3D; this.authService.getCurrentUser()?.role;
     let route &#x3D; &#x27;&#x27;;
@@ -963,26 +1112,33 @@ export class NavbarComponent implements OnInit {
     this.router.navigate([route]);
   }
 
+  /**
+   * Verifica si la URL actual es la página de inicio de sesión.
+   *
+   * @returns {boolean} True si la URL actual es la página de inicio de sesión, de lo contrario false.
+   * @memberof NavbarComponent
+   */
   isLoginPage(): boolean {
     return this.router.url &#x3D;&#x3D;&#x3D; &#x27;/login&#x27;;
   }
 
+  /**
+   * Alterna la visibilidad de un dropdown.
+   *
+   * @param {string} dropdownId ID del dropdown a alternar.
+   * @memberof NavbarComponent
+   */
   toggleDropdown(dropdownId: string): void {
     if (this.currentOpenDropdown &amp;&amp; this.currentOpenDropdown !&#x3D;&#x3D; dropdownId) {
       const currentDropdown &#x3D; document.getElementById(this.currentOpenDropdown);
-      if (currentDropdown) {
-        currentDropdown.classList.remove(&#x27;show&#x27;);
-      }
+      currentDropdown?.classList.remove(&#x27;show&#x27;);
     }
 
     const dropdown &#x3D; document.getElementById(dropdownId);
-    if (dropdown) {
-      dropdown.classList.toggle(&#x27;show&#x27;);
-    }
+    dropdown?.classList.toggle(&#x27;show&#x27;);
     
     this.currentOpenDropdown &#x3D; dropdownId;
   }
-  
 }
 </code></pre>
     </div>
@@ -1311,7 +1467,7 @@ export class NavbarComponent implements OnInit {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><nav class="navbar navbar-expand-lg custom-navbar fixed-top">  <div class="container-fluid d-flex align-items-center">    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">      <i class="bi bi-list"></i>    </button>    <a class="navbar-brand me-auto" href="#">ERP</a>    <div *ngIf="authService.isRoleAllowed([\'Admin\', \'Área\', \'Bodega\'])" class="nav-item position-relative">      <a class="nav-link" routerLink="/notificaciones">        <i class="bi bi-bell"></i>        <span *ngIf="pendingNotificationsCount > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">          {{ pendingNotificationsCount }}          <span class="visually-hidden">unread messages</span>        </span>      </a>    </div>    <div class="vr mx-3"></div>    <div class="dropdown">      <a class="nav-link d-flex align-items-center" id="userDropdown" role="button" aria-expanded="false">        <img [src]="authService.getCurrentUser()?.profilePicture || \'assets/img/fondos/profile picture.webp\'" class="rounded-circle me-2" alt="Profile Picture" width="50" height="50">        <div class="d-flex flex-column align-items-start">          <span>{{ authService.getCurrentUser()?.firstName }} {{ authService.getCurrentUser()?.lastName }}</span>          <span class="text-success">{{ authService.getCurrentUser()?.role }}</span>        </div>      </a>    </div>  </div></nav><div *ngIf="!isLoginPage()" id="sidebar" class="sidebar bg-light border-end">  <div class="sidebar-header d-flex align-items-center justify-content-center py-3">    <img src="../../assets/img/logos/favicon.png" alt="Company Logo" class="company-logo">    <h6 class="ms-2">PRAXA INGENIERIA SPA</h6>  </div>  <ul class="list-group list-group-flush">    <li class="list-group-item list-group-item-action" (click)="navigateToHome()">      <div>        <i class="bi bi-building"></i> <span>Inicio</span>      </div>    </li>    <li *ngIf="authService.isRoleAllowed([\'Admin\', \'Área\', \'Bodega\'])" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" (click)="toggleDropdown(\'operacionesSubmenu\')" role="button">      <div>        <i class="bi bi-box-seam"></i> <span>Bodega</span>      </div>      <i class="bi bi-chevron-down"></i>    </li>    <div *ngIf="authService.isRoleAllowed([\'Admin\', \'Área\', \'Bodega\'])" class="collapse" id="operacionesSubmenu">      <a class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#Modal_add_item">        <i class="bi bi-plus-square"></i> <span>Crear Producto</span>      </a>      <a class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#ingresoBodegaModal">        <i class="bi bi-box-arrow-in-down"></i> <span>Ingreso a Bodega</span>      </a>      <a class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#salidaBodegaModal">        <i class="bi bi-box-arrow-up"></i> <span>Salida de Bodega</span>      </a>      <a class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#trasladoBodegaModal">        <i class="bi bi-arrow-left-right"></i> <span>Traslado de Bodega</span>      </a>      <a class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#detalleHistorialModal">        <i class="bi bi-clock-history"></i> <span>Historial</span>      </a>    </div>    <li *ngIf="authService.isRoleAllowed([\'Admin\', \'Área\', \'Bodega\'])" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" (click)="toggleDropdown(\'ventasSubmenu\')" role="button">      <div>        <i class="bi bi-journal-bookmark"></i> <span>Compras</span>      </div>      <i class="bi bi-chevron-down"></i>    </li>    <div *ngIf="authService.isRoleAllowed([\'Admin\', \'Área\', \'Bodega\'])" class="collapse" id="ventasSubmenu">      <a class="list-group-item list-group-item-action bg-light ps-5">        <i class="bi bi-journal-plus"></i> <span>Órdenes de Compra</span>      </a>      <a class="list-group-item list-group-item-action bg-light ps-5">        <i class="bi bi-journal-check"></i> <span>Recepción de Facturas</span>      </a>    </div>    <li class="list-group-item list-group-item-action" routerLink="/user-profile">      <div>        <i class="bi bi-person-badge"></i> <span>Cuenta</span>      </div>    </li>    <li class="list-group-item list-group-item-action" (click)="logout()">      <div>        <i class="bi bi-box-arrow-left"></i> <span>Salir</span>      </div>    </li>  </ul></div></div>'
-    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AreaDashboardComponent', 'selector': 'app-area-dashboard'},{'name': 'AuditorDashboardComponent', 'selector': 'app-auditor-dashboard'},{'name': 'BodegaDashboardComponent', 'selector': 'app-bodega-dashboard'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'NotificacionesComponent', 'selector': 'app-notificaciones'},{'name': 'UserProfileComponent', 'selector': 'app-user-profile-component'}];
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AreaDashboardComponent', 'selector': 'app-area-dashboard'},{'name': 'AuditorDashboardComponent', 'selector': 'app-auditor-dashboard'},{'name': 'BodegaDashboardComponent', 'selector': 'app-bodega-dashboard'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'NotificacionesComponent', 'selector': 'app-notificaciones'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'NavbarComponent'};
 </script>

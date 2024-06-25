@@ -6,12 +6,20 @@ import { ProductService, Product, Movimiento } from '../service/product.service'
 import { AuthService } from '../auth/auth.service';
 
 /**
- * Interfaz para la estructura de Bodega.
- * 
- * @interface Bodega
+ * Interfaz para representar una bodega.
+ * @interface
  */
 interface Bodega {
+  /**
+   * Nombre de la bodega.
+   * @type {string}
+   */
   name: string;
+
+  /**
+   * Lista de productos en la bodega.
+   * @type {Product[]}
+   */
   products: Product[];
 }
 
@@ -149,16 +157,92 @@ export class AreaDashboardComponent implements OnInit {
     bodega: 'Bodega Principal'
   };
 
+  /**
+   * Items de ingreso.
+   * 
+   * @type {any[]}
+   * @memberof AreaDashboardComponent
+   */
   ingresoItems: any[] = [];
+
+  /**
+   * Items de salida.
+   * 
+   * @type {any[]}
+   * @memberof AreaDashboardComponent
+   */
   salidaItems: any[] = [];
+
+  /**
+   * Cantidad de ingreso.
+   * 
+   * @type {number}
+   * @memberof AreaDashboardComponent
+   */
   cantidadIngreso: number = 1;
+
+  /**
+   * Cantidad de salida.
+   * 
+   * @type {number}
+   * @memberof AreaDashboardComponent
+   */
   cantidadSalida: number = 1;
+
+  /**
+   * Tipo de documento.
+   * 
+   * @type {string}
+   * @memberof AreaDashboardComponent
+   */
   tipoDocumento: string = '';
+
+  /**
+   * Número de documento.
+   * 
+   * @type {string}
+   * @memberof AreaDashboardComponent
+   */
   numeroDocumento: string = '';
+
+  /**
+   * Motivo de salida.
+   * 
+   * @type {string}
+   * @memberof AreaDashboardComponent
+   */
   motivoSalida: string = '';
+
+  /**
+   * Número de registro de ingreso.
+   * 
+   * @type {number}
+   * @memberof AreaDashboardComponent
+   */
   registroNumeroIngreso: number = 0;
+
+  /**
+   * Número de registro de salida.
+   * 
+   * @type {number}
+   * @memberof AreaDashboardComponent
+   */
   registroNumeroSalida: number = 0;
+
+  /**
+   * Fecha actual.
+   * 
+   * @type {string}
+   * @memberof AreaDashboardComponent
+   */
   today: string = '';
+
+  /**
+   * Movimiento seleccionado.
+   * 
+   * @type {(Movimiento | null)}
+   * @memberof AreaDashboardComponent
+   */
   selectedMovimiento: Movimiento | null = null;
 
   /**
@@ -184,13 +268,54 @@ export class AreaDashboardComponent implements OnInit {
     bodega: 'Bodega Principal'
   };
 
+  /**
+   * Producto a eliminar.
+   * 
+   * @type {(Product | null)}
+   * @memberof AreaDashboardComponent
+   */
   productToDelete: Product | null = null;
+
+  /**
+   * Indica si el código del producto ya existe.
+   * 
+   * @type {boolean}
+   * @memberof AreaDashboardComponent
+   */
   productCodeExists: boolean = false;
 
+  /**
+   * Items de traslado.
+   * 
+   * @type {any[]}
+   * @memberof AreaDashboardComponent
+   */
   trasladoItems: any[] = [];
+
+  /**
+   * Bodega de origen seleccionada para traslado.
+   * 
+   * @type {(Bodega | null)}
+   * @memberof AreaDashboardComponent
+   */
   selectedBodegaOrigen: Bodega | null = null;
+
+  /**
+   * Bodega de destino seleccionada para traslado.
+   * 
+   * @type {(Bodega | null)}
+   * @memberof AreaDashboardComponent
+   */
   selectedBodegaDestino: Bodega | null = null;
+
+  /**
+   * Producto seleccionado para traslado.
+   * 
+   * @type {(Product | null)}
+   * @memberof AreaDashboardComponent
+   */
   selectedProductTraslado: Product | null = null;
+  users: any;
 
   /**
    * Crea una instancia de AreaDashboardComponent.
@@ -279,6 +404,8 @@ export class AreaDashboardComponent implements OnInit {
    */
   loadUsers() {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
+    // Falta asignar el valor de `users` a `this.users` para que los usuarios carguen correctamente.
+    this.users = users;
   }
 
   /**

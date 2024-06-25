@@ -106,6 +106,10 @@
                 role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
         </li>
         <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
             <a href="#tree" class="nav-link"
                 role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
         </li>
@@ -165,6 +169,10 @@
                 </td>
             </tr>
 
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./bodega-dashboard.component.css</code></td>
+            </tr>
 
 
 
@@ -175,10 +183,6 @@
 
 
 
-            <tr>
-                <td class="col-md-3">styleUrl</td>
-                <td class="col-md-9"><code>./bodega-dashboard.component.css</code></td>
-            </tr>
 
 
 
@@ -428,17 +432,19 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(productService: <a href="../injectables/ProductService.html" target="_self">ProductService</a>, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>)</code>
+<code>constructor(productService: ProductService, authService: AuthService)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:85</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="260" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:260</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Constructor del componente.</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -447,6 +453,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -454,25 +461,37 @@
                                                         <td>productService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/ProductService.html" target="_self" >ProductService</a></code>
+                                                                    <code>ProductService</code>
                                                         </td>
                                                   
                                                     <td>
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <ul>
+<li>Servicio de productos.</li>
+</ul>
+
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>authService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                                                                    <code>AuthService</code>
                                                         </td>
                                                   
                                                     <td>
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <ul>
+<li>Servicio de autenticación.</li>
+</ul>
+
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -512,14 +531,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="254"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:254</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="517"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:517</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Agrega una nueva bodega.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -530,6 +551,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -544,6 +566,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Formulario de bodega.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -579,19 +607,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="126"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:126</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="329"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:329</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Verifica la existencia del código del producto.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -616,19 +649,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="189"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:189</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="433"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:433</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Carga todos los productos de todas las bodegas.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -653,19 +691,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="176"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:176</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="412"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:412</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Carga las bodegas del almacenamiento local.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -690,19 +733,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="130"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:130</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="337"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:337</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Carga los usuarios del almacenamiento local.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -727,19 +775,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="89"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:89</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="273"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:273</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Método de inicialización del componente.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -764,14 +817,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="112"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:112</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="301"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:301</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Normaliza el código del producto.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -782,6 +837,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -796,6 +852,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Código del producto.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -805,7 +867,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>Código normalizado.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -831,19 +896,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="414"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:414</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="717"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:717</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Abre el historial de movimientos.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -868,14 +938,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="211"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:211</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="469"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:469</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Agrega un nuevo producto.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -886,6 +958,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -900,6 +973,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Formulario de producto.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -935,19 +1014,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="291"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:291</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="564"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:564</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Agrega un producto a la lista de ingreso.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -972,19 +1056,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="349"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:349</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="635"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:635</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Agrega un producto a la lista de salida.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1009,19 +1098,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="434"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:434</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="750"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:750</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Agrega un producto a la lista de traslado.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1046,19 +1140,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="314"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:314</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="596"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:596</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Confirma el ingreso de productos.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1083,19 +1182,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="378"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:378</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="677"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:677</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Confirma la salida de productos.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1120,19 +1224,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="456"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:456</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="781"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:781</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Confirma el traslado de productos.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1157,19 +1266,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="154"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:154</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="375"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:375</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Confirma la eliminación de un producto.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1194,14 +1308,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="147"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:147</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="364"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:364</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Abre el modal de confirmación para eliminar un producto.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1212,6 +1328,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1226,6 +1343,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Índice del producto a eliminar.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1261,14 +1384,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="568"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:568</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="901"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:901</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Edita un producto existente.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1279,6 +1404,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1293,6 +1419,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Índice del producto a editar.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1328,14 +1460,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="310"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:310</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="588"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:588</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Elimina un ítem de la lista de ingreso.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1346,6 +1480,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1360,6 +1495,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Índice del ítem a eliminar.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1395,14 +1536,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="374"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:374</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="669"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:669</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Elimina un ítem de la lista de salida.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1413,6 +1556,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1427,6 +1571,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Índice del ítem a eliminar.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1462,14 +1612,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="452"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:452</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="773"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:773</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Elimina un ítem de la lista de traslado.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1480,6 +1632,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1494,6 +1647,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Índice del ítem a eliminar.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1529,19 +1688,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="511"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:511</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="840"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:840</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Solicita la modificación de un producto.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1566,19 +1730,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="200"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:200</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="453"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:453</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Guarda los cambios en un producto editado.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1603,14 +1772,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="134"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:134</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="346"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:346</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Realiza la búsqueda de un producto.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1621,6 +1792,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1635,6 +1807,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Evento de búsqueda.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1663,21 +1841,23 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>onUpdateProduct(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, product: <a href="../interfaces/Product.html" target="_self">Product</a>)</code>
+<code>onUpdateProduct(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, product: Product)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="165"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:165</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="392"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:392</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Actualiza un producto existente.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1688,6 +1868,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1702,11 +1883,17 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Índice del producto a actualizar.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>product</td>
                                             <td>
-                                                            <code><a href="../interfaces/Product.html" target="_self" >Product</a></code>
+                                                        <code>Product</code>
                                             </td>
 
                                             <td>
@@ -1714,6 +1901,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Datos del producto actualizados.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1742,21 +1935,23 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>onVerDetallesMovimiento(movimiento: <a href="../interfaces/Movimiento.html" target="_self">Movimiento</a>)</code>
+<code>onVerDetallesMovimiento(movimiento: Movimiento)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="419"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:419</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="727"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:727</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Visualiza los detalles de un movimiento.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1767,13 +1962,14 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                                 <td>movimiento</td>
                                             <td>
-                                                            <code><a href="../interfaces/Movimiento.html" target="_self" >Movimiento</a></code>
+                                                        <code>Movimiento</code>
                                             </td>
 
                                             <td>
@@ -1781,6 +1977,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Movimiento a visualizar.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1816,14 +2018,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="170"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:170</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="402"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:402</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Visualiza la información de un producto.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1834,6 +2038,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1848,6 +2053,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Índice del producto a visualizar.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1883,19 +2094,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="427"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:427</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="739"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:739</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Vuelve al historial de movimientos.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1920,19 +2136,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="369"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:369</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="659"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:659</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Muestra el modal para agregar una nueva bodega.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1957,14 +2178,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="116"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:116</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="310"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:310</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Verifica si un producto existe en la bodega seleccionada.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1975,6 +2198,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1989,6 +2213,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Código del producto.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1998,7 +2228,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>Verdadero si el producto existe, falso en caso contrario.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -2024,14 +2257,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="264"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:264</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="533"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:533</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Restablece el formulario especificado.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -2042,6 +2277,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2056,6 +2292,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Formulario a restablecer.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>type</td>
@@ -2067,6 +2309,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Tipo de formulario.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -2102,19 +2350,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="185"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:185</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="425"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:425</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Guarda las bodegas en el almacenamiento local.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -2139,14 +2392,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="195"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:195</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="444"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:444</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Selecciona una bodega.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -2157,6 +2412,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2171,6 +2427,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Bodega seleccionada.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -2206,14 +2468,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="121"
-                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:121</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="320"
+                                    class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:320</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Convierte el valor de entrada a mayúsculas.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -2224,6 +2488,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2238,6 +2503,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Evento de entrada.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -2272,7 +2543,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Product.html" target="_self" >Product[]</a></code>
+                        <i>Type : </i>    <code>Product[]</code>
 
                     </td>
                 </tr>
@@ -2283,10 +2554,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:50</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de todos los productos.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2314,10 +2591,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="92" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:92</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de bodegas.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2345,10 +2628,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:51</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="149" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:149</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Cantidad de productos a ingresar.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2376,10 +2665,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:52</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="155" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:155</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Cantidad de productos a sacar.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2396,7 +2691,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Product.html" target="_self" >Product[]</a></code>
+                        <i>Type : </i>    <code>Product[]</code>
 
                     </td>
                 </tr>
@@ -2407,10 +2702,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:23</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:56</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de productos filtrados.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2427,7 +2728,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Movimiento.html" target="_self" >Movimiento[]</a></code>
+                        <i>Type : </i>    <code>Movimiento[]</code>
 
                     </td>
                 </tr>
@@ -2438,10 +2739,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:62</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Historial de movimientos.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2469,10 +2776,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:49</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="137" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:137</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de ítems de ingreso.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2500,10 +2813,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:55</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="173" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:173</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Motivo de la salida.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2531,10 +2850,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:31</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="104" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:104</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nombre de la nueva bodega.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2551,7 +2876,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Product.html" target="_self" >Product</a></code>
+                        <i>Type : </i>    <code>Product</code>
 
                     </td>
                 </tr>
@@ -2577,10 +2902,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:33</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="116" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:116</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nuevo producto a agregar.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2608,10 +2939,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:54</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="167" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:167</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Número de documento.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2628,7 +2965,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Product.html" target="_self" >Product | null</a></code>
+                        <i>Type : </i>    <code>Product | null</code>
 
                     </td>
                 </tr>
@@ -2639,10 +2976,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:85</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="260" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:260</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Producto original antes de editar.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2670,10 +3013,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:78</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="230" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:230</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indica si el código del producto ya existe.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2690,7 +3039,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Product.html" target="_self" >Product[]</a></code>
+                        <i>Type : </i>    <code>Product[]</code>
 
                     </td>
                 </tr>
@@ -2701,10 +3050,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:21</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:44</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de productos.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2721,7 +3076,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Product.html" target="_self" >Product | null</a></code>
+                        <i>Type : </i>    <code>Product | null</code>
 
                     </td>
                 </tr>
@@ -2732,10 +3087,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:77</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="224" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:224</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Producto a eliminar.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2763,10 +3124,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:56</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="179" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:179</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Número de registro de ingreso.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2794,10 +3161,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:57</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="185" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:185</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Número de registro de salida.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2825,10 +3198,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:50</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="143" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:143</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de ítems de salida.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2856,10 +3235,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:32</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="110" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:110</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Término de búsqueda de productos.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2887,10 +3272,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:30</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="98" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:98</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Bodega seleccionada.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2918,10 +3309,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:82</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="248" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:248</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Bodega de destino seleccionada.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2949,10 +3346,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:81</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="242" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:242</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Bodega de origen seleccionada.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -2969,7 +3372,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Movimiento.html" target="_self" >Movimiento | null</a></code>
+                        <i>Type : </i>    <code>Movimiento | null</code>
 
                     </td>
                 </tr>
@@ -2980,10 +3383,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:59</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="197" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:197</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Movimiento seleccionado.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -3000,7 +3409,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Product.html" target="_self" >Product | null</a></code>
+                        <i>Type : </i>    <code>Product | null</code>
 
                     </td>
                 </tr>
@@ -3011,10 +3420,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:27</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:80</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Producto seleccionado.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -3042,10 +3457,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:25</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:68</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Índice del producto seleccionado para eliminar.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -3073,10 +3494,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:26</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:74</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Índice del producto seleccionado para editar.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -3093,7 +3520,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Product.html" target="_self" >Product | null</a></code>
+                        <i>Type : </i>    <code>Product | null</code>
 
                     </td>
                 </tr>
@@ -3104,10 +3531,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:28</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:86</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Producto seleccionado para salida.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -3124,7 +3557,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Product.html" target="_self" >Product</a></code>
+                        <i>Type : </i>    <code>Product</code>
 
                     </td>
                 </tr>
@@ -3150,10 +3583,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:60</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="203" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:203</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Producto seleccionado para editar.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -3170,7 +3609,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Product.html" target="_self" >Product | null</a></code>
+                        <i>Type : </i>    <code>Product | null</code>
 
                     </td>
                 </tr>
@@ -3181,10 +3620,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:83</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="254" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:254</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Producto seleccionado para traslado.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -3212,10 +3657,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:53</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="161" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:161</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Tipo de documento.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -3243,10 +3694,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:58</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="191" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:191</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Fecha actual.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -3274,10 +3731,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:80</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="236" class="link-to-prism">src/app/bodega-dashboard/bodega-dashboard.component.ts:236</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de ítems de traslado.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -3294,31 +3757,114 @@ import * as bootstrap from &#x27;bootstrap&#x27;;
 import { ProductService, Product, Movimiento, PartialProduct } from &#x27;../service/product.service&#x27;;
 import { AuthService } from &#x27;../auth/auth.service&#x27;;
 
+/**
+ * Interfaz para representar una bodega.
+ * @interface
+ */
 interface Bodega {
+  /**
+   * Nombre de la bodega.
+   * @type {string}
+   */
   name: string;
+
+  /**
+   * Lista de productos almacenados en la bodega.
+   * @type {Product[]}
+   */
   products: Product[];
 }
+
 
 @Component({
   selector: &#x27;app-bodega-dashboard&#x27;,
   templateUrl: &#x27;./bodega-dashboard.component.html&#x27;,
-  styleUrl: &#x27;./bodega-dashboard.component.css&#x27;,
+  styleUrls: [&#x27;./bodega-dashboard.component.css&#x27;],
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, CommonModule] // Añadir ReactiveFormsModule
 })
+/**
+ * Componente del panel de control de la bodega.
+ * @class
+ * @implements {OnInit}
+ */
 export class BodegaDashboardComponent implements OnInit {
+  /**
+   * Lista de productos.
+   * @type {Product[]}
+   */
   products: Product[] &#x3D; [];
+
+  /**
+   * Lista de todos los productos.
+   * @type {Product[]}
+   */
   allProducts: Product[] &#x3D; [];
+
+  /**
+   * Lista de productos filtrados.
+   * @type {Product[]}
+   */
   filteredProducts: Product[] &#x3D; [];
+
+  /**
+   * Historial de movimientos.
+   * @type {Movimiento[]}
+   */
   historial: Movimiento[] &#x3D; [];
+
+  /**
+   * Índice del producto seleccionado para eliminar.
+   * @type {number}
+   */
   selectedProductIndexToDelete: number &#x3D; -1;
+
+  /**
+   * Índice del producto seleccionado para editar.
+   * @type {number}
+   */
   selectedProductIndexToEdit: number &#x3D; -1;
+
+  /**
+   * Producto seleccionado.
+   * @type {Product | null}
+   */
   selectedProduct: Product | null &#x3D; null;
+
+  /**
+   * Producto seleccionado para salida.
+   * @type {Product | null}
+   */
   selectedProductSalida: Product | null &#x3D; null;
+
+  /**
+   * Lista de bodegas.
+   * @type {Bodega[]}
+   */
   bodegas: Bodega[] &#x3D; [];
+
+  /**
+   * Bodega seleccionada.
+   * @type {Bodega}
+   */
   selectedBodega: Bodega &#x3D; { name: &#x27;Bodega Principal&#x27;, products: [] };
+
+  /**
+   * Nombre de la nueva bodega.
+   * @type {string}
+   */
   newBodegaName: string &#x3D; &#x27;&#x27;;
+
+  /**
+   * Término de búsqueda de productos.
+   * @type {string}
+   */
   searchProductTerm: string &#x3D; &#x27;&#x27;;
+
+  /**
+   * Nuevo producto a agregar.
+   * @type {Product}
+   */
   newProduct: Product &#x3D; {
     code: &#x27;&#x27;,
     name: &#x27;&#x27;,
@@ -3335,17 +3881,77 @@ export class BodegaDashboardComponent implements OnInit {
     stock: 0,
     bodega: &#x27;Bodega Principal&#x27;
   };
+
+  /**
+   * Lista de ítems de ingreso.
+   * @type {any[]}
+   */
   ingresoItems: any[] &#x3D; [];
+
+  /**
+   * Lista de ítems de salida.
+   * @type {any[]}
+   */
   salidaItems: any[] &#x3D; [];
+
+  /**
+   * Cantidad de productos a ingresar.
+   * @type {number}
+   */
   cantidadIngreso: number &#x3D; 1;
+
+  /**
+   * Cantidad de productos a sacar.
+   * @type {number}
+   */
   cantidadSalida: number &#x3D; 1;
+
+  /**
+   * Tipo de documento.
+   * @type {string}
+   */
   tipoDocumento: string &#x3D; &#x27;&#x27;;
+
+  /**
+   * Número de documento.
+   * @type {string}
+   */
   numeroDocumento: string &#x3D; &#x27;&#x27;;
+
+  /**
+   * Motivo de la salida.
+   * @type {string}
+   */
   motivoSalida: string &#x3D; &#x27;&#x27;;
+
+  /**
+   * Número de registro de ingreso.
+   * @type {number}
+   */
   registroNumeroIngreso: number &#x3D; 0;
+
+  /**
+   * Número de registro de salida.
+   * @type {number}
+   */
   registroNumeroSalida: number &#x3D; 0;
+
+  /**
+   * Fecha actual.
+   * @type {string}
+   */
   today: string &#x3D; &#x27;&#x27;;
+
+  /**
+   * Movimiento seleccionado.
+   * @type {Movimiento | null}
+   */
   selectedMovimiento: Movimiento | null &#x3D; null;
+
+  /**
+   * Producto seleccionado para editar.
+   * @type {Product}
+   */
   selectedProductToEdit: Product &#x3D; {
     code: &#x27;&#x27;,
     name: &#x27;&#x27;,
@@ -3363,18 +3969,59 @@ export class BodegaDashboardComponent implements OnInit {
     bodega: &#x27;Bodega Principal&#x27;
   };
 
+  /**
+   * Producto a eliminar.
+   * @type {Product | null}
+   */
   productToDelete: Product | null &#x3D; null;
+
+  /**
+   * Indica si el código del producto ya existe.
+   * @type {boolean}
+   */
   productCodeExists: boolean &#x3D; false;
 
+  /**
+   * Lista de ítems de traslado.
+   * @type {any[]}
+   */
   trasladoItems: any[] &#x3D; [];
+
+  /**
+   * Bodega de origen seleccionada.
+   * @type {Bodega | null}
+   */
   selectedBodegaOrigen: Bodega | null &#x3D; null;
+
+  /**
+   * Bodega de destino seleccionada.
+   * @type {Bodega | null}
+   */
   selectedBodegaDestino: Bodega | null &#x3D; null;
+
+  /**
+   * Producto seleccionado para traslado.
+   * @type {Product | null}
+   */
   selectedProductTraslado: Product | null &#x3D; null;
 
+  /**
+   * Producto original antes de editar.
+   * @type {Product | null}
+   */
   originalProduct: Product | null &#x3D; null;
 
+  /**
+   * Constructor del componente.
+   * @param {ProductService} productService - Servicio de productos.
+   * @param {AuthService} authService - Servicio de autenticación.
+   */
   constructor(private productService: ProductService, private authService: AuthService) {}
 
+  /**
+   * Método de inicialización del componente.
+   * @returns {void}
+   */
   ngOnInit(): void {
     this.productService.products$.subscribe(products &#x3D;&gt; {
       this.products &#x3D; products;
@@ -3398,29 +4045,57 @@ export class BodegaDashboardComponent implements OnInit {
     this.filteredProducts &#x3D; this.selectedBodega.products;
   }
 
+  /**
+   * Normaliza el código del producto.
+   * @param {string} code - Código del producto.
+   * @returns {string} - Código normalizado.
+   */
   normalizeCode(code: string): string {
     return code.trim().toUpperCase();
   }
 
+  /**
+   * Verifica si un producto existe en la bodega seleccionada.
+   * @param {string} code - Código del producto.
+   * @returns {boolean} - Verdadero si el producto existe, falso en caso contrario.
+   */
   productExists(code: string): boolean {
     const normalizedCode &#x3D; this.normalizeCode(code);
     return this.selectedBodega.products.some(product &#x3D;&gt; this.normalizeCode(product.code) &#x3D;&#x3D;&#x3D; normalizedCode);
   }
 
+  /**
+   * Convierte el valor de entrada a mayúsculas.
+   * @param {Event} event - Evento de entrada.
+   * @returns {void}
+   */
   toUpperCase(event: Event): void {
     const input &#x3D; event.target as HTMLInputElement;
     input.value &#x3D; input.value.toUpperCase();
   }
 
-  checkProductCode() {
+  /**
+   * Verifica la existencia del código del producto.
+   * @returns {void}
+   */
+  checkProductCode(): void {
     this.productCodeExists &#x3D; this.productExists(this.newProduct.code);
   }
 
-  loadUsers() {
+  /**
+   * Carga los usuarios del almacenamiento local.
+   * @returns {void}
+   */
+  loadUsers(): void {
     const users &#x3D; JSON.parse(localStorage.getItem(&#x27;users&#x27;) || &#x27;[]&#x27;);
   }
 
-  onSearchProduct(event: any) {
+  /**
+   * Realiza la búsqueda de un producto.
+   * @param {Event} event - Evento de búsqueda.
+   * @returns {void}
+   */
+  onSearchProduct(event: any): void {
     this.searchProductTerm &#x3D; event.target.value.toLowerCase();
     if (this.searchProductTerm) {
       this.filteredProducts &#x3D; this.selectedBodega.products.filter(product &#x3D;&gt;
@@ -3433,14 +4108,23 @@ export class BodegaDashboardComponent implements OnInit {
     }
   }
 
-  onDeleteProduct(index: number) {
+  /**
+   * Abre el modal de confirmación para eliminar un producto.
+   * @param {number} index - Índice del producto a eliminar.
+   * @returns {void}
+   */
+  onDeleteProduct(index: number): void {
     this.selectedProductIndexToDelete &#x3D; index;
     this.productToDelete &#x3D; this.selectedBodega.products[index];
     const confirmDeleteModal &#x3D; new bootstrap.Modal(document.getElementById(&#x27;confirmDeleteModal&#x27;)!);
     confirmDeleteModal.show();
   }
 
-  onConfirmDelete() {
+  /**
+   * Confirma la eliminación de un producto.
+   * @returns {void}
+   */
+  onConfirmDelete(): void {
     if (this.selectedProductIndexToDelete !&#x3D;&#x3D; -1) {
       this.selectedBodega.products.splice(this.selectedProductIndexToDelete, 1);
       this.saveBodegas();
@@ -3451,53 +4135,90 @@ export class BodegaDashboardComponent implements OnInit {
     }
   }
 
-  onUpdateProduct(index: number, product: Product) {
+  /**
+   * Actualiza un producto existente.
+   * @param {number} index - Índice del producto a actualizar.
+   * @param {Product} product - Datos del producto actualizados.
+   * @returns {void}
+   */
+  onUpdateProduct(index: number, product: Product): void {
     this.selectedBodega.products[index] &#x3D; product;
     this.saveBodegas();
   }
 
-  onViewProductInfo(index: number) {
+  /**
+   * Visualiza la información de un producto.
+   * @param {number} index - Índice del producto a visualizar.
+   * @returns {void}
+   */
+  onViewProductInfo(index: number): void {
     this.selectedProduct &#x3D; this.selectedBodega.products[index];
     const productInfoModal &#x3D; new bootstrap.Modal(document.getElementById(&#x27;productInfoModal&#x27;)!);
     productInfoModal.show();
   }
 
-  loadBodegas() {
+  /**
+   * Carga las bodegas del almacenamiento local.
+   * @returns {void}
+   */
+  loadBodegas(): void {
     const bodegas &#x3D; localStorage.getItem(&#x27;bodegas&#x27;);
     if (bodegas) {
       this.bodegas &#x3D; JSON.parse(bodegas);
     } else {
       this.bodegas &#x3D; [];
     }
-  } 
+  }
 
-  saveBodegas() {
+  /**
+   * Guarda las bodegas en el almacenamiento local.
+   * @returns {void}
+   */
+  saveBodegas(): void {
     localStorage.setItem(&#x27;bodegas&#x27;, JSON.stringify(this.bodegas));
   }
 
-  loadAllProducts() {
+  /**
+   * Carga todos los productos de todas las bodegas.
+   * @returns {void}
+   */
+  loadAllProducts(): void {
     this.allProducts &#x3D; this.bodegas.reduce((acc: Product[], bodega: Bodega) &#x3D;&gt; {
       return acc.concat(bodega.products);
     }, []);
   }
 
-  selectBodega(bodega: Bodega) {
+  /**
+   * Selecciona una bodega.
+   * @param {Bodega} bodega - Bodega seleccionada.
+   * @returns {void}
+   */
+  selectBodega(bodega: Bodega): void {
     this.selectedBodega &#x3D; bodega;
     this.filteredProducts &#x3D; bodega.products;
   }
 
-  onSaveEditProduct() {
+  /**
+   * Guarda los cambios en un producto editado.
+   * @returns {void}
+   */
+  onSaveEditProduct(): void {
     if (this.selectedProductToEdit &amp;&amp; this.selectedProductIndexToEdit !&#x3D;&#x3D; -1) {
       const editProductModal &#x3D; bootstrap.Modal.getInstance(document.getElementById(&#x27;editProductModal&#x27;)!);
       if (editProductModal) {
-          editProductModal.hide();
-          setTimeout(() &#x3D;&gt; editProductModal.dispose(), 500);
+        editProductModal.hide();
+        setTimeout(() &#x3D;&gt; editProductModal.dispose(), 500);
       }
       this.onRequestModification();
     }
   }
 
-  onAddProduct(form: NgForm) {
+  /**
+   * Agrega un nuevo producto.
+   * @param {NgForm} form - Formulario de producto.
+   * @returns {void}
+   */
+  onAddProduct(form: NgForm): void {
     form.form.markAllAsTouched();
     if (form.valid) {
       if (!this.productExists(this.newProduct.code)) {
@@ -3540,7 +4261,12 @@ export class BodegaDashboardComponent implements OnInit {
     }
   }
 
-  addBodega(form: NgForm) {
+  /**
+   * Agrega una nueva bodega.
+   * @param {NgForm} form - Formulario de bodega.
+   * @returns {void}
+   */
+  addBodega(form: NgForm): void {
     if (this.newBodegaName) {
       this.bodegas.push({ name: this.newBodegaName, products: [] });
       this.newBodegaName &#x3D; &#x27;&#x27;;
@@ -3550,7 +4276,13 @@ export class BodegaDashboardComponent implements OnInit {
     }
   }
 
-  resetForm(form: NgForm, type:&#x27;product&#x27;) {
+  /**
+   * Restablece el formulario especificado.
+   * @param {NgForm} form - Formulario a restablecer.
+   * @param {&#x27;product&#x27;} type - Tipo de formulario.
+   * @returns {void}
+   */
+  resetForm(form: NgForm, type: &#x27;product&#x27;): void {
     form.resetForm();
     if (type &#x3D;&#x3D;&#x3D; &#x27;product&#x27;) {
       this.newProduct &#x3D; {
@@ -3577,7 +4309,11 @@ export class BodegaDashboardComponent implements OnInit {
     }
   }
 
-  onAddProductoToIngreso() {
+  /**
+   * Agrega un producto a la lista de ingreso.
+   * @returns {void}
+   */
+  onAddProductoToIngreso(): void {
     if (!this.selectedProduct) {
       alert(&#x27;Por favor, seleccione un producto.&#x27;);
       return;
@@ -3596,11 +4332,20 @@ export class BodegaDashboardComponent implements OnInit {
     this.cantidadIngreso &#x3D; 1;
   }
 
-  onEliminarItem(index: number) {
+  /**
+   * Elimina un ítem de la lista de ingreso.
+   * @param {number} index - Índice del ítem a eliminar.
+   * @returns {void}
+   */
+  onEliminarItem(index: number): void {
     this.ingresoItems.splice(index, 1);
   }
 
-  onConfirmarIngreso() {
+  /**
+   * Confirma el ingreso de productos.
+   * @returns {void}
+   */
+  onConfirmarIngreso(): void {
     this.ingresoItems.forEach(item &#x3D;&gt; {
       const product &#x3D; this.selectedBodega.products.find(p &#x3D;&gt; p.code &#x3D;&#x3D;&#x3D; item.product.code);
       if (product) {
@@ -3627,15 +4372,19 @@ export class BodegaDashboardComponent implements OnInit {
 
     const ingresoBodegaModalElement &#x3D; document.getElementById(&#x27;ingresoBodegaModal&#x27;);
     if (ingresoBodegaModalElement) {
-        const ingresoBodegaModal &#x3D; bootstrap.Modal.getInstance(ingresoBodegaModalElement);
-        if (ingresoBodegaModal) {
-            ingresoBodegaModal.hide();
-            setTimeout(() &#x3D;&gt; ingresoBodegaModal.dispose(), 500);
-        }
+      const ingresoBodegaModal &#x3D; bootstrap.Modal.getInstance(ingresoBodegaModalElement);
+      if (ingresoBodegaModal) {
+        ingresoBodegaModal.hide();
+        setTimeout(() &#x3D;&gt; ingresoBodegaModal.dispose(), 500);
+      }
     }
   }
 
-  onAddProductoToSalida() {
+  /**
+   * Agrega un producto a la lista de salida.
+   * @returns {void}
+   */
+  onAddProductoToSalida(): void {
     const selectedProductCode &#x3D; this.selectedProductSalida?.code;
     if (!selectedProductCode) return;
 
@@ -3655,16 +4404,29 @@ export class BodegaDashboardComponent implements OnInit {
     }
   }
 
-  openAddBodegaModal() {
+  /**
+   * Muestra el modal para agregar una nueva bodega.
+   * @returns {void}
+   */
+  openAddBodegaModal(): void {
     const addBodegaModal &#x3D; new bootstrap.Modal(document.getElementById(&#x27;addBodegaModal&#x27;)!);
     addBodegaModal.show();
   }
 
-  onEliminarItemSalida(index: number) {
+  /**
+   * Elimina un ítem de la lista de salida.
+   * @param {number} index - Índice del ítem a eliminar.
+   * @returns {void}
+   */
+  onEliminarItemSalida(index: number): void {
     this.salidaItems.splice(index, 1);
   }
 
-  onConfirmarSalida() {
+  /**
+   * Confirma la salida de productos.
+   * @returns {void}
+   */
+  onConfirmarSalida(): void {
     this.salidaItems.forEach(item &#x3D;&gt; {
       const product &#x3D; this.products.find(p &#x3D;&gt; p.code &#x3D;&#x3D;&#x3D; item.product.code);
       if (product) {
@@ -3692,20 +4454,29 @@ export class BodegaDashboardComponent implements OnInit {
 
     const salidaBodegaModalElement &#x3D; document.getElementById(&#x27;salidaBodegaModal&#x27;);
     if (salidaBodegaModalElement) {
-        const salidaBodegaModal &#x3D; bootstrap.Modal.getInstance(salidaBodegaModalElement);
-        if (salidaBodegaModal) {
-            salidaBodegaModal.hide();
-            setTimeout(() &#x3D;&gt; salidaBodegaModal.dispose(), 500);
-        }
+      const salidaBodegaModal &#x3D; bootstrap.Modal.getInstance(salidaBodegaModalElement);
+      if (salidaBodegaModal) {
+        salidaBodegaModal.hide();
+        setTimeout(() &#x3D;&gt; salidaBodegaModal.dispose(), 500);
+      }
     }
   }
 
+  /**
+   * Abre el historial de movimientos.
+   * @returns {void}
+   */
   onAbrirHistorial(): void {
     const detalleHistorialModal &#x3D; new bootstrap.Modal(document.getElementById(&#x27;detalleHistorialModal&#x27;)!);
     detalleHistorialModal.show();
   }
 
-  onVerDetallesMovimiento(movimiento: Movimiento) {
+  /**
+   * Visualiza los detalles de un movimiento.
+   * @param {Movimiento} movimiento - Movimiento a visualizar.
+   * @returns {void}
+   */
+  onVerDetallesMovimiento(movimiento: Movimiento): void {
     this.selectedMovimiento &#x3D; movimiento;
     const detalleMovimientoModal &#x3D; new bootstrap.Modal(document.getElementById(&#x27;detalleMovimientoModal&#x27;)!);
     detalleMovimientoModal.show();
@@ -3713,6 +4484,10 @@ export class BodegaDashboardComponent implements OnInit {
     detalleHistorialModal?.hide();
   }
 
+  /**
+   * Vuelve al historial de movimientos.
+   * @returns {void}
+   */
   onVolverHistorial(): void {
     const detalleMovimientoModal &#x3D; bootstrap.Modal.getInstance(document.getElementById(&#x27;detalleMovimientoModal&#x27;)!);
     detalleMovimientoModal?.hide();
@@ -3720,34 +4495,47 @@ export class BodegaDashboardComponent implements OnInit {
     detalleHistorialModal.show();
   }
 
-  onAddProductoToTraslado() {
+  /**
+   * Agrega un producto a la lista de traslado.
+   * @returns {void}
+   */
+  onAddProductoToTraslado(): void {
     if (!this.selectedProductTraslado) {
       alert(&#x27;Por favor, seleccione un producto.&#x27;);
       return;
     }
-  
+
     const existingItem &#x3D; this.trasladoItems.find(item &#x3D;&gt; item.product.code &#x3D;&#x3D;&#x3D; this.selectedProductTraslado!.code);
     if (existingItem) {
       alert(&#x27;El producto ya se encuentra en la tabla.&#x27;);
       return;
     }
-  
+
     this.trasladoItems.push({
       product: this.selectedProductTraslado,
     });
     this.selectedProductTraslado &#x3D; null;
   }
-  
-  onEliminarItemTraslado(index: number) {
+
+  /**
+   * Elimina un ítem de la lista de traslado.
+   * @param {number} index - Índice del ítem a eliminar.
+   * @returns {void}
+   */
+  onEliminarItemTraslado(index: number): void {
     this.trasladoItems.splice(index, 1);
   }
-  
-  onConfirmarTraslado() {
+
+  /**
+   * Confirma el traslado de productos.
+   * @returns {void}
+   */
+  onConfirmarTraslado(): void {
     if (!this.selectedBodegaOrigen || !this.selectedBodegaDestino || this.selectedBodegaOrigen &#x3D;&#x3D;&#x3D; this.selectedBodegaDestino) {
       alert(&#x27;Seleccione bodegas válidas.&#x27;);
       return;
     }
-  
+
     this.trasladoItems.forEach(item &#x3D;&gt; {
       const productInOrigen &#x3D; this.selectedBodegaOrigen!.products.find(p &#x3D;&gt; p.code &#x3D;&#x3D;&#x3D; item.product.code);
       if (productInOrigen) {
@@ -3763,9 +4551,9 @@ export class BodegaDashboardComponent implements OnInit {
         productInOrigen.stock &#x3D; 0;
       }
     });
-  
+
     this.selectedBodegaOrigen!.products &#x3D; this.selectedBodegaOrigen!.products.filter(product &#x3D;&gt; product.stock &gt; 0);
-  
+
     this.productService.addMovimiento({
       tipo: &#x27;Traslado&#x27;,
       numero: this.productService.getNextSalidaNumber(),
@@ -3781,12 +4569,12 @@ export class BodegaDashboardComponent implements OnInit {
       })),
       usuario: &#x60;${this.authService.getCurrentUser().firstName} ${this.authService.getCurrentUser().lastName}&#x60;
     });
-  
+
     this.saveBodegas();
     this.trasladoItems &#x3D; [];
     this.selectedBodegaOrigen &#x3D; null;
     this.selectedBodegaDestino &#x3D; null;
-  
+
     const trasladoBodegaModalElement &#x3D; document.getElementById(&#x27;trasladoBodegaModal&#x27;);
     if (trasladoBodegaModalElement) {
       const trasladoBodegaModal &#x3D; bootstrap.Modal.getInstance(trasladoBodegaModalElement);
@@ -3797,7 +4585,11 @@ export class BodegaDashboardComponent implements OnInit {
     }
   }
 
-  onRequestModification() {
+  /**
+   * Solicita la modificación de un producto.
+   * @returns {void}
+   */
+  onRequestModification(): void {
     if (!this.originalProduct) {
       return;
     }
@@ -3853,15 +4645,18 @@ export class BodegaDashboardComponent implements OnInit {
     editProductModal?.hide();
   }
 
-
-  onEditProduct(index: number) {
+  /**
+   * Edita un producto existente.
+   * @param {number} index - Índice del producto a editar.
+   * @returns {void}
+   */
+  onEditProduct(index: number): void {
     this.selectedProductIndexToEdit &#x3D; index;
     this.selectedProductToEdit &#x3D; { ...this.selectedBodega.products[index] };
     this.originalProduct &#x3D; { ...this.selectedBodega.products[index] }; // Guardar el producto original
     const editProductModal &#x3D; new bootstrap.Modal(document.getElementById(&#x27;editProductModal&#x27;)!);
     editProductModal.show();
   }
-
 }
 </code></pre>
     </div>
@@ -4475,6 +5270,55 @@ export class BodegaDashboardComponent implements OnInit {
 </code></pre>
     </div>
 
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./bodega-dashboard.component.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">th, td 
+{
+  text-align: center;
+  vertical-align: middle;
+}
+
+.inventory-table-container {
+  padding: 20px;
+}
+
+.table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+
+.table th, .table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#detalleHistorialModal .modal-body {
+  max-height: 900px;
+  overflow-y: auto;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 240px;
+  padding-top: 70px;
+  width: calc(100% - 240px);
+  }
+  
+  .container {
+  max-width: 90%;
+  width: 100%;
+  }
+    </code></pre>
+    </div>
 
     <div class="tab-pane fade " id="tree">
         <div id="tree-container"></div>
@@ -4502,7 +5346,7 @@ export class BodegaDashboardComponent implements OnInit {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div class="main-content">  <div class="container mt-3">    <ul class="nav nav-tabs" id="bodegaTabs" role="tablist">      <li class="nav-item" *ngFor="let bodega of bodegas">        <a class="nav-link" [class.active]="bodega === selectedBodega" (click)="selectBodega(bodega)" role="tab">{{ bodega.name }}</a>      </li>      <li class="nav-item">        <a class="nav-link" (click)="openAddBodegaModal()"><i class="bi bi-plus"></i></a>      </li>    </ul>    <div class="tab-content mt-3">      <div class="tab-pane fade show active" id="bodegaContent" role="tabpanel">        <div class="d-flex justify-content-between align-items-center">          <h2>Inventario - {{ selectedBodega.name }}</h2>        </div>        <input type="text" class="form-control mt-2" placeholder="Buscar productos..." [(ngModel)]="searchProductTerm" (input)="onSearchProduct($event)">        <table id="productTable" class="table table-striped table-bordered caption-top mt-2">          <thead class="table-dark">            <tr>              <th scope="col">CÓDIGO</th>              <th scope="col">DESCRIPCIÓN</th>              <th scope="col">UNIDAD</th>              <th scope="col">STOCK</th>              <th scope="col">HERRAMIENTAS</th>            </tr>          </thead>          <tbody>            <tr *ngFor="let product of filteredProducts; let i = index">              <td>{{ product.code }}</td>              <td>{{ product.description }}</td>              <td>{{ product.unit }}</td>              <td>{{ product.stock }}</td>              <td>                <div class="btn-group" role="group" aria-label="Basic example">                  <button type="button" class="btn btn-success" (click)="onViewProductInfo(i)">                    <i class="bi bi-info-circle"></i>                  </button>                  <button type="button" class="btn btn-warning" (click)="onEditProduct(i)">                    <i class="bi bi-pen"></i>                  </button>                  <button type="button" class="btn btn-danger" (click)="onDeleteProduct(i)">                    <i class="bi bi-trash"></i>                  </button>                </div>              </td>            </tr>          </tbody>        </table>      </div>    </div>  </div></div><div class="modal fade" id="Modal_add_item" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="Modal_add_itemLabel" aria-hidden="true">  <div class="modal-dialog modal-lg modal-dialog-centered">    <div class="modal-content">      <div class="modal-header">        <h1 class="modal-title fs-5" id="Modal_add_itemLabel">Creación de Producto</h1>        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm(productForm, \'product\')"></button>      </div>      <div class="modal-body">        <form (ngSubmit)="onAddProduct(productForm)" #productForm="ngForm" class="row g-3 needs-validation-product">          <div class="col-md-4">            <label for="productBodega" class="form-label">Bodega</label>            <select class="form-select" id="productBodega" required [(ngModel)]="newProduct.bodega" name="bodega">              <option *ngFor="let bodega of bodegas" [ngValue]="bodega.name">{{ bodega.name }}</option>            </select>          </div>                    <div class="col-md-4">            <label for="productCode" class="form-label">Codigo Producto</label>            <input type="text" class="form-control" id="productCode" required [(ngModel)]="newProduct.code" name="code" (input)="toUpperCase($event)">            <div *ngIf="productExists(newProduct.code) && productForm.submitted" class="invalid-feedback">              El código del producto ya existe. Por favor, ingrese un código diferente.            </div>          </div>          <div class="col-md-4">            <label for="productName" class="form-label">Nombre Producto</label>            <input type="text" class="form-control" id="productName" required [(ngModel)]="newProduct.name" name="name" (input)="toUpperCase($event)">            <div *ngIf="productForm.submitted && !newProduct.name" class="invalid-feedback">              Por favor ingrese el nombre del producto.            </div>          </div>          <div class="col-md-4">            <label for="productDescription" class="form-label">Descripción</label>            <input type="text" class="form-control" id="productDescription" required [(ngModel)]="newProduct.description" name="description" (input)="toUpperCase($event)">            <div *ngIf="productForm.submitted && !newProduct.description" class="invalid-feedback">              Por favor ingrese la descripción del producto.            </div>          </div>          <div class="col-md-4">            <label for="productModel" class="form-label">Modelo</label>            <input type="text" class="form-control" id="productModel" required [(ngModel)]="newProduct.model" name="model" (input)="toUpperCase($event)">            <div *ngIf="productForm.submitted && !newProduct.model" class="invalid-feedback">              Por favor ingrese el modelo del producto.            </div>          </div>          <div class="col-md-4">            <label for="productBrand" class="form-label">Marca</label>            <input type="text" class="form-control" id="productBrand" required [(ngModel)]="newProduct.brand" name="brand" (input)="toUpperCase($event)">            <div *ngIf="productForm.submitted && !newProduct.brand" class="invalid-feedback">              Por favor ingrese la marca del producto.            </div>          </div>          <div class="col-md-4">            <label for="productMaterial" class="form-label">Material</label>            <input type="text" class="form-control" id="productMaterial" [(ngModel)]="newProduct.material" name="material" (input)="toUpperCase($event)">          </div>          <div class="col-md-4">            <label for="productColor" class="form-label">Color</label>            <input type="text" class="form-control" id="productColor" [(ngModel)]="newProduct.color" name="color" (input)="toUpperCase($event)">          </div>          <div class="col-md-4">            <label for="productFamily" class="form-label">Familia</label>            <input type="text" class="form-control" id="productFamily" required [(ngModel)]="newProduct.family" name="family" (input)="toUpperCase($event)">            <div *ngIf="productForm.submitted && !newProduct.family" class="invalid-feedback">              Por favor ingrese una familia.            </div>          </div>          <div class="col-md-4">            <label for="productValue" class="form-label">Valor Neto</label>            <input type="number" class="form-control" id="productValue" required [(ngModel)]="newProduct.value" name="value">            <div *ngIf="productForm.submitted && !newProduct.value" class="invalid-feedback">              Por favor ingrese el valor neto del producto.            </div>          </div>          <div class="col-md-4">            <label for="productCurrency" class="form-label">Tipo de Moneda</label>            <select class="form-select" id="productCurrency" required [(ngModel)]="newProduct.currency" name="currency">              <option selected disabled value="">Elegir...</option>              <option>CLP</option>              <option>USD</option>              <option>EUR</option>            </select>            <div *ngIf="productForm.submitted && !newProduct.currency" class="invalid-feedback">              Por favor seleccione un tipo de moneda.            </div>          </div>          <div class="col-md-4">            <label for="productUnit" class="form-label">Unidad</label>            <input type="text" class="form-control" id="productUnit" required [(ngModel)]="newProduct.unit" name="unit" (input)="toUpperCase($event)">            <div *ngIf="productForm.submitted && !newProduct.unit" class="invalid-feedback">              Por favor ingrese la unidad del producto.            </div>          </div>          <div class="col-md-4">            <label for="productLocation" class="form-label">Ubicación</label>            <input type="text" class="form-control" id="productLocation" required [(ngModel)]="newProduct.location" name="location" (input)="toUpperCase($event)">            <div *ngIf="productForm.submitted && !newProduct.location" class="invalid-feedback">              Por favor ingrese la ubicación del producto.            </div>          </div>          <div class="col-12">            <button class="btn btn-primary" type="submit">Crear Producto</button>          </div>        </form>      </div>      <div class="modal-footer">        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetForm(productForm, \'product\')">Cerrar</button>      </div>    </div>  </div></div><div class="modal fade" id="productInfoModal" tabindex="-1" aria-labelledby="productInfoModalLabel" aria-hidden="true">  <div class="modal-dialog modal-dialog-centered">    <div class="modal-content">      <div class="modal-header">        <h5 class="modal-title" id="productInfoModalLabel">Información del Producto</h5>        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>      </div>      <div class="modal-body" *ngIf="selectedProduct">        <ul class="list-group">          <li class="list-group-item"><strong>Código:</strong> {{ selectedProduct.code }}</li>          <li class="list-group-item"><strong>Bodega:</strong> {{ selectedProduct.bodega }}</li>          <li class="list-group-item"><strong>Nombre:</strong> {{ selectedProduct.name }}</li>          <li class="list-group-item"><strong>Descripción:</strong> {{ selectedProduct.description }}</li>          <li class="list-group-item"><strong>Modelo:</strong> {{ selectedProduct.model }}</li>          <li class="list-group-item"><strong>Marca:</strong> {{ selectedProduct.brand }}</li>          <li class="list-group-item"><strong>Material:</strong> {{ selectedProduct.material }}</li>          <li class="list-group-item"><strong>Color:</strong> {{ selectedProduct.color }}</li>          <li class="list-group-item"><strong>Familia:</strong> {{ selectedProduct.family }}</li>          <li class="list-group-item"><strong>Valor:</strong> {{ selectedProduct.value }}</li>          <li class="list-group-item"><strong>Moneda:</strong> {{ selectedProduct.currency }}</li>          <li class="list-group-item"><strong>Unidad:</strong> {{ selectedProduct.unit }}</li>          <li class="list-group-item"><strong>Ubicación:</strong> {{ selectedProduct.location }}</li>          <li class="list-group-item"><strong>Stock:</strong> {{ selectedProduct.stock }}</li>        </ul>      </div>    </div>  </div></div><div class="modal fade" id="ingresoBodegaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">  <div class="modal-dialog modal-dialog-centered modal-xl">      <div class="modal-content">          <div class="modal-header">              <h5 class="modal-title" id="exampleModalLabel">Ingreso a Bodega</h5>              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>          </div>          <div class="modal-body">              <form id="ingresoBodegaForm">                  <div class="row mb-3">                      <div class="col-md-6">                          <label for="registroNumero" class="form-label">Ingreso n°:</label>                          <input type="text" class="form-control" id="registroNumero" [(ngModel)]="registroNumeroIngreso" name="registroNumeroIngreso" readonly>                      </div>                      <div class="col-md-6">                          <label for="fechaHora" class="form-label">Fecha:</label>                          <input type="text" class="form-control" id="fechaHora" [(ngModel)]="today" name="today" readonly>                      </div>                  </div>                  <div class="row mb-3">                      <div class="col-md-6">                          <label for="selectProducto" class="form-label">Producto:</label>                          <select class="form-select" id="selectProducto" [(ngModel)]="selectedProduct" name="selectedProduct" required>                              <option *ngFor="let product of selectedBodega.products" [ngValue]="product">{{ product.name }} ({{ product.code }})</option>                          </select>                      </div>                      <div class="col-md-6">                          <label for="cantidadIngreso" class="form-label">Cantidad a Ingresar:</label>                          <input type="number" class="form-control" id="cantidadIngreso" [(ngModel)]="cantidadIngreso" name="cantidadIngreso" min="1">                      </div>                  </div>                  <button type="button" class="btn btn-primary mb-3" (click)="onAddProductoToIngreso()">Ingresar Producto</button>                  <div style="max-height: 300px; overflow-y: auto;">                      <table class="table">                          <thead>                              <tr>                                  <th>Código</th>                                  <th>Nombre</th>                                  <th>Cantidad</th>                                  <th>Acción</th>                              </tr>                          </thead>                          <tbody>                              <tr *ngFor="let item of ingresoItems; let i = index">                                  <td>{{ item.product.code }}</td>                                  <td>{{ item.product.name }}</td>                                  <td>                                      <input type="number" [(ngModel)]="item.cantidad" name="cantidad{{i}}" min="1" class="form-control">                                  </td>                                  <td>                                      <button type="button" class="btn btn-danger" (click)="onEliminarItem(i)">Eliminar</button>                                  </td>                              </tr>                          </tbody>                      </table>                  </div>              </form>          </div>          <div class="modal-footer">              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>              <button type="button" class="btn btn-primary" (click)="onConfirmarIngreso()">Confirmar Ingreso</button>          </div>      </div>  </div></div><div class="modal fade" id="salidaBodegaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">  <div class="modal-dialog modal-dialog-centered modal-xl">    <div class="modal-content">      <div class="modal-header">        <h5 class="modal-title" id="exampleModalLabel">Salida de Bodega</h5>        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>      </div>      <div class="modal-body">        <form id="salidaBodegaForm" #salidaBodegaForm="ngForm">          <div class="row mb-3">            <div class="col-md-6">              <label for="registroNumeroSalida" class="form-label">Salida n°:</label>              <input type="text" class="form-control" id="registroNumeroSalida" [(ngModel)]="registroNumeroSalida" name="registroNumeroSalida" readonly>            </div>            <div class="col-md-6">              <label for="fechaHoraSalida" class="form-label">Fecha:</label>              <input type="text" class="form-control" id="fechaHoraSalida" [value]="today" readonly>            </div>          </div>          <div class="row mb-3">            <div class="col-md-6">              <label for="selectProductoSalida" class="form-label">Producto:</label>              <select class="form-select" id="selectProductoSalida" [(ngModel)]="selectedProductSalida" name="selectedProductSalida" required>                <option *ngFor="let product of allProducts" [ngValue]="product">{{ product.name }} ({{ product.code }})</option>              </select>              <div *ngIf="salidaBodegaForm.submitted && !salidaBodegaForm.controls[\'selectedProductSalida\']?.valid" class="invalid-feedback">                Por favor seleccione un producto.              </div>            </div>            <div class="col-md-6">              <label for="cantidadSalida" class="form-label">Cantidad a Sacar:</label>              <input type="number" class="form-control" id="cantidadSalida" [(ngModel)]="cantidadSalida" name="cantidadSalida" min="1" required>              <div *ngIf="salidaBodegaForm.submitted && !salidaBodegaForm.controls[\'cantidadSalida\']?.valid" class="invalid-feedback">                Por favor ingrese una cantidad válida.              </div>            </div>          </div>          <div class="row mb-3">            <div class="col-md-12">              <label for="motivoSalida" class="form-label">Motivo de la Salida:</label>              <textarea class="form-control" id="motivoSalida" [(ngModel)]="motivoSalida" name="motivoSalida" rows="3" required></textarea>              <div *ngIf="salidaBodegaForm.submitted && !salidaBodegaForm.controls[\'motivoSalida\']?.valid" class="invalid-feedback">                Por favor ingrese el motivo de la salida.              </div>            </div>          </div>          <button type="button" class="btn btn-primary mb-3" (click)="onAddProductoToSalida()">Agregar Salida</button>          <div style="max-height: 300px; overflow-y: auto;">            <table class="table">              <thead>                <tr>                  <th scope="col">Producto</th>                  <th scope="col">Nombre</th>                  <th scope="col">Descripción</th>                  <th scope="col">Stock Actual</th>                  <th scope="col">Cantidad</th>                  <th scope="col">Tipo Documento</th>                  <th scope="col">Número Documento</th>                  <th scope="col">Acciones</th>                </tr>              </thead>              <tbody>                <tr *ngFor="let item of salidaItems; let i = index">                  <td>{{ item.product.code }}</td>                  <td>{{ item.product.name }}</td>                  <td>{{ item.product.description }}</td>                  <td>{{ item.product.stock }}</td>                  <td>                    <input type="number" [(ngModel)]="item.cantidad" name="cantidadSalida{{i}}" min="1" class="form-control">                  </td>                  <td>                    <select class="form-select" [(ngModel)]="item.tipoDocumento" name="tipoDocumento{{i}}">                      <option selected disabled value="">Elegir...</option>                      <option value="VD">VD</option>                      <option value="OE">OE</option>                    </select>                  </td>                  <td>                    <input type="text" class="form-control" [(ngModel)]="item.numeroDocumento" name="numeroDocumento{{i}}">                  </td>                  <td>                    <button type="button" class="btn btn-danger" (click)="onEliminarItemSalida(i)">Borrar</button>                  </td>                </tr>              </tbody>            </table>          </div>          <div class="mb-3">            <button type="button" class="btn btn-success" (click)="onConfirmarSalida()" [disabled]="!salidaBodegaForm.valid">Confirmar Salida</button>          </div>        </form>      </div>    </div>  </div></div><div class="modal fade" id="detalleHistorialModal" tabindex="-1" aria-labelledby="detalleHistorialModalLabel" aria-hidden="true">  <div class="modal-dialog modal-dialog-centered modal-xl">    <div class="modal-content">      <div class="modal-header">        <h5 class="modal-title" id="detalleHistorialModalLabel">Historial de Movimientos</h5>        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>      </div>      <div class="modal-body">        <div style="max-height: 800px; overflow-y: auto;"> <!-- Añadido para el scroll -->          <table class="table">            <thead>              <tr>                <th scope="col">Tipo</th>                <th scope="col">Número</th>                <th scope="col">Fecha</th>                <th scope="col">Detalles</th>              </tr>            </thead>            <tbody id="tablaHistorial">              <tr *ngFor="let movimiento of historial">                <td>{{ movimiento?.tipo }}</td>                <td>{{ movimiento?.numero }}</td>                <td>{{ movimiento?.fecha }}</td>                <td>                  <button class="btn btn-success" (click)="onVerDetallesMovimiento(movimiento)">Ver Detalles</button>                </td>              </tr>            </tbody>          </table>        </div>      </div>    </div>  </div></div><div class="modal fade" id="detalleMovimientoModal" tabindex="-1" aria-labelledby="detalleMovimientoModalLabel" aria-hidden="true">  <div class="modal-dialog modal-dialog-centered modal-lg">    <div class="modal-content">      <div class="modal-header">        <h5 class="modal-title" id="detalleMovimientoModalLabel">Detalle del Movimiento</h5>        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>      </div>      <div class="modal-body" id="detalleMovimientoContent">        <p><strong>Tipo:</strong> {{ selectedMovimiento?.tipo }}</p>        <p><strong>Número:</strong> {{ selectedMovimiento?.numero }}</p>        <p><strong>Fecha:</strong> {{ selectedMovimiento?.fecha }}</p>        <div *ngIf="selectedMovimiento?.tipo === \'Salida\'">          <p><strong>Documento:</strong> {{ selectedMovimiento?.documento }}</p>          <p><strong>Detalles:</strong> {{ selectedMovimiento?.detalles }}</p>        </div>        <div *ngIf="selectedMovimiento?.tipo === \'Traslado\'">          <p><strong>Detalles:</strong> {{ selectedMovimiento?.detalles }}</p>          <p><strong>Bodega Origen:</strong> {{ selectedMovimiento?.bodegaOrigen }}</p>          <p><strong>Bodega Destino:</strong> {{ selectedMovimiento?.bodegaDestino }}</p>        </div>        <p><strong>Usuario:</strong> {{ selectedMovimiento?.usuario }}</p>        <table class="table">          <thead>            <tr>              <th>Código</th>              <th>Nombre</th>              <th>Descripción</th>              <th>Cantidad</th>            </tr>          </thead>          <tbody>            <tr *ngFor="let item of selectedMovimiento?.items">              <td>{{ item.code }}</td>              <td>{{ item.name }}</td>              <td>{{ item.description }}</td>              <td>{{ item.cantidad }}</td>            </tr>          </tbody>        </table>      </div>      <div class="modal-footer">        <button type="button" class="btn btn-secondary" (click)="onVolverHistorial()">Volver al Historial</button>      </div>    </div>  </div></div><div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">  <div class="modal-dialog">      <div class="modal-content">          <div class="modal-header">              <h5 class="modal-title" id="editProductModalLabel">Editar Producto</h5>              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>          </div>          <div class="modal-body">              <form id="editProductForm" (ngSubmit)="onRequestModification()" #editProductForm="ngForm">                  <div class="mb-3">                      <label for="editProductCode" class="form-label">Código</label>                      <input type="text" class="form-control" id="editProductCode" [(ngModel)]="selectedProductToEdit.code" name="code" readonly>                  </div>                  <div class="mb-3">                      <label for="editProductName" class="form-label">Nombre</label>                      <input type="text" class="form-control" id="editProductName" [(ngModel)]="selectedProductToEdit.name" name="name" required>                  </div>                  <div class="mb-3">                      <label for="editProductDescription" class="form-label">Descripción</label>                      <input type="text" class="form-control" id="editProductDescription" [(ngModel)]="selectedProductToEdit.description" name="description" required>                  </div>                  <div class="mb-3">                      <label for="editProductModel" class="form-label">Modelo</label>                      <input type="text" class="form-control" id="editProductModel" [(ngModel)]="selectedProductToEdit.model" name="model">                  </div>                  <div class="mb-3">                      <label for="editProductBrand" class="form-label">Marca</label>                      <input type="text" class="form-control" id="editProductBrand" [(ngModel)]="selectedProductToEdit.brand" name="brand">                  </div>                  <div class="mb-3">                      <label for="editProductMaterial" class="form-label">Material</label>                      <input type="text" class="form-control" id="editProductMaterial" [(ngModel)]="selectedProductToEdit.material" name="material">                  </div>                  <div class="mb-3">                      <label for="editProductColor" class="form-label">Color</label>                      <input type="text" class="form-control" id="editProductColor" [(ngModel)]="selectedProductToEdit.color" name="color">                  </div>                  <div class="mb-3">                      <label for="editProductFamily" class="form-label">Familia</label>                      <input type="text" class="form-control" id="editProductFamily" [(ngModel)]="selectedProductToEdit.family" name="family">                  </div>                  <div class="mb-3">                      <label for="editProductValue" class="form-label">Valor</label>                      <input type="number" class="form-control" id="editProductValue" [(ngModel)]="selectedProductToEdit.value" name="value">                  </div>                  <div class="mb-3">                      <label for="editProductCurrency" class="form-label">Moneda</label>                      <input type="text" class="form-control" id="editProductCurrency" [(ngModel)]="selectedProductToEdit.currency" name="currency">                  </div>                  <div class="mb-3">                      <label for="editProductUnit" class="form-label">Unidad</label>                      <input type="text" class="form-control" id="editProductUnit" [(ngModel)]="selectedProductToEdit.unit" name="unit" required>                  </div>                  <div class="mb-3">                      <label for="editProductLocation" class="form-label">Ubicación</label>                      <input type="text" class="form-control" id="editProductLocation" [(ngModel)]="selectedProductToEdit.location" name="location">                  </div>                  <div class="mb-3">                      <label for="editProductStock" class="form-label">Stock</label>                      <input type="number" class="form-control" id="editProductStock" [(ngModel)]="selectedProductToEdit.stock" name="stock" readonly>                  </div>                  <button type="submit" class="btn btn-primary">Solicitar Modificación</button>              </form>          </div>      </div>  </div></div><div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">  <div class="modal-dialog modal-dialog-centered">    <div class="modal-content">      <div class="modal-header">        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>      </div>      <div class="modal-body">        ¿Está seguro que desea borrar el producto con código <strong>{{ productToDelete?.code }}</strong>?      </div>      <div class="modal-footer">        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>        <button type="button" class="btn btn-danger" (click)="onConfirmDelete()">Eliminar</button>      </div>    </div>  </div></div><div class="modal fade" id="addBodegaModal" tabindex="-1" aria-labelledby="addBodegaModalLabel" aria-hidden="true">  <div class="modal-dialog">    <div class="modal-content">      <div class="modal-header">        <h5 class="modal-title" id="addBodegaModalLabel">Agregar Nueva Bodega</h5>        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>      </div>      <div class="modal-body">        <form (ngSubmit)="addBodega(bodegaForm)" #bodegaForm="ngForm">          <div class="mb-3">            <label for="bodegaName" class="form-label">Nombre de la Bodega</label>            <input type="text" class="form-control" id="bodegaName" [(ngModel)]="newBodegaName" name="bodegaName" required>          </div>          <button type="submit" class="btn btn-primary">Agregar Bodega</button>        </form>      </div>    </div>  </div></div><div class="modal fade" id="trasladoBodegaModal" tabindex="-1" aria-labelledby="trasladoBodegaLabel" aria-hidden="true">  <div class="modal-dialog modal-dialog-centered modal-xl">    <div class="modal-content">      <div class="modal-header">        <h5 class="modal-title" id="trasladoBodegaLabel">Traslado de Bodega</h5>        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>      </div>      <div class="modal-body">        <form id="trasladoBodegaForm">          <div class="row mb-3">            <div class="col-md-6">              <label for="selectBodegaOrigen" class="form-label">Seleccione Bodega de Origen:</label>              <select class="form-select" id="selectBodegaOrigen" [(ngModel)]="selectedBodegaOrigen" name="selectedBodegaOrigen" required>                <option *ngFor="let bodega of bodegas" [ngValue]="bodega">{{ bodega.name }}</option>              </select>            </div>            <div class="col-md-6">              <label for="selectBodegaDestino" class="form-label">Seleccione Bodega de Destino:</label>              <select class="form-select" id="selectBodegaDestino" [(ngModel)]="selectedBodegaDestino" name="selectedBodegaDestino" required>                <option *ngFor="let bodega of bodegas" [ngValue]="bodega">{{ bodega.name }}</option>              </select>            </div>          </div>          <div class="row mb-3">            <div class="col-md-6">              <label for="selectProductoTraslado" class="form-label">Productos:</label>              <select class="form-select" id="selectProductoTraslado" [(ngModel)]="selectedProductTraslado" name="selectedProductTraslado" required>                <option *ngFor="let product of selectedBodegaOrigen?.products" [ngValue]="product">{{ product.name }} ({{ product.code }})</option>              </select>            </div>          </div>          <button type="button" class="btn btn-primary mb-3" (click)="onAddProductoToTraslado()">Agregar Producto</button>          <div style="max-height: 300px; overflow-y: auto;">            <table class="table">              <thead>                <tr>                  <th>Código</th>                  <th>Nombre</th>                  <th>Stock</th>                  <th>Acción</th>                </tr>              </thead>              <tbody>                <tr *ngFor="let item of trasladoItems; let i = index">                  <td>{{ item.product.code }}</td>                  <td>{{ item.product.name }}</td>                  <td>{{ item.product.stock }}</td>                  <td>                    <button type="button" class="btn btn-danger" (click)="onEliminarItemTraslado(i)">Eliminar</button>                  </td>                </tr>              </tbody>            </table>          </div>        </form>      </div>      <div class="modal-footer">        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>        <button type="button" class="btn btn-primary" (click)="onConfirmarTraslado()" [disabled]="trasladoItems.length === 0">Confirmar Traslado</button>      </div>    </div>  </div></div></div>'
-    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AreaDashboardComponent', 'selector': 'app-area-dashboard'},{'name': 'AuditorDashboardComponent', 'selector': 'app-auditor-dashboard'},{'name': 'BodegaDashboardComponent', 'selector': 'app-bodega-dashboard'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'NotificacionesComponent', 'selector': 'app-notificaciones'},{'name': 'UserProfileComponent', 'selector': 'app-user-profile-component'}];
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AreaDashboardComponent', 'selector': 'app-area-dashboard'},{'name': 'AuditorDashboardComponent', 'selector': 'app-auditor-dashboard'},{'name': 'BodegaDashboardComponent', 'selector': 'app-bodega-dashboard'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'NotificacionesComponent', 'selector': 'app-notificaciones'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'BodegaDashboardComponent'};
 </script>

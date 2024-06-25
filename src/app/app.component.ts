@@ -2,6 +2,12 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 
+/**
+ * Componente principal de la aplicación.
+ * 
+ * @export
+ * @class AppComponent
+ */
 @Component({
   selector: 'app-root',
   template: `
@@ -13,5 +19,12 @@ import { NavbarComponent } from './navbar/navbar.component';
   imports: [RouterModule, NavbarComponent]
 })
 export class AppComponent {
-  title = 'erp-praxa';
+  /**
+   * Título de la aplicación.
+   * 
+   * @type {string}
+   * @memberof AppComponent
+   */
+  title: string = 'erp-praxa';
 }
+
