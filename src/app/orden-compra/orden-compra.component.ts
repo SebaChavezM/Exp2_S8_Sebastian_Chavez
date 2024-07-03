@@ -79,11 +79,12 @@ export class OrdenCompraComponent implements OnInit {
   updateItems() {
     this.newOrdenCompra.items.forEach((item, index) => {
       item.item = index + 1;
-      item.total = item.precio * item.cantidad - item.descuento;
+      const descuento = item.descuento ? (item.precio * item.descuento) / 100 : 0;
+      item.total = (item.precio * item.cantidad) - descuento;
       this.calcularFechaEntrega(item);
     });
     this.calculateTotal();
-  }
+  }  
 
   calculateTotal() {
     const totalNeto = this.newOrdenCompra.items.reduce((sum, item) => sum + item.total, 0);
@@ -146,14 +147,14 @@ export class OrdenCompraComponent implements OnInit {
     doc.text('San Pedro de la Paz', 14, 26);
     doc.text('praxaingenieria.com', 14, 30);
   
-    // Encabezado derecho
-    doc.setFillColor(22, 160, 133);  // Color verde
-    doc.rect(150, 10, 50, 20, 'F');
+    // Encabezado derecho con solo borde
     doc.setFontSize(12);
-    doc.setTextColor(255, 255, 255); // Color blanco
+    doc.setDrawColor(22, 160, 133); // Color del borde
+    doc.rect(150, 10, 50, 20); // Solo borde
+    doc.setTextColor(0, 0, 0); // Color negro para el texto
     doc.text('RUT: 76.751.421-2', 155, 16);
     doc.text('ORDEN DE COMPRA', 155, 22);
-    doc.text(`N° ${this.newOrdenCompra.numero}`, 155, 28);
+    doc.text(`N° ${this.newOrdenCompra.numero}`, 175, 28, { align: 'center' }); // Centrado
   
     // Restaurar color para el contenido
     doc.setTextColor(0, 0, 0);
@@ -168,7 +169,7 @@ export class OrdenCompraComponent implements OnInit {
       [
         { content: this.selectedProveedor?.nombre || '', styles: { fontSize: 10, textColor: [0, 0, 0] } },
         { content: this.selectedProveedor?.rut || '', styles: { fontSize: 10, textColor: [0, 0, 0] } },
-        { content: this.newOrdenCompra.fecha, styles: { fontSize: 10, textColor: [0, 0, 0] } }
+        { content: this.formatDate(this.newOrdenCompra.fecha), styles: { fontSize: 10, textColor: [0, 0, 0] } }
       ],
       [
         { content: 'DIRECCIÓN', styles: { fontSize: 6, fontStyle: 'bold', textColor: [128, 128, 128] } },
@@ -199,44 +200,77 @@ export class OrdenCompraComponent implements OnInit {
       styles: { cellPadding: 2, valign: 'middle' },
       theme: 'grid',
       columnStyles: {
-        0: { cellWidth: 'auto' },
-        1: { cellWidth: 'auto' },
-        2: { cellWidth: 'auto' }
+        0: { cellWidth: 'wrap' },
+        1: { cellWidth: 'wrap' },
+        2: { cellWidth: 'wrap' }
       }
     });
+  
+    // Función para formatear los números CLP
+    const formatCLP = (value: number): string => {
+      return value.toLocaleString('es-CL');
+    };
+  
+    // Función para obtener el símbolo de la moneda
+    const getCurrencySymbol = (currency: string): string => {
+      switch (currency) {
+        case 'CLP':
+          return '$';
+        case 'USD':
+          return '$';
+        case 'EUR':
+          return '€';
+        default:
+          return '';
+      }
+    };
   
     // Items
     (doc as any).autoTable({
       startY: (doc as any).lastAutoTable.finalY + 10,
-      head: [['Item', 'Código', 'Descripción', 'Descuento', 'Moneda', 'Cantidad', 'Unidad', 'Precio', 'Total', 'Plazo de Entrega (semanas)', 'Fecha de Entrega Estimada']],
+      head: [['Item', 'Código', 'Descripción', 'Dto.', 'Qty', 'Ud.', 'Precio', 'Total', 'E.T.A'].map(title => title.toUpperCase())],
       body: this.newOrdenCompra.items.map(item => [
         item.item,
         item.codigo,
         item.descripcion,
-        item.descuento,
-        item.tipoMoneda,
+        item.descuento ? `${item.descuento}%` : '0%',
         item.cantidad,
         item.unidad,
-        item.precio,
-        item.total,
-        item.plazoEntrega,
-        item.fechaEntregaEstimada
+        item.tipoMoneda === 'CLP' ? `${getCurrencySymbol(item.tipoMoneda)} ${formatCLP(item.precio)}` : `${getCurrencySymbol(item.tipoMoneda)} ${item.precio.toFixed(2)}`,
+        item.tipoMoneda === 'CLP' ? `${getCurrencySymbol(item.tipoMoneda)} ${formatCLP(item.total)}` : `${getCurrencySymbol(item.tipoMoneda)} ${item.total.toFixed(2)}`,
+        this.formatDate(item.fechaEntregaEstimada)
       ]),
       styles: { fontSize: 8, cellPadding: 2 },
-      headStyles: { fillColor: [22, 160, 133], textColor: [255, 255, 255] },
+      headStyles: { fillColor: [22, 160, 133], textColor: [255, 255, 255], halign: 'center' },
+      columnStyles: {
+        0: { halign: 'center' },
+        1: { halign: 'left' },
+        2: { halign: 'left' },
+        3: { halign: 'center' },
+        4: { halign: 'center' },
+        5: { halign: 'center' },
+        6: { halign: 'center', cellWidth: 25 },
+        7: { halign: 'center', cellWidth: 25 },
+        8: { halign: 'center' },
+      },
       margin: { top: 10, right: 10, bottom: 10, left: 10 }
     });
   
     // Totales
     const finalY = (doc as any).lastAutoTable.finalY + 10;
-    doc.text(`Precio Neto: ${this.newOrdenCompra.totalNeto}`, 14, finalY);
-    doc.text(`IVA: ${this.newOrdenCompra.iva}`, 14, finalY + 6);
-    doc.text(`Total: ${this.newOrdenCompra.total}`, 14, finalY + 12);
+    doc.text(`Precio Neto: ${formatCLP(this.newOrdenCompra.totalNeto)}`, 14, finalY);
+    doc.text(`IVA: ${formatCLP(this.newOrdenCompra.iva)}`, 14, finalY + 6);
+    doc.text(`Total: ${formatCLP(this.newOrdenCompra.total)}`, 14, finalY + 12);
   
     // Convertir a URL y mostrar
     const pdfBlob = doc.output('blob');
     const pdfUrl = URL.createObjectURL(pdfBlob);
     this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(pdfUrl);
+  }
+  
+  formatDate(date: string): string {
+    const [year, month, day] = date.split('-');
+    return `${day}-${month}-${year}`;
   }
   
 }
