@@ -1,0 +1,112 @@
+<div id="orden-compra" class="container">
+    <h1>Generar Orden de Compra</h1>
+    <div class="form-group">
+      <label for="numero">Número de Orden de Compra:</label>
+      <input type="text" class="form-control" id="numero" [(ngModel)]="newOrdenCompra.numero" name="numero" readonly>
+    </div>
+    <div class="form-group">
+      <label for="fecha">Fecha:</label>
+      <input type="text" class="form-control" id="fecha" [(ngModel)]="newOrdenCompra.fecha" name="fecha" readonly>
+    </div>
+  
+    <h2>Datos del Proveedor</h2>
+    <div class="form-group">
+      <label for="proveedor">Proveedor:</label>
+      <select class="form-control" id="proveedor" [(ngModel)]="selectedProveedor" name="proveedor" (ngModelChange)="updateItems()">
+        <option *ngFor="let proveedor of proveedores" [ngValue]="proveedor">{{ proveedor.nombre }}</option>
+      </select>
+    </div>
+    <div *ngIf="selectedProveedor">
+      <div class="form-group">
+        <label for="rut">RUT:</label>
+        <input type="text" class="form-control" id="rut" [value]="selectedProveedor.rut" readonly>
+      </div>
+      <div class="form-group">
+        <label for="direccion">Dirección:</label>
+        <input type="text" class="form-control" id="direccion" [value]="selectedProveedor.direccion" readonly>
+      </div>
+      <div class="form-group">
+        <label for="comuna">Comuna:</label>
+        <input type="text" class="form-control" id="comuna" [value]="selectedProveedor.comuna" readonly>
+      </div>
+      <div class="form-group">
+        <label for="telefono">Teléfono:</label>
+        <input type="text" class="form-control" id="telefono" [value]="selectedProveedor.telefono" readonly>
+      </div>
+      <div class="form-group">
+        <label for="contacto">Nombre de Contacto:</label>
+        <input type="text" class="form-control" id="contacto" [value]="selectedProveedor.contacto" readonly>
+      </div>
+    </div>
+  
+    <h2>Información Interna</h2>
+    <div class="form-group">
+      <label for="formaPago">Forma de Pago:</label>
+      <input type="text" class="form-control" id="formaPago" [(ngModel)]="newOrdenCompra.formaPago" name="formaPago">
+    </div>
+    <div class="form-group">
+      <label for="centroCosto">Centro de Costo:</label>
+      <select class="form-control" id="centroCosto" [(ngModel)]="newOrdenCompra.centroCosto" name="centroCosto">
+        <option value="Administracion">Administración</option>
+        <option value="Operaciones">Operaciones</option>
+        <option value="Produccion">Producción</option>
+        <option value="Servicios">Servicios</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="numeroOEVDGG">Número de Documento OE-VD-GG:</label>
+      <input type="text" class="form-control" id="numeroOEVDGG" [(ngModel)]="newOrdenCompra.numeroOEVDGG" name="numeroOEVDGG">
+    </div>
+  
+    <h2>Items</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Código</th>
+          <th>Descripción</th>
+          <th>Descuento</th>
+          <th>Moneda</th>
+          <th>Cantidad</th>
+          <th>Unidad</th>
+          <th>Precio</th>
+          <th>Total</th>
+          <th>Plazo de Entrega (semanas)</th>
+          <th>Fecha de Entrega Estimada</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of newOrdenCompra.items; let i = index">
+          <td>{{ item.item }}</td>
+          <td><input type="text" class="form-control" [(ngModel)]="item.codigo" name="codigo{{ i }}" (ngModelChange)="updateItems()"></td>
+          <td><input type="text" class="form-control" [(ngModel)]="item.descripcion" name="descripcion{{ i }}" (ngModelChange)="updateItems()"></td>
+          <td><input type="number" class="form-control" [(ngModel)]="item.descuento" name="descuento{{ i }}" (ngModelChange)="updateItems()"></td>
+          <td>
+            <select class="form-control" [(ngModel)]="item.tipoMoneda" name="tipoMoneda{{ i }}" (ngModelChange)="updateItems()">
+              <option value="CLP">CLP</option>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+            </select>
+          </td>
+          <td><input type="number" class="form-control" [(ngModel)]="item.cantidad" name="cantidad{{ i }}" (ngModelChange)="updateItems()"></td>
+          <td><input type="text" class="form-control" [(ngModel)]="item.unidad" name="unidad{{ i }}" (ngModelChange)="updateItems()"></td>
+          <td><input type="number" class="form-control" [(ngModel)]="item.precio" name="precio{{ i }}" (ngModelChange)="updateItems()"></td>
+          <td>{{ item.total }}</td>
+          <td><input type="number" class="form-control" [(ngModel)]="item.plazoEntrega" name="plazoEntrega{{ i }}" (ngModelChange)="calcularFechaEntrega(item)"></td>
+          <td>{{ item.fechaEntregaEstimada }}</td>
+          <td><button type="button" class="btn btn-danger" (click)="removeItem(i)">Eliminar</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" class="btn btn-primary" (click)="addItem()">Agregar Item</button>
+    <p><strong>Precio Neto:</strong> {{ newOrdenCompra.totalNeto | currency }}</p>
+    <p><strong>IVA:</strong> {{ newOrdenCompra.iva | currency }}</p>
+    <p><strong>Total:</strong> {{ newOrdenCompra.total | currency }}</p>
+    <button type="button" class="btn btn-secondary" (click)="previsualizarPDF()">Previsualizar PDF</button>
+    <form #form="ngForm">
+      <button type="submit" class="btn btn-success" (click)="onSubmit(form)">Guardar Orden de Compra</button>
+    </form>
+  </div>
+  <iframe *ngIf="pdfUrl" [src]="pdfUrl" width="100%" height="600px"></iframe>
+  

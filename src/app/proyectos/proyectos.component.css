@@ -2,6 +2,10 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.container {
+    padding-top: 40px;
+}
+
 .btn-custom {
     background-color: #ee7712;
     border: none;
@@ -101,10 +105,3 @@ body {
 .table-custom td {
     border: 1px solid #ee7712;
 }
-
-#historial-container {
-    max-height: 800px;
-    overflow-y: auto;
-    padding: 10px;
-    margin-bottom: 20px;
-  }

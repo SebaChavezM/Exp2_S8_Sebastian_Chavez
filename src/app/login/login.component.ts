@@ -11,88 +11,21 @@ import { AuthService } from '../auth/auth.service';
   standalone: true,
   imports: [CommonModule, FormsModule]
 })
-/**
- * Componente para la página de inicio de sesión.
- * @class
- */
 export class LoginComponent {
-  /**
-   * Correo electrónico del usuario.
-   * @type {string}
-   */
   email: string = '';
-
-  /**
-   * Contraseña del usuario.
-   * @type {string}
-   */
   password: string = '';
-
-  /**
-   * Correo electrónico de recuperación.
-   * @type {string}
-   */
   recoveryEmail: string = '';
-
-  /**
-   * Nombre completo del usuario.
-   * @type {string}
-   */
   fullName: string = '';
-
-  /**
-   * Fecha de nacimiento del usuario.
-   * @type {string}
-   */
   birthDate: string = '';
-
-  /**
-   * Área de trabajo del usuario.
-   * @type {string}
-   */
   workArea: string = '';
-
-  /**
-   * Supervisor del usuario.
-   * @type {string}
-   */
   supervisor: string = '';
-
-  /**
-   * Mensaje de error para el correo electrónico.
-   * @type {string}
-   */
   emailError: string = '';
-
-  /**
-   * Mensaje de error para el inicio de sesión.
-   * @type {string}
-   */
   loginError: string = '';
-
-  /**
-   * Indicador de si el correo electrónico es válido.
-   * @type {boolean}
-   */
   emailValid: boolean = true;
-
-  /**
-   * Indicador de si el usuario es adulto.
-   * @type {boolean}
-   */
   isAdult: boolean = true;
 
-  /**
-   * Constructor del componente.
-   * @param {AuthService} authService - Servicio de autenticación.
-   */
   constructor(private authService: AuthService) {}
 
-  /**
-   * Maneja el envío del formulario de inicio de sesión.
-   * @param {NgForm} form - El formulario de inicio de sesión.
-   * @returns {void}
-   */
   onSubmit(form: NgForm): void {
     if (form.valid) {
       const success = this.authService.login(this.email, this.password);
@@ -104,10 +37,6 @@ export class LoginComponent {
     }
   }
 
-  /**
-   * Verifica si el correo electrónico de recuperación pertenece a un usuario registrado.
-   * @returns {void}
-   */
   verifyEmail(): void {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const user = users.find((user: any) => user.email === this.recoveryEmail);
@@ -120,17 +49,11 @@ export class LoginComponent {
     }
   }
 
-  /**
-   * Envía una notificación para la recuperación de cuenta.
-   * @param {NgForm} form - El formulario de notificación.
-   * @returns {void}
-   */
   sendNotification(form: NgForm): void {
     if (form.valid && this.isAdult) {
-      // Guardar notificación en el local storage
       const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
       notifications.push({
-        id: Date.now(), // Genera un ID único basado en la marca de tiempo
+        id: Date.now(),
         status: 'pending',
         solicitadaPor: this.fullName,
         email: this.recoveryEmail,
@@ -147,23 +70,23 @@ export class LoginComponent {
     }
   }
 
-  /**
-   * Muestra el paso especificado en el formulario de recuperación.
-   * @param {number} step - El número de paso a mostrar.
-   * @returns {void}
-   */
   showStep(step: number): void {
     for (let i = 1; i <= 3; i++) {
-      document.getElementById(`step${i}`)?.classList.add('d-none');
+      const stepElement = document.getElementById(`step${i}`);
+      const stepCircle = document.getElementById(`stepCircle${i}`);
+      
+      if (stepElement && stepCircle) {
+        if (i === step) {
+          stepElement.classList.add('active');
+          stepCircle.classList.add('active');
+        } else {
+          stepElement.classList.remove('active');
+          stepCircle.classList.remove('active');
+        }
+      }
     }
-    document.getElementById(`step${step}`)?.classList.remove('d-none');
   }
 
-  /**
-   * Valida la edad del usuario a partir de la fecha de nacimiento.
-   * @param {Event} event - Evento de cambio en el campo de fecha de nacimiento.
-   * @returns {void}
-   */
   validateAge(event: any): void {
     const birthDate = new Date(event.target.value);
     const today = new Date();
@@ -175,5 +98,17 @@ export class LoginComponent {
     }
 
     this.isAdult = age >= 18;
+  }
+
+  resetModal(): void {
+    this.recoveryEmail = '';
+    this.fullName = '';
+    this.birthDate = '';
+    this.workArea = '';
+    this.supervisor = '';
+    this.emailError = '';
+    this.emailValid = true;
+    this.isAdult = true;
+    this.showStep(1);
   }
 }

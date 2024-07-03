@@ -1,0 +1,61 @@
+<div class="container">
+  <h2>Generar Reporte</h2>
+  <div class="mb-3">
+    <label for="reportType" class="form-label">Tipo de Reporte</label>
+    <select id="reportType" class="form-select" [(ngModel)]="selectedReportType" (change)="resetParams()">
+      <option value="" disabled selected>Seleccione un tipo de reporte</option>
+      <option *ngFor="let reportType of reportTypes" [value]="reportType.value">{{ reportType.label }}</option>
+    </select>
+  </div>
+
+  <ng-container [ngSwitch]="selectedReportType">
+    <div *ngSwitchCase="'generalInventory'">
+      <!-- No se necesitan parámetros adicionales para este reporte -->
+    </div>
+    <div *ngSwitchCase="'lowStock'">
+      <label for="threshold" class="form-label">Umbral de Stock</label>
+      <input type="number" id="threshold" class="form-control" [(ngModel)]="reportParams.threshold">
+    </div>
+    <div *ngSwitchCase="'inventoryByWarehouse'">
+      <label for="bodega" class="form-label">Bodega</label>
+      <input type="text" id="bodega" class="form-control" [(ngModel)]="reportParams.bodega">
+    </div>
+    <div *ngSwitchCase="'inventoryMovements'">
+      <label for="startDate" class="form-label">Fecha de Inicio</label>
+      <input type="date" id="startDate" class="form-control" [(ngModel)]="reportParams.startDate">
+      <label for="endDate" class="form-label">Fecha de Fin</label>
+      <input type="date" id="endDate" class="form-control" [(ngModel)]="reportParams.endDate">
+    </div>
+    <div *ngSwitchCase="'bestSellingProducts'">
+      <label for="topN" class="form-label">Top N</label>
+      <input type="number" id="topN" class="form-control" [(ngModel)]="reportParams.topN">
+    </div>
+    <div *ngSwitchCase="'obsoleteProducts'">
+      <label for="cutoffDate" class="form-label">Fecha de Corte</label>
+      <input type="date" id="cutoffDate" class="form-control" [(ngModel)]="reportParams.cutoffDate">
+    </div>
+  </ng-container>
+
+  <button class="btn btn-primary" (click)="generateReport()">Generar Reporte</button>
+
+  <!-- Tabla de previsualización del reporte -->
+  <div *ngIf="reportData.length > 0" class="mt-4">
+    <h3>Previsualización del Reporte</h3>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th *ngFor="let header of reportHeaders">{{ header | titlecase }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of reportData">
+            <td *ngFor="let header of reportHeaders">{{ row[header.toLowerCase()] }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <button class="btn btn-success mt-3" (click)="downloadExcel()">Descargar Reporte en Excel</button>
+</div>

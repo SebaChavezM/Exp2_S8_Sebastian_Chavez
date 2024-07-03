@@ -1,0 +1,120 @@
+<div class="container">
+  <h2>Gestión de Proveedores</h2>
+
+  <form #form="ngForm" (ngSubmit)="addProveedor(form)">
+    <div class="row">
+      <div class="col-md-4">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombre" [(ngModel)]="newProveedor.nombre" name="nombre" required>
+        <div *ngIf="form.submitted && !form.controls['nombre']?.valid" class="invalid-feedback d-block">
+          Por favor ingrese el nombre del proveedor.
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="rut" class="form-label">RUT</label>
+        <input type="text" class="form-control" id="rut" [(ngModel)]="newProveedor.rut" name="rut" required>
+        <div *ngIf="form.submitted && !form.controls['rut']?.valid" class="invalid-feedback d-block">
+          Por favor ingrese el RUT del proveedor.
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="direccion" class="form-label">Dirección</label>
+        <input type="text" class="form-control" id="direccion" [(ngModel)]="newProveedor.direccion" name="direccion" required>
+        <div *ngIf="form.submitted && !form.controls['direccion']?.valid" class="invalid-feedback d-block">
+          Por favor ingrese la dirección del proveedor.
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="comuna" class="form-label">Comuna</label>
+        <input type="text" class="form-control" id="comuna" [(ngModel)]="newProveedor.comuna" name="comuna" required>
+        <div *ngIf="form.submitted && !form.controls['comuna']?.valid" class="invalid-feedback d-block">
+          Por favor ingrese la comuna del proveedor.
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="telefono" class="form-label">Teléfono</label>
+        <input type="text" class="form-control" id="telefono" [(ngModel)]="newProveedor.telefono" name="telefono">
+      </div>
+      <div class="col-md-4">
+        <label for="contacto" class="form-label">Contacto</label>
+        <input type="text" class="form-control" id="contacto" [(ngModel)]="newProveedor.contacto" name="contacto" required>
+        <div *ngIf="form.submitted && !form.controls['contacto']?.valid" class="invalid-feedback d-block">
+          Por favor ingrese el nombre del contacto.
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Agregar Proveedor</button>
+  </form>
+
+  <h3 class="mt-5">Listado de Proveedores</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>RUT</th>
+        <th>Dirección</th>
+        <th>Comuna</th>
+        <th>Teléfono</th>
+        <th>Contacto</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let proveedor of proveedores">
+        <td>{{ proveedor.nombre }}</td>
+        <td>{{ proveedor.rut }}</td>
+        <td>{{ proveedor.direccion }}</td>
+        <td>{{ proveedor.comuna }}</td>
+        <td>{{ proveedor.telefono }}</td>
+        <td>{{ proveedor.contacto }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm" (click)="selectProveedor(proveedor)">Editar</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteProveedor(proveedor.rut)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Editar Proveedor Modal -->
+  <div *ngIf="selectedProveedor" class="modal fade show" id="editProveedorModal" tabindex="-1" aria-labelledby="editProveedorModalLabel" aria-modal="true" role="dialog" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProveedorModalLabel">Editar Proveedor</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="selectedProveedor = null"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="updateProveedor()">
+            <div class="mb-3">
+              <label for="editNombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="editNombre" [(ngModel)]="selectedProveedor!.nombre" name="editNombre" required>
+            </div>
+            <div class="mb-3">
+              <label for="editRut" class="form-label">RUT</label>
+              <input type="text" class="form-control" id="editRut" [(ngModel)]="selectedProveedor!.rut" name="editRut" required>
+            </div>
+            <div class="mb-3">
+              <label for="editDireccion" class="form-label">Dirección</label>
+              <input type="text" class="form-control" id="editDireccion" [(ngModel)]="selectedProveedor!.direccion" name="editDireccion" required>
+            </div>
+            <div class="mb-3">
+              <label for="editComuna" class="form-label">Comuna</label>
+              <input type="text" class="form-control" id="editComuna" [(ngModel)]="selectedProveedor!.comuna" name="editComuna" required>
+            </div>
+            <div class="mb-3">
+              <label for="editTelefono" class="form-label">Teléfono</label>
+              <input type="text" class="form-control" id="editTelefono" [(ngModel)]="selectedProveedor!.telefono" name="editTelefono" required>
+            </div>
+            <div class="mb-3">
+              <label for="editContacto" class="form-label">Contacto</label>
+              <input type="text" class="form-control" id="editContacto" [(ngModel)]="selectedProveedor!.contacto" name="editContacto" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,67 +3,19 @@ import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
 import { ProductService, Product, Movimiento } from '../service/product.service';
+import { ProyectosService } from '../service/proyecto.service';
+import { BulkUploadComponent } from '../bulk-upload/bulk-upload.component';
 import * as bootstrap from 'bootstrap';
 
-/**
- * Interfaz para representar a un usuario.
- * @interface
- */
-interface User {
-  /**
-   * Identificador único del usuario.
-   * @type {string}
-   */
-  id: string;
-
-  /**
-   * Nombre del usuario.
-   * @type {string}
-   */
-  firstName: string;
-
-  /**
-   * Apellido del usuario.
-   * @type {string}
-   */
-  lastName: string;
-
-  /**
-   * Correo electrónico del usuario.
-   * @type {string}
-   */
-  email: string;
-
-  /**
-   * Rol del usuario en el sistema (e.g., Admin, User).
-   * @type {string}
-   */
-  role: string;
-
-  /**
-   * Contraseña del usuario.
-   * @type {string}
-   */
-  password: string;
+interface Bodega {
+  name: string;
+  products: Product[];
 }
 
-
-/**
- * Interfaz para representar una bodega.
- * @interface
- */
-interface Bodega {
-  /**
-   * Nombre de la bodega.
-   * @type {string}
-   */
-  name: string;
-
-  /**
-   * Lista de productos en la bodega.
-   * @type {Product[]}
-   */
-  products: Product[];
+interface Proyecto {
+  tipo: string;
+  numero: string;
+  nombre: string;
 }
 
 @Component({
@@ -71,90 +23,21 @@ interface Bodega {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule]
+  imports: [FormsModule, CommonModule, BulkUploadComponent]
 })
-/**
- * Componente del panel de control.
- * @class
- * @implements {OnInit}
- */
 export class DashboardComponent implements OnInit {
-  /**
-   * Lista de productos disponibles.
-   * @type {Product[]}
-   */
   products: Product[] = [];
-
-  /**
-   * Lista de todos los productos.
-   * @type {Product[]}
-   */
   allProducts: Product[] = [];
-
-  /**
-   * Lista de productos filtrados.
-   * @type {Product[]}
-   */
   filteredProducts: Product[] = [];
-
-  /**
-   * Historial de movimientos.
-   * @type {Movimiento[]}
-   */
   historial: Movimiento[] = [];
-
-  /**
-   * Índice del producto seleccionado para eliminar.
-   * @type {number}
-   */
   selectedProductIndexToDelete: number = -1;
-
-  /**
-   * Índice del producto seleccionado para editar.
-   * @type {number}
-   */
   selectedProductIndexToEdit: number = -1;
-
-  /**
-   * Producto seleccionado.
-   * @type {Product | null}
-   */
   selectedProduct: Product | null = null;
-
-  /**
-   * Producto seleccionado para salida.
-   * @type {Product | null}
-   */
   selectedProductSalida: Product | null = null;
-
-  /**
-   * Lista de bodegas.
-   * @type {Bodega[]}
-   */
   bodegas: Bodega[] = [];
-
-  /**
-   * Bodega seleccionada.
-   * @type {Bodega}
-   */
   selectedBodega: Bodega = { name: 'Bodega Principal', products: [] };
-
-  /**
-   * Nombre de la nueva bodega.
-   * @type {string}
-   */
   newBodegaName: string = '';
-
-  /**
-   * Término de búsqueda de productos.
-   * @type {string}
-   */
   searchProductTerm: string = '';
-
-  /**
-   * Datos del nuevo producto.
-   * @type {Product}
-   */
   newProduct: Product = {
     code: '',
     name: '',
@@ -171,77 +54,17 @@ export class DashboardComponent implements OnInit {
     stock: 0,
     bodega: 'Bodega Principal'
   };
-
-  /**
-   * Items de ingreso.
-   * @type {any[]}
-   */
   ingresoItems: any[] = [];
-
-  /**
-   * Items de salida.
-   * @type {any[]}
-   */
   salidaItems: any[] = [];
-
-  /**
-   * Cantidad de ingreso.
-   * @type {number}
-   */
   cantidadIngreso: number = 1;
-
-  /**
-   * Cantidad de salida.
-   * @type {number}
-   */
   cantidadSalida: number = 1;
-
-  /**
-   * Tipo de documento.
-   * @type {string}
-   */
   tipoDocumento: string = '';
-
-  /**
-   * Número de documento.
-   * @type {string}
-   */
   numeroDocumento: string = '';
-
-  /**
-   * Motivo de salida.
-   * @type {string}
-   */
   motivoSalida: string = '';
-
-  /**
-   * Número de registro de ingreso.
-   * @type {number}
-   */
   registroNumeroIngreso: number = 0;
-
-  /**
-   * Número de registro de salida.
-   * @type {number}
-   */
   registroNumeroSalida: number = 0;
-
-  /**
-   * Fecha de hoy.
-   * @type {string}
-   */
   today: string = '';
-
-  /**
-   * Movimiento seleccionado.
-   * @type {Movimiento | null}
-   */
   selectedMovimiento: Movimiento | null = null;
-
-  /**
-   * Producto seleccionado para editar.
-   * @type {Product}
-   */
   selectedProductToEdit: Product = {
     code: '',
     name: '',
@@ -258,226 +81,80 @@ export class DashboardComponent implements OnInit {
     stock: 0,
     bodega: 'Bodega Principal'
   };
-
-  /**
-   * Producto a eliminar.
-   * @type {Product | null}
-   */
   productToDelete: Product | null = null;
-
-  /**
-   * Indica si el código del producto ya existe.
-   * @type {boolean}
-   */
   productCodeExists: boolean = false;
-
-  /**
-   * Datos del nuevo usuario.
-   * @type {User}
-   */
-  newUser: User = { id: '', firstName: '', lastName: '', email: '', password: '', role: 'User' };
-
-  /**
-   * Contraseña repetida para verificación.
-   * @type {string}
-   */
-  repeatPassword: string = '';
-
-  /**
-   * Error en el registro.
-   * @type {string}
-   */
   registerError: string = '';
-
-  /**
-   * Éxito en el registro.
-   * @type {string}
-   */
   registerSuccess: string = '';
-
-  /**
-   * Lista de usuarios.
-   * @type {User[]}
-   */
-  users: User[] = [];
-
-  /**
-   * Lista de usuarios filtrados.
-   * @type {User[]}
-   */
-  filteredUsers: User[] = [];
-
-  /**
-   * Término de búsqueda de usuarios.
-   * @type {string}
-   */
-  searchUserTerm: string = '';
-
-  /**
-   * Usuario seleccionado.
-   * @type {User}
-   */
-  selectedUser: User = { id: '', firstName: '', lastName: '', email: '', password: '', role: 'User' };
-
-  /**
-   * Items de traslado.
-   * @type {any[]}
-   */
   trasladoItems: any[] = [];
-
-  /**
-   * Bodega de origen seleccionada para traslado.
-   * @type {Bodega | null}
-   */
   selectedBodegaOrigen: Bodega | null = null;
-
-  /**
-   * Bodega de destino seleccionada para traslado.
-   * @type {Bodega | null}
-   */
   selectedBodegaDestino: Bodega | null = null;
-
-  /**
-   * Producto seleccionado para traslado.
-   * @type {Product | null}
-   */
   selectedProductTraslado: Product | null = null;
+  searchHistorialTerm: string = '';
+  filteredHistorial: Movimiento[] = [];
+  filterIngreso: boolean = true;
+  filterSalida: boolean = true;
+  filterTraslado: boolean = true;
+  relatedProject: Proyecto | null = null;
+  projects: Proyecto[] = [];
 
-  /**
-   * Constructor del componente.
-   * @param {ProductService} productService - Servicio de productos.
-   * @param {AuthService} authService - Servicio de autenticación.
-   */
-  constructor(private productService: ProductService, private authService: AuthService) {}
+  constructor(
+    private productService: ProductService,
+    private authService: AuthService,
+    private proyectosService: ProyectosService) {}
 
-  /**
-   * Método de inicialización del componente.
-   * @returns {void}
-   */
-  ngOnInit(): void {
-    this.productService.products$.subscribe(products => {
-      this.products = products;
-      this.filteredProducts = this.selectedBodega.products;
-    });
-    this.productService.historial$.subscribe(historial => this.historial = historial);
-    this.today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
-    this.registroNumeroIngreso = this.productService.getNextIngresoNumber();
-    this.registroNumeroSalida = this.productService.getNextSalidaNumber();
-    this.loadUsers();
-    this.loadBodegas();
-    this.loadAllProducts();
+ngOnInit(): void {
+  this.productService.products$.subscribe(products => {
+    this.products = products;
+    this.updateBodegaProducts();
+  });
 
-    if (this.bodegas.length === 0) {
-      this.bodegas.push({ name: 'Bodega Principal', products: [] });
-      this.selectedBodega = this.bodegas[0];
-      this.saveBodegas();
-    } else {
-      this.selectedBodega = this.bodegas[0];
-    }
-    this.filteredProducts = this.selectedBodega.products;
-    this.selectedBodegaOrigen = this.bodegas.length > 0 ? this.bodegas[0] : null;
-    this.selectedBodegaDestino = this.bodegas.length > 0 ? this.bodegas[1] : null;
+  this.proyectosService.proyectos$.subscribe(projects => {
+    this.projects = projects;
+    console.log('Projects loaded:', this.projects);
+  });
+
+  this.productService.historial$.subscribe(historial => {
+    this.historial = historial;
+    this.filteredHistorial = historial;
+  });
+
+  this.today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+  this.registroNumeroIngreso = this.productService.getNextIngresoNumber();
+  this.registroNumeroSalida = this.productService.getNextSalidaNumber();
+  this.loadBodegas();
+  this.loadAllProducts();
+
+  if (this.bodegas.length === 0) {
+    this.bodegas.push({ name: 'BODEGA PRINCIPAL', products: [] }); // Normalize name to uppercase
+    this.selectedBodega = this.bodegas[0];
+    this.saveBodegas();
+  } else {
+    this.selectedBodega = this.bodegas[0];
+  }
+  this.filteredProducts = this.selectedBodega.products;
+  this.selectedBodegaOrigen = this.bodegas.length > 0 ? this.bodegas[0] : null;
+  this.selectedBodegaDestino = this.bodegas.length > 1 ? this.bodegas[1] : null; // Ensure there are at least 2 bodegas
+}
+
+
+  normalizeCode(code: any): string {
+    return typeof code === 'string' ? code.trim().toUpperCase() : '';
   }
 
-  /**
-   * Normaliza el código del producto.
-   * @param {string} code - Código del producto.
-   * @returns {string} - Código normalizado.
-   */
-  normalizeCode(code: string): string {
-    return code.trim().toUpperCase();
-  }
-
-  /**
-   * Verifica si un producto existe en la bodega seleccionada.
-   * @param {string} code - Código del producto.
-   * @returns {boolean} - Verdadero si el producto existe, falso en caso contrario.
-   */
   productExists(code: string): boolean {
     const normalizedCode = this.normalizeCode(code);
     return this.selectedBodega.products.some(product => this.normalizeCode(product.code) === normalizedCode);
   }
 
-  /**
-   * Convierte el valor de entrada a mayúsculas.
-   * @param {Event} event - Evento de entrada.
-   * @returns {void}
-   */
   toUpperCase(event: Event): void {
     const input = event.target as HTMLInputElement;
     input.value = input.value.toUpperCase();
   }
 
-  /**
-   * Verifica la existencia del código del producto.
-   * @returns {void}
-   */
   checkProductCode(): void {
     this.productCodeExists = this.productExists(this.newProduct.code);
   }
 
-  /**
-   * Registra un nuevo usuario.
-   * @param {NgForm} form - Formulario de usuario.
-   * @returns {void}
-   */
-  onRegister(form: NgForm): void {
-    if (form.valid) {
-      if (this.newUser.password !== this.repeatPassword) {
-        this.registerError = 'Las contraseñas no coinciden.';
-        return;
-      }
-
-      const existingUser = this.users.find(user => user.email === this.newUser.email);
-      if (existingUser) {
-        this.registerError = 'El usuario ya existe. Por favor, intente con otro email.';
-        this.registerSuccess = '';
-        return;
-      }
-
-      this.users.push({ ...this.newUser });
-      localStorage.setItem('users', JSON.stringify(this.users));
-      this.registerSuccess = 'Usuario registrado exitosamente.';
-      this.registerError = '';
-      this.loadUsers();
-      form.resetForm();
-      const userModal = bootstrap.Modal.getInstance(document.getElementById('userModal')!);
-      userModal?.hide();
-    }
-  }
-
-  /**
-   * Carga los usuarios del almacenamiento local.
-   * @returns {void}
-   */
-  loadUsers(): void {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    this.users = users;
-    this.filteredUsers = users;
-  }
-
-  /**
-   * Realiza la búsqueda de un usuario.
-   * @returns {void}
-   */
-  onSearchUser(): void {
-    if (this.searchUserTerm) {
-      this.filteredUsers = this.users.filter(user =>
-        user.firstName.toLowerCase().includes(this.searchUserTerm.toLowerCase()) ||
-        user.lastName.toLowerCase().includes(this.searchUserTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(this.searchUserTerm.toLowerCase()) ||
-        user.role.toLowerCase().includes(this.searchUserTerm.toLowerCase())
-      );
-    } else {
-      this.filteredUsers = this.users;
-    }
-  }
-
-  /**
-   * Realiza la búsqueda de un producto.
-   * @param {Event} event - Evento de búsqueda.
-   * @returns {void}
-   */
   onSearchProduct(event: any): void {
     this.searchProductTerm = event.target.value.toLowerCase();
     if (this.searchProductTerm) {
@@ -491,120 +168,11 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  /**
-   * Abre el modal para agregar usuarios.
-   * @returns {void}
-   */
   openUserModal(): void {
     const userModal = new bootstrap.Modal(document.getElementById('userModal')!);
     userModal.show();
   }
 
-  /**
-   * Guarda los cambios en un usuario.
-   * @param {NgForm} form - Formulario de usuario.
-   * @returns {void}
-   */
-  onSaveUser(form: NgForm): void {
-    form.form.markAllAsTouched();
-    if (form.valid) {
-      if (this.newUser.password !== this.repeatPassword) {
-        this.registerError = 'Las claves no coinciden.';
-        return;
-      }
-
-      const existingUser = this.users.find(user => user.email === this.newUser.email);
-      if (existingUser) {
-        this.registerError = 'El usuario ya existe. Por favor, intente con otro correo.';
-        this.registerSuccess = '';
-        return;
-      }
-
-      this.users.push({ ...this.newUser });
-      localStorage.setItem('users', JSON.stringify(this.users));
-      this.registerSuccess = 'Usuario registrado exitosamente.';
-      this.registerError = '';
-      this.loadUsers();
-      this.resetForm(form, 'user');
-    } else {
-      this.registerError = 'Por favor complete todos los campos correctamente.';
-      const formElement = document.querySelector('form.needs-validation-user');
-      if (formElement) {
-        formElement.classList.add('was-validated');
-      }
-    }
-  }
-
-  /**
-   * Visualiza los detalles de un usuario.
-   * @param {User} user - Usuario a visualizar.
-   * @returns {void}
-   */
-  viewUser(user: User): void {
-    this.selectedUser = user;
-    const userInfoModal = new bootstrap.Modal(document.getElementById('userInfoModal')!);
-    userInfoModal.show();
-  }
-
-  /**
-   * Edita un usuario existente.
-   * @param {User} user - Usuario a editar.
-   * @returns {void}
-   */
-  editUser(user: User): void {
-    this.selectedUser = { ...user };
-    const editUserModal = new bootstrap.Modal(document.getElementById('editUserModal')!);
-    editUserModal.show();
-  }
-
-  /**
-   * Guarda los cambios en un usuario editado.
-   * @param {NgForm} form - Formulario de usuario.
-   * @returns {void}
-   */
-  onSaveEditUser(form: NgForm): void {
-    if (form.valid) {
-      const index = this.users.findIndex(u => u.id === this.selectedUser.id);
-      if (index !== -1) {
-        this.users[index] = { ...this.selectedUser };
-        localStorage.setItem('users', JSON.stringify(this.users));
-        this.loadUsers();
-        const editUserModal = bootstrap.Modal.getInstance(document.getElementById('editUserModal')!);
-        editUserModal?.hide();
-      }
-    }
-  }
-
-  /**
-   * Elimina un usuario.
-   * @param {User} user - Usuario a eliminar.
-   * @returns {void}
-   */
-  deleteUser(user: User): void {
-    this.selectedUser = user;
-    const confirmDeleteUserModal = new bootstrap.Modal(document.getElementById('confirmDeleteUserModal')!);
-    confirmDeleteUserModal.show();
-  }
-
-  /**
-   * Confirma la eliminación de un usuario.
-   * @returns {void}
-   */
-  onConfirmDeleteUser(): void {
-    const index = this.users.findIndex(u => u.id === this.selectedUser.id);
-    if (index > -1) {
-      this.users.splice(index, 1);
-      localStorage.setItem('users', JSON.stringify(this.users));
-      this.loadUsers();
-      const confirmDeleteUserModal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteUserModal')!);
-      confirmDeleteUserModal?.hide();
-    }
-  }
-
-  /**
-   * Alterna la visibilidad de la contraseña.
-   * @returns {void}
-   */
   togglePasswordVisibility(): void {
     const passwordField = document.getElementById('editPassword') as HTMLInputElement;
     if (passwordField.type === 'password') {
@@ -614,11 +182,8 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  /**
-   * Abre el modal de confirmación para eliminar un producto.
-   * @param {number} index - Índice del producto a eliminar.
-   * @returns {void}
-   */
+  
+
   onDeleteProduct(index: number): void {
     this.selectedProductIndexToDelete = index;
     this.productToDelete = this.selectedBodega.products[index];
@@ -626,48 +191,27 @@ export class DashboardComponent implements OnInit {
     confirmDeleteModal.show();
   }
 
-  /**
-   * Confirma la eliminación de un producto.
-   * @returns {void}
-   */
-  onConfirmDelete(): void {
-    if (this.selectedProductIndexToDelete !== -1) {
-      this.selectedBodega.products.splice(this.selectedProductIndexToDelete, 1);
-      this.saveBodegas();
-      this.selectedProductIndexToDelete = -1;
-      this.productToDelete = null;
-      const confirmDeleteModal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal')!);
-      confirmDeleteModal?.hide();
-    }
+onConfirmDelete(): void {
+  if (this.productToDelete) {
+    this.productService.deleteProductByCode(this.productToDelete.code);
+    this.productToDelete = null;
+    this.selectedProductIndexToDelete = -1;
+    const confirmDeleteModal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal')!);
+    confirmDeleteModal?.hide();
   }
+}
 
-  /**
-   * Actualiza un producto existente.
-   * @param {number} index - Índice del producto a actualizar.
-   * @param {Product} product - Datos del producto actualizados.
-   * @returns {void}
-   */
   onUpdateProduct(index: number, product: Product): void {
     this.selectedBodega.products[index] = product;
     this.saveBodegas();
   }
 
-  /**
-   * Visualiza la información de un producto.
-   * @param {number} index - Índice del producto a visualizar.
-   * @returns {void}
-   */
   onViewProductInfo(index: number): void {
     this.selectedProduct = this.selectedBodega.products[index];
     const productInfoModal = new bootstrap.Modal(document.getElementById('productInfoModal')!);
     productInfoModal.show();
   }
 
-  /**
-   * Edita un producto existente.
-   * @param {number} index - Índice del producto a editar.
-   * @returns {void}
-   */
   onEditProduct(index: number): void {
     this.selectedProductIndexToEdit = index;
     this.selectedProductToEdit = { ...this.selectedBodega.products[index] };
@@ -675,51 +219,49 @@ export class DashboardComponent implements OnInit {
     editProductModal.show();
   }
 
-  /**
-   * Carga las bodegas del almacenamiento local.
-   * @returns {void}
-   */
   loadBodegas(): void {
     const bodegas = localStorage.getItem('bodegas');
     if (bodegas) {
-      this.bodegas = JSON.parse(bodegas);
+      this.bodegas = JSON.parse(bodegas).map((bodega: Bodega) => ({
+        ...bodega,
+        name: bodega.name.toUpperCase()
+      }));
     } else {
       this.bodegas = [];
     }
+    this.updateBodegaProducts();
   }
 
-  /**
-   * Guarda las bodegas en el almacenamiento local.
-   * @returns {void}
-   */
   saveBodegas(): void {
     localStorage.setItem('bodegas', JSON.stringify(this.bodegas));
   }
 
-  /**
-   * Carga todos los productos de todas las bodegas.
-   * @returns {void}
-   */
+  updateBodegaProducts(): void {
+    this.bodegas.forEach(bodega => {
+      bodega.products = this.products.filter(product => product.bodega === bodega.name);
+    });
+    this.filteredProducts = this.selectedBodega.products;
+  }
+
+  addProductToBodega(product: Product): void {
+    const targetBodega = this.bodegas.find(b => b.name === product.bodega);
+    if (targetBodega && !targetBodega.products.some(p => p.code === product.code)) {
+      targetBodega.products.push(product);
+      this.saveBodegas();
+    }
+  }
+
   loadAllProducts(): void {
     this.allProducts = this.bodegas.reduce((acc: Product[], bodega: Bodega) => {
       return acc.concat(bodega.products);
     }, []);
   }
 
-  /**
-   * Selecciona una bodega.
-   * @param {Bodega} bodega - Bodega seleccionada.
-   * @returns {void}
-   */
   selectBodega(bodega: Bodega): void {
     this.selectedBodega = bodega;
     this.filteredProducts = bodega.products;
   }
 
-  /**
-   * Guarda los cambios en un producto editado.
-   * @returns {void}
-   */
   onSaveEditProduct(): void {
     if (this.selectedProductToEdit && this.selectedProductIndexToEdit !== -1) {
       this.selectedProductToEdit.bodega = this.selectedBodega.name;
@@ -747,59 +289,50 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  /**
-   * Agrega un nuevo producto.
-   * @param {NgForm} form - Formulario de producto.
-   * @returns {void}
-   */
-  onAddProduct(form: NgForm): void {
-    form.form.markAllAsTouched();
-    if (form.valid) {
-      if (!this.productExists(this.newProduct.code)) {
-        this.newProduct.code = this.normalizeCode(this.newProduct.code);
-        const targetBodega = this.bodegas.find(b => b.name === this.newProduct.bodega);
-        if (targetBodega) {
-          targetBodega.products.push(this.newProduct);
-          this.saveBodegas();
-        }
-        form.resetForm();
-        this.newProduct = {
-          code: '',
-          name: '',
-          description: '',
-          model: '',
-          brand: '',
-          material: '',
-          color: '',
-          family: '',
-          value: 0,
-          currency: '',
-          unit: '',
-          location: '',
-          stock: 0,
-          bodega: 'Bodega Principal'
-        };
-        const formElement = document.querySelector('form.needs-validation-product');
-        if (formElement) {
-          formElement.classList.remove('was-validated');
-        }
-        this.loadAllProducts();
-      } else {
-        alert('El código del producto ya existe. Por favor, ingrese un código diferente.');
+onAddProduct(form: NgForm): void {
+  form.form.markAllAsTouched();
+  if (form.valid) {
+    if (!this.productExists(this.newProduct.code)) {
+      this.newProduct.code = this.normalizeCode(this.newProduct.code);
+      const targetBodega = this.bodegas.find(b => b.name === this.newProduct.bodega);
+      if (targetBodega) {
+        targetBodega.products.push(this.newProduct);
+        this.productService.addProduct(this.newProduct);
+        this.saveBodegas();
       }
-    } else {
+      form.resetForm();
+      this.newProduct = {
+        code: '',
+        name: '',
+        description: '',
+        model: '',
+        brand: '',
+        material: '',
+        color: '',
+        family: '',
+        value: 0,
+        currency: '',
+        unit: '',
+        location: '',
+        stock: 0,
+        bodega: 'Bodega Principal'
+      };
       const formElement = document.querySelector('form.needs-validation-product');
       if (formElement) {
-        formElement.classList.add('was-validated');
+        formElement.classList.remove('was-validated');
       }
+      this.loadAllProducts();
+    } else {
+      alert('El código del producto ya existe. Por favor, ingrese un código diferente.');
+    }
+  } else {
+    const formElement = document.querySelector('form.needs-validation-product');
+    if (formElement) {
+      formElement.classList.add('was-validated');
     }
   }
+}
 
-  /**
-   * Agrega una nueva bodega.
-   * @param {NgForm} form - Formulario de bodega.
-   * @returns {void}
-   */
   addBodega(form: NgForm): void {
     if (this.newBodegaName) {
       this.bodegas.push({ name: this.newBodegaName, products: [] });
@@ -810,17 +343,9 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  /**
-   * Restablece el formulario especificado.
-   * @param {NgForm} form - Formulario a restablecer.
-   * @param {'user' | 'product'} type - Tipo de formulario.
-   * @returns {void}
-   */
   resetForm(form: NgForm, type: 'user' | 'product'): void {
     form.resetForm();
     if (type === 'user') {
-      this.newUser = { id: '', firstName: '', lastName: '', email: '', password: '', role: 'User' };
-      this.repeatPassword = '';
       this.registerError = '';
       this.registerSuccess = '';
     } else if (type === 'product') {
@@ -848,10 +373,6 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  /**
-   * Agrega un producto a la lista de ingreso.
-   * @returns {void}
-   */
   onAddProductoToIngreso(): void {
     if (!this.selectedProduct) {
       alert('Por favor, seleccione un producto.');
@@ -871,19 +392,10 @@ export class DashboardComponent implements OnInit {
     this.cantidadIngreso = 1;
   }
 
-  /**
-   * Elimina un ítem de la lista de ingreso.
-   * @param {number} index - Índice del ítem a eliminar.
-   * @returns {void}
-   */
   onEliminarItem(index: number): void {
     this.ingresoItems.splice(index, 1);
   }
 
-  /**
-   * Confirma el ingreso de productos.
-   * @returns {void}
-   */
   onConfirmarIngreso(): void {
     this.ingresoItems.forEach(item => {
       const product = this.selectedBodega.products.find(p => p.code === item.product.code);
@@ -920,19 +432,11 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  /**
-   * Abre el modal para agregar una nueva bodega.
-   * @returns {void}
-   */
   openAddBodegaModal(): void {
     const addBodegaModal = new bootstrap.Modal(document.getElementById('addBodegaModal')!);
     addBodegaModal.show();
   }
 
-  /**
-   * Agrega un producto a la lista de salida.
-   * @returns {void}
-   */
   onAddProductoToSalida(): void {
     if (!this.selectedProductSalida) {
       alert('Por favor, seleccione un producto.');
@@ -954,10 +458,6 @@ export class DashboardComponent implements OnInit {
     this.cantidadSalida = 1;
   }
 
-  /**
-   * Confirma la salida de productos.
-   * @returns {void}
-   */
   onConfirmarSalida(): void {
     this.salidaItems.forEach(item => {
       const product = this.selectedBodega.products.find(p => p.code === item.product.code);
@@ -999,29 +499,15 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  /**
-   * Elimina un ítem de la lista de salida.
-   * @param {number} index - Índice del ítem a eliminar.
-   * @returns {void}
-   */
   onEliminarItemSalida(index: number): void {
     this.salidaItems.splice(index, 1);
   }
 
-  /**
-   * Abre el historial de movimientos.
-   * @returns {void}
-   */
   onAbrirHistorial(): void {
     const detalleHistorialModal = new bootstrap.Modal(document.getElementById('detalleHistorialModal')!);
     detalleHistorialModal.show();
   }
 
-  /**
-   * Visualiza los detalles de un movimiento.
-   * @param {Movimiento} movimiento - Movimiento a visualizar.
-   * @returns {void}
-   */
   onVerDetallesMovimiento(movimiento: Movimiento): void {
     this.selectedMovimiento = movimiento;
     const detalleMovimientoModal = new bootstrap.Modal(document.getElementById('detalleMovimientoModal')!);
@@ -1030,10 +516,49 @@ export class DashboardComponent implements OnInit {
     detalleHistorialModal?.hide();
   }
 
-  /**
-   * Vuelve al historial de movimientos.
-   * @returns {void}
-   */
+  loadProjects(): void {
+    const storedProjects = localStorage.getItem('projects');
+    if (storedProjects) {
+      this.projects = JSON.parse(storedProjects);
+    }
+  }
+
+  onSearchHistorial(): void {
+    this.relatedProject = null;
+    const searchTerm = this.searchHistorialTerm.toLowerCase();
+    console.log('Search Term:', searchTerm);
+
+    if (searchTerm) {
+      this.filteredHistorial = this.historial.filter((movimiento) => {
+        const matchesTerm = movimiento.tipo.toLowerCase().includes(searchTerm) ||
+          String(movimiento.numero).toLowerCase().includes(searchTerm) ||
+          (movimiento.tipo === 'Salida' && movimiento.documento && movimiento.documento.toLowerCase().includes(searchTerm));
+
+        const matchesFilter = (this.filterIngreso && movimiento.tipo === 'Ingreso') ||
+          (this.filterSalida && movimiento.tipo === 'Salida') ||
+          (this.filterTraslado && movimiento.tipo === 'Traslado');
+
+        return matchesTerm && matchesFilter;
+      });
+
+      console.log('Filtered Historial:', this.filteredHistorial);
+
+      this.relatedProject = this.projects.find((project: Proyecto) =>
+        project.numero.toLowerCase().includes(searchTerm)
+      ) || null;
+
+      console.log('Related Project:', this.relatedProject);
+    } else {
+      this.filteredHistorial = this.historial.filter((movimiento) => {
+        return (this.filterIngreso && movimiento.tipo === 'Ingreso') ||
+          (this.filterSalida && movimiento.tipo === 'Salida') ||
+          (this.filterTraslado && movimiento.tipo === 'Traslado');
+      });
+
+      console.log('Filtered Historial (no search term):', this.filteredHistorial);
+    }
+}
+
   onVolverHistorial(): void {
     const detalleMovimientoModal = bootstrap.Modal.getInstance(document.getElementById('detalleMovimientoModal')!);
     detalleMovimientoModal?.hide();
@@ -1041,10 +566,6 @@ export class DashboardComponent implements OnInit {
     detalleHistorialModal.show();
   }
 
-  /**
-   * Agrega un producto a la lista de traslado.
-   * @returns {void}
-   */
   onAddProductoToTraslado(): void {
     if (!this.selectedProductTraslado) {
       alert('Por favor, seleccione un producto.');
@@ -1063,19 +584,10 @@ export class DashboardComponent implements OnInit {
     this.selectedProductTraslado = null;
   }
 
-  /**
-   * Elimina un ítem de la lista de traslado.
-   * @param {number} index - Índice del ítem a eliminar.
-   * @returns {void}
-   */
   onEliminarItemTraslado(index: number): void {
     this.trasladoItems.splice(index, 1);
   }
 
-  /**
-   * Confirma el traslado de productos.
-   * @returns {void}
-   */
   onConfirmarTraslado(): void {
     if (!this.selectedBodegaOrigen || !this.selectedBodegaDestino || this.selectedBodegaOrigen === this.selectedBodegaDestino) {
       alert('Seleccione bodegas válidas.');

@@ -66,18 +66,10 @@ export class AuthService {
   login(email: string, password: string): boolean {
     const users = JSON.parse(localStorage.getItem('users')!);
     const user = users.find((u: any) => u.email === email && u.password === password);
-
+  
     if (user) {
       localStorage.setItem('currentUser', JSON.stringify(user));
-      if (user.role === 'Admin') {
-        this.router.navigate(['/admin-dashboard']);
-      } else if (user.role === 'Área') {
-        this.router.navigate(['/area-dashboard']);
-      } else if (user.role === 'Auditor') {
-        this.router.navigate(['/auditor-dashboard']);
-      } else if (user.role === 'Bodega') {
-        this.router.navigate(['/bodega-dashboard']);
-      }
+      this.router.navigate(['/inicio']);
       return true;
     }
     return false;
@@ -178,6 +170,7 @@ export class AuthService {
     const user = this.getCurrentUser();
     return user && allowedRoles.includes(user.role);
   }
+  
 
   /**
    * Actualiza los datos del usuario actual.

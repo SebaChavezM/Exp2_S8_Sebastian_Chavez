@@ -1,30 +1,91 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  padding-top: 200px;
+  margin-top: 50px;
+}
+
 .profile-picture-wrapper {
   position: relative;
 }
 
 .profile-picture {
-  width: 250px;
-  height: 250px;
-  object-fit: cover;
+  width: 100%;
+  max-width: 200px;
   border-radius: 50%;
-  display: block;
-  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.profile-picture-wrapper label {
-  display: block;
-  margin-top: 10px;
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+  color: white;
 }
 
-.form-control[readonly] {
-  background-color: #f8f9fa;
-  opacity: 1;
+.btn-secondary:hover {
+  background-color: #5a6268;
 }
 
 .btn-success {
-  margin-right: 10px;
+  background-color: #ee7712;
+  border: none;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #cc6600;
+}
+
+.btn-primary {
+  background-color: #ee7712;
+  border: none;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #cc6600;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
 }
 
 input[type="file"] {
   display: none;
+}
+
+label[for="profilePicture"] {
+  cursor: pointer;
+}
+
+form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.form-control {
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+}
+
+form button {
+  margin-top: 10px;
 }

@@ -23,6 +23,8 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 50%;
+  max-width: 900px;
+  transition: all 0.3s ease;
 }
 
 .logo {
@@ -36,4 +38,116 @@ body {
 
 .form-container {
   flex: 2;
+}
+
+/* Step Indicator */
+.step-indicator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.step-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #d3d3d3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #fff;
+  position: relative;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.step-circle.active {
+  background-color: #ee7712;
+  transform: scale(1.2);
+}
+
+.step-line {
+  flex-grow: 1;
+  height: 2px;
+  background-color: #d3d3d3;
+  margin: 0 10px;
+}
+
+.step {
+  display: none;
+}
+
+.step.active {
+  display: block;
+}
+
+/* Confirmation */
+.confirmation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.icon-container {
+  font-size: 50px;
+  color: #28a745;
+  margin-bottom: 20px;
+}
+
+.confirmation-message h4 {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #28a745;
+  margin-bottom: 10px;
+}
+
+.confirmation-message p {
+  font-size: 1em;
+  color: #555;
+}
+
+/* Buttons */
+.custom-btn {
+  background-color: #ee7712;
+  border: none;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.custom-btn:hover {
+  background-color: #cc6600;
+}
+
+.custom-link {
+  color: #ee7712;
+  transition: color 0.3s ease;
+}
+
+.custom-link:hover {
+  color: #cc6600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+  }
+
+  .logo {
+    margin-bottom: 20px;
+  }
+
+  .logo img {
+    width: 150px;
+  }
+
+  .form-container {
+    width: 100%;
+  }
 }

@@ -26,7 +26,7 @@
   </div>
 </nav>
 
-<div *ngIf="!isLoginPage()" id="sidebar" class="sidebar bg-light border-end">
+<div *ngIf="!isLoginPage() && !isInicioPage()" id="sidebar" class="sidebar bg-light border-end">
   <div class="sidebar-header d-flex align-items-center justify-content-center py-3">
     <img src="../../assets/img/logos/favicon.png" alt="Company Logo" class="company-logo">
     <h6 class="ms-2">PRAXA INGENIERIA SPA</h6>
@@ -59,6 +59,9 @@
       <a class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#detalleHistorialModal">
         <i class="bi bi-clock-history"></i> <span>Historial</span>
       </a>
+      <a class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#bulkUploadModal">
+        <i class="bi bi-upload"></i> <span>Carga Masiva</span>
+      </a>
     </div>
     <li *ngIf="authService.isRoleAllowed(['Admin', 'Área', 'Bodega'])" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" (click)="toggleDropdown('ventasSubmenu')" role="button">
       <div>
@@ -67,13 +70,31 @@
       <i class="bi bi-chevron-down"></i>
     </li>
     <div *ngIf="authService.isRoleAllowed(['Admin', 'Área', 'Bodega'])" class="collapse" id="ventasSubmenu">
-      <a class="list-group-item list-group-item-action bg-light ps-5">
+      <a class="list-group-item list-group-item-action bg-light ps-5" routerLink="/orden-compra">
         <i class="bi bi-journal-plus"></i> <span>Órdenes de Compra</span>
       </a>
       <a class="list-group-item list-group-item-action bg-light ps-5">
         <i class="bi bi-journal-check"></i> <span>Recepción de Facturas</span>
       </a>
+      <a class="list-group-item list-group-item-action bg-light ps-5" routerLink="/proveedores">
+        <i class="bi bi-person-lines-fill"></i> <span>Proveedores</span>
+      </a>
     </div>
+    <li *ngIf="authService.isRoleAllowed(['Admin', 'Área', 'Bodega'])" class="list-group-item list-group-item-action" routerLink="/reportes">
+      <div>
+        <i class="bi bi-file-earmark-bar-graph"></i> <span>Reportes</span>
+      </div>
+    </li>
+    <li *ngIf="authService.isRoleAllowed(['Admin'])" class="list-group-item list-group-item-action" routerLink="/proyectos">
+      <div>
+        <i class="bi bi-folder2-open"></i> <span>Proyectos</span>
+      </div>
+    </li>
+    <li *ngIf="authService.isRoleAllowed(['Admin'])" class="list-group-item list-group-item-action" routerLink="/usuarios">
+      <div>
+        <i class="bi bi-person-rolodex"></i> <span>Usuarios</span>
+      </div>
+    </li>
     <li class="list-group-item list-group-item-action" routerLink="/user-profile">
       <div>
         <i class="bi bi-person-badge"></i> <span>Cuenta</span>

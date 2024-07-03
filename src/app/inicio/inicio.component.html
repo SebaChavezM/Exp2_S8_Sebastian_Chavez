@@ -1,0 +1,77 @@
+<section id="services" class="services section">
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Menu Admin</h2>
+    <p>ERP PRAXA INGENIERIA SPA</p>
+  </div>
+
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100" *ngIf="authService.isRoleAllowed(['Admin', 'Área', 'Bodega', 'Auditor'])">
+        <div class="service-item position-relative">
+          <div class="icon">
+            <i class="bi bi-box-seam"></i>
+          </div>
+          <a (click)="navigateToDashboard()" class="stretched-link">
+            <h3>BODEGA</h3>
+          </a>
+          <p>Gestion de almacenamiento y movimiento de inventarios, garantizando control y seguimiento de productos en la bodega.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200" *ngIf="authService.isRoleAllowed(['Admin', 'Área', 'Bodega'])">
+        <div class="service-item position-relative">
+          <div class="icon">
+            <i class="bi bi-journal-bookmark"></i>
+          </div>
+          <a (click)="navigateToPage('/compras')" class="stretched-link">
+            <h3>COMPRAS</h3>
+          </a>
+          <p>Centraliza y optimiza el proceso de adquisición de bienes y servicios, facilitando la gestión de órdenes de compra y proveedores.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300" *ngIf="authService.isRoleAllowed(['Admin', 'Área', 'Bodega'])">
+        <div class="service-item position-relative">
+          <div class="icon">
+            <i class="bi bi-file-earmark-bar-graph"></i>
+          </div>
+          <a (click)="navigateToPage('/reportes')" class="stretched-link">
+            <h3>REPORTES</h3>
+          </a>
+          <p>Genera reportes detallados para una mejor toma de decisiones.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400" *ngIf="authService.isRoleAllowed(['Admin'])">
+        <div class="service-item position-relative">
+          <div class="icon">
+            <i class="bi bi-folder2-open"></i>
+          </div>
+          <a (click)="navigateToPage('/proyectos')" class="stretched-link">
+            <h3>PROYECTOS</h3>
+          </a>
+          <p>Administrar y supervisa proyectos en curso.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500" *ngIf="authService.isRoleAllowed(['Admin'])">
+        <div class="service-item position-relative">
+          <div class="icon">
+            <i class="bi bi-person-rolodex"></i>
+          </div>
+          <a (click)="navigateToPage('/usuarios')" class="stretched-link">
+            <h3>USUARIOS</h3>
+          </a>
+          <p>Gestiona la información y permisos de los usuarios del sistema, asegurando un acceso controlado.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600" *ngIf="authService.isRoleAllowed(['Admin', 'Área', 'Bodega', 'Auditor'])">
+        <div class="service-item position-relative">
+          <div class="icon">
+            <i class="bi bi-person-badge"></i>
+          </div>
+          <a (click)="navigateToPage('/user-profile')" class="stretched-link">
+            <h3>CUENTA</h3>
+          </a>
+          <p>Administra la configuración y datos de tu cuenta personal, incluyendo detalles de contacto y preferencias de usuario.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

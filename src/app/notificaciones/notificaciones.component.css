@@ -1,12 +1,10 @@
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
-/* Estilos generales */
 th, td {
   text-align: center;
 }
 
-/* Contenedor de la tabla de inventario */
 .inventory-table-container {
   margin: 80px 15px 15px 15px;
   padding: 1em;
@@ -18,7 +16,6 @@ th, td {
   overflow-y: auto;
 }
 
-/* Contenedor del título y la barra de búsqueda */
 .caption-container {
   display: flex;
   align-items: center;
@@ -49,7 +46,6 @@ th, td {
   text-align: right;
 }
 
-/* Estilos de la tabla */
 table {
   width: 100%;
   border-collapse: separate;
@@ -85,7 +81,6 @@ table tr:last-child td {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-/* Estilos para el modal */
 #cuentaModal .modal-body {
   display: flex;
   flex-direction: column;
@@ -111,7 +106,6 @@ table tr:last-child td {
   }
 }
 
-/* Ajustes para la barra de título y búsqueda en dispositivos móviles */
 @media (max-width: 768px) {
   .caption-container {
     flex-direction: column;
@@ -124,7 +118,6 @@ table tr:last-child td {
   }
 }
 
-/* Ajustes específicos para dispositivos móviles */
 @media (max-width: 767px) {
   .caption-container {
     flex-direction: column;
@@ -167,7 +160,6 @@ table tr:last-child td {
   }
 }
 
-/* Estilos adicionales para la tabla de notificaciones */
 #page-content-wrapper .table {
   margin-top: 80px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -201,7 +193,6 @@ table tr:last-child td {
   background-color: #d3550c;
 }
 
-/* Estilos para el modal de notificaciones */
 #notificationModal .modal-header {
   border-bottom: none;
 }

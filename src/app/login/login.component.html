@@ -19,79 +19,10 @@
             Por favor, ingrese su contraseña.
           </div>
         </div>
-        <button type="submit" class="btn btn-warning">Iniciar sesión</button>
-        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#recoverPasswordModal">¿Olvidaste tu contraseña?</button>
+        <button type="submit" class="btn custom-btn">Iniciar sesión</button>
+        <button type="button" class="btn btn-link custom-link" data-bs-toggle="modal" data-bs-target="#recoverPasswordModal">¿Olvidaste tu contraseña?</button>
         <div *ngIf="loginError" class="alert alert-danger mt-3">{{ loginError }}</div>
       </form>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="recoverPasswordModal" tabindex="-1" aria-labelledby="recoverPasswordModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="recoverPasswordModalLabel">Recuperar Contraseña</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Step 1 -->
-        <div id="step1" class="step">
-          <h4>Paso 1: Verificación de Correo Electrónico</h4>
-          <form (ngSubmit)="verifyEmail()" #emailForm="ngForm" novalidate>
-            <div class="mb-3">
-              <label for="emailCheck" class="form-label">Correo electrónico</label>
-              <input type="email" class="form-control" id="emailCheck" [(ngModel)]="recoveryEmail" name="recoveryEmail" required>
-              <div class="invalid-feedback" *ngIf="!emailForm.controls['recoveryEmail']?.valid && emailForm.submitted">
-                Por favor, ingrese su correo electrónico.
-              </div>
-              <div class="invalid-feedback" *ngIf="emailError">{{ emailError }}</div>
-            </div>
-            <button type="submit" class="btn btn-primary">Siguiente</button>
-          </form>
-        </div>
-        <!-- Step 2 -->
-        <div id="step2" class="step d-none">
-          <h4>Paso 2: Información Adicional</h4>
-          <form #recoveryForm="ngForm" (ngSubmit)="sendNotification(recoveryForm)" novalidate>
-            <div class="mb-3">
-              <label for="fullName" class="form-label">Nombre Completo</label>
-              <input type="text" class="form-control" id="fullName" [(ngModel)]="fullName" name="fullName" required>
-              <div class="invalid-feedback" *ngIf="recoveryForm.submitted && !recoveryForm.controls['fullName']?.valid">
-                Por favor, ingrese su nombre completo.
-              </div>
-            </div>
-            <div class="mb-3">
-              <label for="birthDate" class="form-label">Fecha de Nacimiento</label>
-              <input type="date" class="form-control" id="birthDate" [(ngModel)]="birthDate" name="birthDate" required (change)="validateAge($event)">
-              <div class="invalid-feedback" *ngIf="recoveryForm.submitted && !recoveryForm.controls['birthDate']?.valid">
-                Por favor, ingrese su fecha de nacimiento.
-              </div>
-              <div class="invalid-feedback" *ngIf="!isAdult">Debe ser mayor de 18 años.</div>
-            </div>
-            <div class="mb-3">
-              <label for="workArea" class="form-label">Área de Trabajo</label>
-              <input type="text" class="form-control" id="workArea" [(ngModel)]="workArea" name="workArea" required>
-              <div class="invalid-feedback" *ngIf="recoveryForm.submitted && !recoveryForm.controls['workArea']?.valid">
-                Por favor, ingrese su área de trabajo.
-              </div>
-            </div>
-            <div class="mb-3">
-              <label for="supervisor" class="form-label">Jefe a Cargo</label>
-              <input type="text" class="form-control" id="supervisor" [(ngModel)]="supervisor" name="supervisor" required>
-              <div class="invalid-feedback" *ngIf="recoveryForm.submitted && !recoveryForm.controls['supervisor']?.valid">
-                Por favor, ingrese el nombre de su jefe a cargo.
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primary" [disabled]="!recoveryForm.valid || !isAdult">Enviar</button>
-          </form>
-        </div>
-        <!-- Step 3 -->
-        <div id="step3" class="step d-none">
-          <h4>Paso 3: Confirmación</h4>
-          <p>Se ha enviado una notificación para realizar el cambio de contraseña. Un administrador se contactará con usted.</p>
-        </div>
-      </div>
     </div>
   </div>
 </div>
