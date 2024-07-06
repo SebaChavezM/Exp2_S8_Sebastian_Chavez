@@ -1,0 +1,137 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.form-control {
+    width: 100%;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.col {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.invalid-feedback {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.btn-custom {
+    background-color: #ee7712;
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.btn-custom:hover {
+    background-color: #cc6600;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.table-custom {
+    border: 1px solid #ee7712;
+}
+
+.table-custom thead {
+    background-color: #ee7712;
+    color: white;
+}
+
+.table-custom th,
+.table-custom td {
+    border: 1px solid #ee7712;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.logo {
+    flex: 1;
+    text-align: center;
+}
+
+.logo img {
+    width: 250px;
+}
+
+.form-container {
+    flex: 2;
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+    }
+
+    .logo {
+        margin-bottom: 20px;
+    }
+
+    .logo img {
+        width: 150px;
+    }
+
+    .form-container {
+        width: 100%;
+    }
+}
+
+.main-content .btn-success,
+.main-content .btn-warning,
+.main-content .btn-danger,
+.main-content .btn-primary,
+.main-content .btn-secondary {
+    background-color: #ee7712;
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.main-content .btn-success:hover,
+.main-content .btn-warning:hover,
+.main-content .btn-danger:hover,
+.main-content .btn-primary:hover,
+.main-content .btn-secondary:hover {
+    background-color: #cc6600;
+}
+
+.table-custom {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-custom th,
+.table-custom td {
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-custom th {
+    background-color: #ee7712;
+    color: white;
+}
+
+.table-custom td {
+    border: 1px solid #ee7712;
+}
+
+#historial-container {
+    max-height: 800px;
+    overflow-y: auto;
+    padding: 10px;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h4 class="modal-title">Buscar Producto</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <input type="text" class="form-control mb-3" placeholder="Buscar..." (input)="applyFilter($event)">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Descripción</th>
+          <th>Unidad</th>
+          <th>Precio</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of filteredProducts">
+          <td>{{ product.code }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.unit }}</td>
+          <td>{{ product.value | currency: product.currency }}</td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="selectProduct(product)">Seleccionar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" class="btn btn-success" (click)="addProduct()">Agregar Nuevo Producto</button>
+  </div>
+  

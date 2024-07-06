@@ -13,6 +13,11 @@ export interface OrdenCompra {
   centroCosto: string;
   numeroCotizacion: string;
   numeroOEVDGG: string;
+  documentoTipo: string;
+  pedidoFabrica: string;
+  nota?: string;
+  numeroInterno?: string;
+  solicitadoPor?: string; 
 }
 
 export interface OrdenCompraItem {
@@ -27,8 +32,9 @@ export interface OrdenCompraItem {
   total: number;
   plazoEntrega: number;
   fechaEntregaEstimada: string;
+  documentoTipo: string;
+  pedidoFabrica: string;
 }
 
-
-
 import { Proveedor } from './proveedor.model';
+
