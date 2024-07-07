@@ -2,19 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import * as bootstrap from 'bootstrap';
-
-/**
- * Interfaz para representar a un usuario.
- * @interface
- */
-interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: string;
-  password: string;
-}
+import { UserService, User } from '../service/user.service';
 
 @Component({
   selector: 'app-user-management',
@@ -24,23 +12,26 @@ interface User {
   imports: [FormsModule, CommonModule]
 })
 export class UserManagementComponent implements OnInit {
-  newUser: User = { id: '', firstName: '', lastName: '', email: '', password: '', role: 'User' };
+  newUser: User = { firstName: '', lastName: '', email: '', password: '', role: 'User' };
   repeatPassword: string = '';
   registerError: string = '';
   registerSuccess: string = '';
   users: User[] = [];
   filteredUsers: User[] = [];
   searchUserTerm: string = '';
-  selectedUser: User = { id: '', firstName: '', lastName: '', email: '', password: '', role: 'User' };
+  selectedUser: User = { firstName: '', lastName: '', email: '', password: '', role: 'User' };
+
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.loadUsers();
   }
 
   loadUsers(): void {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    this.users = users;
-    this.filteredUsers = users;
+    this.userService.getUsers().subscribe(users => {
+      this.users = users;
+      this.filteredUsers = users;
+    });
   }
 
   onRegister(form: NgForm): void {
@@ -57,14 +48,14 @@ export class UserManagementComponent implements OnInit {
         return;
       }
 
-      this.users.push({ ...this.newUser });
-      localStorage.setItem('users', JSON.stringify(this.users));
-      this.registerSuccess = 'Usuario registrado exitosamente.';
-      this.registerError = '';
-      this.loadUsers();
-      form.resetForm();
-      const userModal = bootstrap.Modal.getInstance(document.getElementById('userModal')!);
-      userModal?.hide();
+      this.userService.addUser(this.newUser).then(() => {
+        this.registerSuccess = 'Usuario registrado exitosamente.';
+        this.registerError = '';
+        this.loadUsers();
+        form.resetForm();
+        const userModal = bootstrap.Modal.getInstance(document.getElementById('userModal')!);
+        userModal?.hide();
+      });
     }
   }
 
@@ -101,12 +92,12 @@ export class UserManagementComponent implements OnInit {
         return;
       }
 
-      this.users.push({ ...this.newUser });
-      localStorage.setItem('users', JSON.stringify(this.users));
-      this.registerSuccess = 'Usuario registrado exitosamente.';
-      this.registerError = '';
-      this.loadUsers();
-      this.resetForm(form, 'user');
+      this.userService.addUser(this.newUser).then(() => {
+        this.registerSuccess = 'Usuario registrado exitosamente.';
+        this.registerError = '';
+        this.loadUsers();
+        this.resetForm(form, 'user');
+      });
     } else {
       this.registerError = 'Por favor complete todos los campos correctamente.';
       const formElement = document.querySelector('form.needs-validation-user');
@@ -130,14 +121,11 @@ export class UserManagementComponent implements OnInit {
 
   onSaveEditUser(form: NgForm): void {
     if (form.valid) {
-      const index = this.users.findIndex(u => u.id === this.selectedUser.id);
-      if (index !== -1) {
-        this.users[index] = { ...this.selectedUser };
-        localStorage.setItem('users', JSON.stringify(this.users));
+      this.userService.updateUser(this.selectedUser).then(() => {
         this.loadUsers();
         const editUserModal = bootstrap.Modal.getInstance(document.getElementById('editUserModal')!);
         editUserModal?.hide();
-      }
+      });
     }
   }
 
@@ -157,20 +145,17 @@ export class UserManagementComponent implements OnInit {
   }
 
   onConfirmDeleteUser(): void {
-    const index = this.users.findIndex(u => u.id === this.selectedUser.id);
-    if (index > -1) {
-      this.users.splice(index, 1);
-      localStorage.setItem('users', JSON.stringify(this.users));
+    this.userService.deleteUser(this.selectedUser.id!).then(() => {
       this.loadUsers();
       const confirmDeleteUserModal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteUserModal')!);
       confirmDeleteUserModal?.hide();
-    }
+    });
   }
 
   resetForm(form: NgForm, type: 'user' | 'product'): void {
     form.resetForm();
     if (type === 'user') {
-      this.newUser = { id: '', firstName: '', lastName: '', email: '', password: '', role: 'User' };
+      this.newUser = { firstName: '', lastName: '', email: '', password: '', role: 'User' };
       this.repeatPassword = '';
       this.registerError = '';
       this.registerSuccess = '';

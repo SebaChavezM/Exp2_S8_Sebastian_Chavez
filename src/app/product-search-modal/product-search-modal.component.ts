@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule, CurrencyPipe } from '@angular/common'; // Importamos CommonModule y CurrencyPipe
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgbActiveModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductService, Product } from '../service/product.service';
 
 @Component({
   selector: 'app-product-search-modal',
-  templateUrl: './product-search-modal.component.html',
-  styleUrls: ['./product-search-modal.component.css'],
   standalone: true,
-  imports: [CommonModule, CurrencyPipe] // Aseguramos importar CommonModule y CurrencyPipe aquí
+  imports: [CommonModule, FormsModule, NgbModalModule],
+  templateUrl: './product-search-modal.component.html',
+  styleUrls: ['./product-search-modal.component.css']
 })
 export class ProductSearchModalComponent implements OnInit {
+  searchTerm: string = '';
   products: Product[] = [];
   filteredProducts: Product[] = [];
 
-  constructor(public activeModal: NgbActiveModal, private productService: ProductService) {}
+  activeModal = inject(NgbActiveModal);
+  productService = inject(ProductService);
 
   ngOnInit(): void {
     this.loadProducts();
@@ -22,14 +25,19 @@ export class ProductSearchModalComponent implements OnInit {
 
   loadProducts() {
     this.products = this.productService.getAllProducts();
-    this.filteredProducts = [...this.products];
+    this.filteredProducts = this.products;
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
+  filterProducts() {
     this.filteredProducts = this.products.filter(product =>
-      product.description.toLowerCase().includes(filterValue)
+      product.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      product.code.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
+  }
+
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
+    this.filteredProducts = this.products.filter(product => product.name.toLowerCase().includes(filterValue));
   }
 
   selectProduct(product: Product) {

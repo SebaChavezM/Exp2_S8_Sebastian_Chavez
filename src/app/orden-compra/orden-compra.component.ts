@@ -10,7 +10,8 @@ import { ProveedorService } from '../service/proveedor.service';
 import { OrdenCompraService } from '../service/orden-compra.service';
 import { Proveedor } from '../models/proveedor.model';
 import { OrdenCompra, OrdenCompraItem } from '../models/orden-compra.model';
-import { Product } from '../service/product.service';
+import { ProductService, Product } from '../service/product.service';
+import { NotificationService } from '../service/notificacion.service';
 
 @Component({
   selector: 'app-orden-compra',
@@ -51,13 +52,27 @@ export class OrdenCompraComponent implements OnInit {
   constructor(
     private proveedorService: ProveedorService,
     private ordenCompraService: OrdenCompraService,
-    private sanitizer: DomSanitizer
+    private productService: ProductService,
+    private sanitizer: DomSanitizer,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
+    this.loadProveedores();
+    this.loadProducts();
+  }
+
+  loadProveedores() {
     const storedProveedores = localStorage.getItem('proveedores');
     if (storedProveedores) {
       this.proveedores = JSON.parse(storedProveedores);
+    }
+  }
+
+  loadProducts() {
+    const storedProducts = localStorage.getItem('products');
+    if (storedProducts) {
+      this.productService.saveProductsToLocalStorage(JSON.parse(storedProducts));
     }
   }
 
@@ -156,9 +171,29 @@ export class OrdenCompraComponent implements OnInit {
       return;
     }
     this.newOrdenCompra.proveedor = this.selectedProveedor;
+  
+    // Generar PDF y obtener URL
+    const doc = new jsPDF();
+    // ... [El código para generar el PDF]
+    const pdfBlob = doc.output('blob');
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+    this.newOrdenCompra.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(pdfUrl).toString();
+  
     this.ordenCompraService.addOrdenCompra(this.newOrdenCompra);
+  
+    const notification = {
+      id: Date.now(),
+      status: 'Pendiente',
+      message: 'Nueva orden de compra creada',
+      solicitadaPor: this.newOrdenCompra.generadoPor,
+      productoOriginal: {},
+      cambiosSolicitados: {}
+    };
+    this.notificationService.addNotification(notification);
+  
     this.resetForm(this.form);
   }
+  
 
   resetForm(form: NgForm) {
     form.resetForm();

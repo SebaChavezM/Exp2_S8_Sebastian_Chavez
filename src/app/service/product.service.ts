@@ -70,7 +70,7 @@ export class ProductService {
     return JSON.parse(localStorage.getItem('products')!) || [];
   }
 
-  private saveProductsToLocalStorage(products: Product[]): void {
+  public saveProductsToLocalStorage(products: Product[]): void {
     localStorage.setItem('products', JSON.stringify(products));
     this.productsSubject.next(products);
   }
@@ -176,5 +176,14 @@ export class ProductService {
     const bodegas = new Set<string>();
     this.productsSubject.getValue().forEach(product => bodegas.add(product.bodega.toUpperCase()));
     return Array.from(bodegas);
+  }
+
+  updateStock(productCode: string, bodega: string, cantidad: number): void {
+    const currentProducts = this.productsSubject.getValue();
+    const productIndex = currentProducts.findIndex(p => p.code === productCode && p.bodega === bodega);
+    if (productIndex !== -1) {
+      currentProducts[productIndex].stock += cantidad;
+      this.saveProductsToLocalStorage(currentProducts);
+    }
   }
 }

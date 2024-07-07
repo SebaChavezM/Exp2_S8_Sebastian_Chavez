@@ -30,10 +30,13 @@ export class OrdenCompraService {
     this.saveOrdenesCompraToLocalStorage(currentOrdenesCompra);
   }
 
-  updateOrdenCompra(index: number, ordenCompra: OrdenCompra): void {
+  updateOrdenCompra(numero: number, updatedOrdenCompra: OrdenCompra): void {
     const currentOrdenesCompra = this.getOrdenesCompra();
-    currentOrdenesCompra[index] = ordenCompra;
-    this.saveOrdenesCompraToLocalStorage(currentOrdenesCompra);
+    const index = currentOrdenesCompra.findIndex(oc => oc.numero === numero);
+    if (index !== -1) {
+      currentOrdenesCompra[index] = updatedOrdenCompra;
+      this.saveOrdenesCompraToLocalStorage(currentOrdenesCompra);
+    }
   }
 
   deleteOrdenCompra(index: number): void {

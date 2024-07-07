@@ -10,6 +10,7 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { OrdenCompraComponent } from './orden-compra/orden-compra.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { AuthGuard } from './auth/auth.guard';
+import { ListadoOcComponent } from './listado-oc/listado-oc.component';
 import { ProveedorComponent } from './proveedor/proveedor.component';
 import { ReportComponent } from './report-page/report-page.component';
 import { ProyectosComponent } from './proyectos/proyectos.component';
@@ -30,6 +31,7 @@ export const routes: Routes = [
   { path: 'user-profile', component: UserProfileComponent },
   { path: 'usuarios', component: UserManagementComponent },
   { path: 'bulk-upload', component: BulkUploadComponent },
+  { path: 'listado-oc', component: ListadoOcComponent },
   { path: 'reportes', component: ReportComponent },
   { path: '**', redirectTo: 'login' }
 ];

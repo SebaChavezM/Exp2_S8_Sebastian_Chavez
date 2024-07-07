@@ -1,0 +1,121 @@
+<div class="container">
+  <h2>Listado de Órdenes de Compra</h2>
+  <table class="table table-custom">
+    <thead>
+      <tr>
+        <th>Número</th>
+        <th>Fecha</th>
+        <th>Proveedor</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ordenCompra of ordenesCompra">
+        <td>{{ ordenCompra.numero }}</td>
+        <td>{{ ordenCompra.fecha }}</td>
+        <td>{{ ordenCompra.proveedor?.nombre }}</td>
+        <td>
+          <span [ngClass]="{
+              'text-danger': ordenCompra.estado === 'Incompleta',
+              'text-warning': ordenCompra.estado === 'Parcial',
+              'text-success': ordenCompra.estado === 'Completa',
+              'text-info': ordenCompra.estado === 'Pendiente de Factura'
+            }">{{ ordenCompra.estado }}</span>
+        </td>
+        <td>
+          <button class="btn btn-primary" (click)="verPDF(ordenCompra)">Ver PDF</button>
+          <button class="btn btn-secondary" (click)="abrirModalDetalles(ordenCompra)">Ver Detalles</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal Detalles -->
+<ng-template #detallesModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Detalles de Orden de Compra</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>Orden de Compra N°:</strong> {{ selectedOrdenCompra?.numero }}</p>
+    <p><strong>Fecha:</strong> {{ selectedOrdenCompra?.fecha }}</p>
+    <p><strong>Proveedor:</strong> {{ selectedOrdenCompra?.proveedor?.nombre }}</p>
+    <p><strong>Estado:</strong> <span [ngClass]="{
+          'text-danger': selectedOrdenCompra?.estado === 'Incompleta',
+          'text-warning': selectedOrdenCompra?.estado === 'Parcial',
+          'text-success': selectedOrdenCompra?.estado === 'Completa',
+          'text-info': selectedOrdenCompra?.estado === 'Pendiente de Factura'
+        }">{{ selectedOrdenCompra?.estado }}</span></p>
+    <p><strong>Tipo Documento:</strong> {{ selectedOrdenCompra?.documentoTipo }} {{ selectedOrdenCompra?.numeroOEVDGG }}</p>
+    <p><strong>Items:</strong></p>
+    <table class="table table-custom">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Descripción</th>
+          <th>Cantidad Pedida</th>
+          <th>Precio</th>
+          <th>Total</th>
+          <th>Cantidad Pendiente</th>
+          <th>Cantidad Recepcionada</th>
+          <th>Bodega</th>
+          <th>Recepción</th>
+          <th>Factura</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of selectedOrdenCompra?.items">
+          <td>{{ item.codigo }}</td>
+          <td>{{ item.descripcion }}</td>
+          <td>{{ item.cantidad }}</td>
+          <td>{{ item.precio | currency }}</td>
+          <td>{{ item.total | currency }}</td>
+          <td>{{ item.cantidad - (item.recepcionada || 0) }}</td>
+          <td>{{ item.recepcionada || 0 }}</td>
+          <td>
+            <select class="form-control" [(ngModel)]="item.bodega">
+              <option *ngFor="let bodega of bodegas" [value]="bodega">{{ bodega }}</option>
+            </select>
+          </td>
+          <td>
+            <button type="button" class="btn btn-success" (click)="abrirModalRecepcion(item)">Confirmar Recepción</button>
+          </td>
+          <td><input type="text" class="form-control" [(ngModel)]="item.factura"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="guardarCambios()">Guardar</button>
+  </div>
+</ng-template>
+
+<!-- Modal Confirmación Recepción -->
+<ng-template #recepcionModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Confirmar Recepción</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>Producto:</strong> {{ selectedOrdenCompraItem?.descripcion }}</p>
+    <p><strong>Cantidad Pedida:</strong> {{ selectedOrdenCompraItem?.cantidad }}</p>
+    <p *ngIf="cantidadPendiente !== null && cantidadPendiente > 0">
+      <strong>Faltan por recepcionar:</strong> {{ cantidadPendiente }}
+    </p>
+    <div class="form-group">
+      <label for="cantidadRecepcionada">Cantidad Recepcionada</label>
+      <input type="number" id="cantidadRecepcionada" class="form-control" [(ngModel)]="cantidadRecepcionada" name="cantidadRecepcionada" min="0" [max]="cantidadPendiente">
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="confirmarRecepcion()">Confirmar</button>
+  </div>
+</ng-template>

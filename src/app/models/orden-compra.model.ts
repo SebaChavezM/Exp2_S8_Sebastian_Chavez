@@ -15,9 +15,9 @@ export interface OrdenCompra {
   numeroOEVDGG: string;
   documentoTipo: string;
   pedidoFabrica: string;
-  nota?: string;
-  numeroInterno?: string;
-  solicitadoPor?: string; 
+  solicitadoPor: string;
+  nota: string;
+  pdfUrl?: string;  // Agregar esta línea
 }
 
 export interface OrdenCompraItem {
@@ -34,7 +34,11 @@ export interface OrdenCompraItem {
   fechaEntregaEstimada: string;
   documentoTipo: string;
   pedidoFabrica: string;
+  bodega?: string;
+  recepcionada?: number;
+  factura?: string;
 }
+
 
 import { Proveedor } from './proveedor.model';
 
