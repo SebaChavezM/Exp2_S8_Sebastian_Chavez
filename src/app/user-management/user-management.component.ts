@@ -12,14 +12,14 @@ import { UserService, User } from '../service/user.service';
   imports: [FormsModule, CommonModule]
 })
 export class UserManagementComponent implements OnInit {
-  newUser: User = { firstName: '', lastName: '', email: '', password: '', role: 'User' };
+  newUser: User = { id: '', firstName: '', lastName: '', email: '', password: '', role: 'User' };
   repeatPassword: string = '';
   registerError: string = '';
   registerSuccess: string = '';
   users: User[] = [];
   filteredUsers: User[] = [];
   searchUserTerm: string = '';
-  selectedUser: User = { firstName: '', lastName: '', email: '', password: '', role: 'User' };
+  selectedUser: User = { id: '', firstName: '', lastName: '', email: '', password: '', role: 'User' };
 
   constructor(private userService: UserService) {}
 
@@ -48,6 +48,8 @@ export class UserManagementComponent implements OnInit {
         return;
       }
 
+      this.newUser.id = this.generateUserId(); // Genera un ID único
+
       this.userService.addUser(this.newUser).then(() => {
         this.registerSuccess = 'Usuario registrado exitosamente.';
         this.registerError = '';
@@ -57,6 +59,10 @@ export class UserManagementComponent implements OnInit {
         userModal?.hide();
       });
     }
+  }
+
+  generateUserId(): string {
+    return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   }
 
   onSearchUser(): void {
@@ -91,6 +97,8 @@ export class UserManagementComponent implements OnInit {
         this.registerSuccess = '';
         return;
       }
+
+      this.newUser.id = this.generateUserId(); // Genera un ID único
 
       this.userService.addUser(this.newUser).then(() => {
         this.registerSuccess = 'Usuario registrado exitosamente.';
@@ -155,7 +163,7 @@ export class UserManagementComponent implements OnInit {
   resetForm(form: NgForm, type: 'user' | 'product'): void {
     form.resetForm();
     if (type === 'user') {
-      this.newUser = { firstName: '', lastName: '', email: '', password: '', role: 'User' };
+      this.newUser = { id: '', firstName: '', lastName: '', email: '', password: '', role: 'User' };
       this.repeatPassword = '';
       this.registerError = '';
       this.registerSuccess = '';
