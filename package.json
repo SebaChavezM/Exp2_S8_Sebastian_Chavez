@@ -1,15 +1,15 @@
 {
   "name": "erp-praxa",
   "version": "0.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "compodoc": "npx compodoc -p tsconfig.app.json -d documentation",
-    "serve:ssr:erp-praxa": "node dist/erp-praxa/server/server.mjs"
-  },
+"scripts": {
+  "ng": "ng",
+  "start": "ng serve",
+  "build": "ng build --output-path=dist/erp-praxa",
+  "watch": "ng build --watch --configuration development",
+  "test": "ng test",
+  "compodoc": "npx compodoc -p tsconfig.app.json -d documentation",
+  "serve:ssr:erp-praxa": "node dist/erp-praxa/server/server.mjs"
+},
   "private": true,
   "dependencies": {
     "@angular/animations": "^18.0.6",
