@@ -13,9 +13,12 @@ import * as bootstrap from 'bootstrap';
   imports: [CommonModule, FormsModule]
 })
 export class ProveedorComponent implements OnInit {
+  /** Lista de proveedores */
   proveedores: Proveedor[] = [];
+  /** Proveedor seleccionado para edición */
   selectedProveedor: Proveedor | null = null;
 
+  /** Nuevo proveedor a agregar */
   newProveedor: Proveedor = {
     nombre: '',
     rut: '',
@@ -25,6 +28,11 @@ export class ProveedorComponent implements OnInit {
     contacto: ''
   };
 
+  /**
+   * Método de inicialización del componente.
+   * Carga la lista de proveedores desde el almacenamiento local.
+   * @returns {void}
+   */
   ngOnInit(): void {
     const storedProveedores = localStorage.getItem('proveedores');
     if (storedProveedores) {
@@ -32,6 +40,11 @@ export class ProveedorComponent implements OnInit {
     }
   }
 
+  /**
+   * Agrega un nuevo proveedor a la lista de proveedores.
+   * @param {NgForm} form - El formulario de entrada.
+   * @returns {void}
+   */
   addProveedor(form: NgForm): void {
     form.form.markAllAsTouched();
     if (form.valid) {
@@ -55,14 +68,27 @@ export class ProveedorComponent implements OnInit {
     }
   }
 
+  /**
+   * Guarda la lista de proveedores en el almacenamiento local.
+   * @returns {void}
+   */
   saveProveedores(): void {
     localStorage.setItem('proveedores', JSON.stringify(this.proveedores));
   }
 
+  /**
+   * Selecciona un proveedor para edición.
+   * @param {Proveedor} proveedor - El proveedor a seleccionar.
+   * @returns {void}
+   */
   selectProveedor(proveedor: Proveedor): void {
     this.selectedProveedor = { ...proveedor };
   }
 
+  /**
+   * Actualiza la información de un proveedor seleccionado.
+   * @returns {void}
+   */
   updateProveedor(): void {
     if (this.selectedProveedor) {
       const index = this.proveedores.findIndex(p => p.rut === this.selectedProveedor!.rut);
@@ -74,11 +100,21 @@ export class ProveedorComponent implements OnInit {
     }
   }
 
+  /**
+   * Elimina un proveedor de la lista de proveedores.
+   * @param {string} rut - El RUT del proveedor a eliminar.
+   * @returns {void}
+   */
   deleteProveedor(rut: string): void {
     this.proveedores = this.proveedores.filter(p => p.rut !== rut);
     this.saveProveedores();
   }
 
+  /**
+   * Formatea un RUT agregando puntos y guión.
+   * @param {string} rut - El RUT a formatear.
+   * @returns {string} - El RUT formateado.
+   */
   formatRUT(rut: string): string {
     rut = rut.replace(/[.-]/g, '');
     if (rut.length > 1) {

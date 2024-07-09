@@ -11,14 +11,51 @@ import * as bootstrap from 'bootstrap';
   standalone: true,
   imports: [CommonModule]
 })
+/**
+ * Componente para la carga masiva de productos desde un archivo Excel.
+ * 
+ * @class BulkUploadComponent
+ */
 export class BulkUploadComponent {
+  /**
+   * Vista previa de los productos cargados desde el archivo.
+   * 
+   * @type {Product[]}
+   * @memberof BulkUploadComponent
+   */
   productsPreview: Product[] = [];
+
+  /**
+   * Mensajes de error encontrados durante el procesamiento del archivo.
+   * 
+   * @type {string[]}
+   * @memberof BulkUploadComponent
+   */
   errorMessages: string[] = [];
+
+  /**
+   * Indicador para deshabilitar el botón de confirmación.
+   * 
+   * @type {boolean}
+   * @memberof BulkUploadComponent
+   */
   disableConfirmButton = false;
 
+  /**
+   * Crea una instancia de BulkUploadComponent.
+   * 
+   * @param {ProductService} productService Servicio de productos.
+   * @memberof BulkUploadComponent
+   */
   constructor(private productService: ProductService) { }
 
-  onFileChange(event: any) {
+  /**
+   * Maneja el cambio de archivo y procesa su contenido.
+   * 
+   * @param {Event} event Evento de cambio de archivo.
+   * @memberof BulkUploadComponent
+   */
+  onFileChange(event: any): void {
     const target: DataTransfer = <DataTransfer>(event.target);
     if (target.files.length !== 1) throw new Error('Cannot use multiple files');
 
@@ -35,7 +72,13 @@ export class BulkUploadComponent {
     reader.readAsBinaryString(target.files[0]);
   }
 
-  processData(data: any) {
+  /**
+   * Procesa los datos leídos del archivo Excel.
+   * 
+   * @param {any} data Datos leídos del archivo Excel.
+   * @memberof BulkUploadComponent
+   */
+  processData(data: any): void {
     this.productsPreview = [];
     this.errorMessages = [];
     this.disableConfirmButton = false;
@@ -99,14 +142,24 @@ export class BulkUploadComponent {
     }
   }
 
-  confirmBulkUpload() {
+  /**
+   * Confirma la carga masiva de productos.
+   * 
+   * @memberof BulkUploadComponent
+   */
+  confirmBulkUpload(): void {
     if (this.errorMessages.length === 0) {
       this.productService.addProducts(this.productsPreview);
       this.resetModal();
     }
   }
 
-  clearFile() {
+  /**
+   * Limpia el archivo seleccionado y los datos de vista previa.
+   * 
+   * @memberof BulkUploadComponent
+   */
+  clearFile(): void {
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     fileInput.value = '';
     this.productsPreview = [];
@@ -114,7 +167,12 @@ export class BulkUploadComponent {
     this.disableConfirmButton = false;
   }
 
-  resetModal() {
+  /**
+   * Reinicia el modal de carga.
+   * 
+   * @memberof BulkUploadComponent
+   */
+  resetModal(): void {
     this.clearFile();
     const modal = document.querySelector('.modal.show') as HTMLElement;
     if (modal) {

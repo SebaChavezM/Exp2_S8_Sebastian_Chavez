@@ -12,6 +12,7 @@ import * as XLSX from 'xlsx';
   imports: [FormsModule, CommonModule]
 })
 export class ReportComponent {
+  /** Tipos de reportes disponibles */
   reportTypes = [
     { value: 'generalInventory', label: 'Inventario General' },
     { value: 'inventoryMovements', label: 'Movimientos de Inventario' },
@@ -25,14 +26,26 @@ export class ReportComponent {
     { value: 'inventoryAudit', label: 'Auditoría de Inventario' }
   ];
 
+  /** Tipo de reporte seleccionado */
   selectedReportType: string = '';
+  /** Parámetros del reporte */
   reportParams: any = {};
+  /** Datos del reporte */
   reportData: any[] = [];
+  /** Encabezados del reporte */
   reportHeaders: string[] = [];
 
+  /**
+   * Constructor del componente.
+   * @param {ReportService} reportService - Servicio de reportes.
+   */
   constructor(private reportService: ReportService) { }
 
-  generateReport() {
+  /**
+   * Genera el reporte basado en el tipo de reporte seleccionado y los parámetros proporcionados.
+   * @returns {void}
+   */
+  generateReport(): void {
     if (!this.selectedReportType) {
       alert('Seleccione un tipo de reporte');
       return;
@@ -48,7 +61,11 @@ export class ReportComponent {
     this.reportHeaders = this.reportService.getReportHeaders(this.selectedReportType);
   }
 
-  downloadExcel() {
+  /**
+   * Descarga el reporte generado en formato Excel.
+   * @returns {void}
+   */
+  downloadExcel(): void {
     if (this.reportData.length === 0) {
       alert('No hay datos para exportar');
       return;
@@ -60,7 +77,11 @@ export class ReportComponent {
     XLSX.writeFile(wb, `${this.selectedReportType}.xlsx`);
   }
 
-  resetParams() {
+  /**
+   * Restablece los parámetros y los datos del reporte.
+   * @returns {void}
+   */
+  resetParams(): void {
     this.reportParams = {};
     this.reportData = [];
     this.reportHeaders = [];

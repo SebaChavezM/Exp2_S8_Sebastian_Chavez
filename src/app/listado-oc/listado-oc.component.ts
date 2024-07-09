@@ -24,28 +24,53 @@ export class ListadoOcComponent implements OnInit {
   @ViewChild('detallesModal', { static: false }) detallesModal: any;
   @ViewChild('recepcionModal', { static: false }) recepcionModal: any;
 
+  /**
+   * Constructor del componente ListadoOcComponent.
+   * @param {OrdenCompraService} ordenCompraService - Servicio de órdenes de compra.
+   * @param {NgbModal} modalService - Servicio de modal de Ngb.
+   * @param {ProductService} productService - Servicio de productos.
+   */
   constructor(
     private ordenCompraService: OrdenCompraService,
     private modalService: NgbModal,
     private productService: ProductService
   ) {}
 
+  /**
+   * Método de inicialización del componente.
+   * @returns {void}
+   */
   ngOnInit(): void {
     this.ordenesCompra = this.ordenCompraService.getOrdenesCompra();
     this.bodegas = this.productService.getAllBodegas();
   }
 
+  /**
+   * Abre un PDF de la orden de compra en una nueva pestaña.
+   * @param {OrdenCompra} ordenCompra - La orden de compra que contiene el URL del PDF.
+   * @returns {void}
+   */
   verPDF(ordenCompra: OrdenCompra): void {
     if (ordenCompra.pdfUrl) {
       window.open(ordenCompra.pdfUrl, '_blank');
     }
   }
 
+  /**
+   * Abre el modal de detalles de la orden de compra seleccionada.
+   * @param {OrdenCompra} ordenCompra - La orden de compra seleccionada.
+   * @returns {void}
+   */
   abrirModalDetalles(ordenCompra: OrdenCompra): void {
     this.selectedOrdenCompra = ordenCompra;
     this.modalService.open(this.detallesModal, { size: 'xl' });
   }
 
+  /**
+   * Abre el modal de recepción de un ítem de la orden de compra seleccionada.
+   * @param {OrdenCompraItem} item - El ítem de la orden de compra seleccionada.
+   * @returns {void}
+   */
   abrirModalRecepcion(item: OrdenCompraItem): void {
     this.selectedOrdenCompraItem = item;
     this.cantidadRecepcionada = item.recepcionada || 0;
@@ -53,6 +78,10 @@ export class ListadoOcComponent implements OnInit {
     this.modalService.open(this.recepcionModal);
   }
 
+  /**
+   * Confirma la recepción de los ítems en el modal de recepción.
+   * @returns {void}
+   */
   confirmarRecepcion(): void {
     if (this.selectedOrdenCompraItem && this.cantidadRecepcionada !== null && this.cantidadPendiente !== null) {
       const item = this.selectedOrdenCompraItem;
@@ -75,6 +104,10 @@ export class ListadoOcComponent implements OnInit {
     }
   }
 
+  /**
+   * Actualiza el estado de la orden de compra seleccionada.
+   * @returns {void}
+   */
   actualizarEstadoOrdenCompra(): void {
     if (this.selectedOrdenCompra) {
       const allItemsRecepcionados = this.selectedOrdenCompra.items.every(item => item.recepcionada && item.recepcionada >= item.cantidad);
@@ -94,6 +127,10 @@ export class ListadoOcComponent implements OnInit {
     }
   }
 
+  /**
+   * Guarda los cambios realizados en la orden de compra.
+   * @returns {void}
+   */
   guardarCambios(): void {
     if (this.selectedOrdenCompra) {
       this.selectedOrdenCompra.items.forEach(item => {

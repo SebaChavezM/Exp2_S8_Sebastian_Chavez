@@ -7,11 +7,19 @@ import { ProyectosService } from '../service/proyecto.service';
 import { BulkUploadComponent } from '../bulk-upload/bulk-upload.component';
 import * as bootstrap from 'bootstrap';
 
+/**
+ * Interfaz para representar una bodega.
+ * @interface
+ */
 interface Bodega {
   name: string;
   products: Product[];
 }
 
+/**
+ * Interfaz para representar un proyecto.
+ * @interface
+ */
 interface Proyecto {
   tipo: string;
   numero: string;
@@ -25,6 +33,11 @@ interface Proyecto {
   standalone: true,
   imports: [FormsModule, CommonModule, BulkUploadComponent]
 })
+/**
+ * Componente del panel de control del dashboard.
+ * @class
+ * @implements {OnInit}
+ */
 export class DashboardComponent implements OnInit {
   products: Product[] = [];
   allProducts: Product[] = [];
@@ -97,64 +110,97 @@ export class DashboardComponent implements OnInit {
   relatedProject: Proyecto | null = null;
   projects: Proyecto[] = [];
 
+  /**
+   * Constructor del componente.
+   * @param {ProductService} productService - Servicio de productos.
+   * @param {AuthService} authService - Servicio de autenticación.
+   * @param {ProyectosService} proyectosService - Servicio de proyectos.
+   */
   constructor(
     private productService: ProductService,
     private authService: AuthService,
     private proyectosService: ProyectosService) {}
 
-ngOnInit(): void {
-  this.productService.products$.subscribe(products => {
-    this.products = products;
-    this.updateBodegaProducts();
-  });
+  /**
+   * Método de inicialización del componente.
+   * @returns {void}
+   */
+  ngOnInit(): void {
+    this.productService.products$.subscribe(products => {
+      this.products = products;
+      this.updateBodegaProducts();
+    });
 
-  this.proyectosService.proyectos$.subscribe(projects => {
-    this.projects = projects;
-    console.log('Projects loaded:', this.projects);
-  });
+    this.proyectosService.proyectos$.subscribe(projects => {
+      this.projects = projects;
+      console.log('Projects loaded:', this.projects);
+    });
 
-  this.productService.historial$.subscribe(historial => {
-    this.historial = historial;
-    this.filteredHistorial = historial;
-  });
+    this.productService.historial$.subscribe(historial => {
+      this.historial = historial;
+      this.filteredHistorial = historial;
+    });
 
-  this.today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
-  this.registroNumeroIngreso = this.productService.getNextIngresoNumber();
-  this.registroNumeroSalida = this.productService.getNextSalidaNumber();
-  this.loadBodegas();
-  this.loadAllProducts();
+    this.today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    this.registroNumeroIngreso = this.productService.getNextIngresoNumber();
+    this.registroNumeroSalida = this.productService.getNextSalidaNumber();
+    this.loadBodegas();
+    this.loadAllProducts();
 
-  if (this.bodegas.length === 0) {
-    this.bodegas.push({ name: 'BODEGA PRINCIPAL', products: [] }); // Normalize name to uppercase
-    this.selectedBodega = this.bodegas[0];
-    this.saveBodegas();
-  } else {
-    this.selectedBodega = this.bodegas[0];
+    if (this.bodegas.length === 0) {
+      this.bodegas.push({ name: 'BODEGA PRINCIPAL', products: [] }); // Normalize name to uppercase
+      this.selectedBodega = this.bodegas[0];
+      this.saveBodegas();
+    } else {
+      this.selectedBodega = this.bodegas[0];
+    }
+    this.filteredProducts = this.selectedBodega.products;
+    this.selectedBodegaOrigen = this.bodegas.length > 0 ? this.bodegas[0] : null;
+    this.selectedBodegaDestino = this.bodegas.length > 1 ? this.bodegas[1] : null; // Ensure there are at least 2 bodegas
   }
-  this.filteredProducts = this.selectedBodega.products;
-  this.selectedBodegaOrigen = this.bodegas.length > 0 ? this.bodegas[0] : null;
-  this.selectedBodegaDestino = this.bodegas.length > 1 ? this.bodegas[1] : null; // Ensure there are at least 2 bodegas
-}
 
-
+  /**
+   * Normaliza el código del producto.
+   * @param {any} code - Código del producto.
+   * @returns {string} - Código normalizado.
+   */
   normalizeCode(code: any): string {
     return typeof code === 'string' ? code.trim().toUpperCase() : '';
   }
 
+  /**
+   * Verifica si un producto existe en la bodega seleccionada.
+   * @param {string} code - Código del producto.
+   * @returns {boolean} - Verdadero si el producto existe, falso en caso contrario.
+   */
   productExists(code: string): boolean {
     const normalizedCode = this.normalizeCode(code);
     return this.selectedBodega.products.some(product => this.normalizeCode(product.code) === normalizedCode);
   }
 
+  /**
+   * Convierte el valor de entrada a mayúsculas.
+   * @param {Event} event - Evento de entrada.
+   * @returns {void}
+   */
   toUpperCase(event: Event): void {
     const input = event.target as HTMLInputElement;
     input.value = input.value.toUpperCase();
   }
 
+  /**
+   * Verifica la existencia del código del producto.
+   * @returns {void}
+   */
   checkProductCode(): void {
     this.productCodeExists = this.productExists(this.newProduct.code);
   }
 
+  /**
+   * Realiza la búsqueda de un producto.
+   * @param {Event} event - Evento de búsqueda.
+   * @returns {void}
+   */
   onSearchProduct(event: any): void {
     this.searchProductTerm = event.target.value.toLowerCase();
     if (this.searchProductTerm) {
@@ -168,11 +214,19 @@ ngOnInit(): void {
     }
   }
 
+  /**
+   * Abre el modal del usuario.
+   * @returns {void}
+   */
   openUserModal(): void {
     const userModal = new bootstrap.Modal(document.getElementById('userModal')!);
     userModal.show();
   }
 
+  /**
+   * Alterna la visibilidad de la contraseña.
+   * @returns {void}
+   */
   togglePasswordVisibility(): void {
     const passwordField = document.getElementById('editPassword') as HTMLInputElement;
     if (passwordField.type === 'password') {
@@ -182,8 +236,11 @@ ngOnInit(): void {
     }
   }
 
-  
-
+  /**
+   * Abre el modal de confirmación para eliminar un producto.
+   * @param {number} index - Índice del producto a eliminar.
+   * @returns {void}
+   */
   onDeleteProduct(index: number): void {
     this.selectedProductIndexToDelete = index;
     this.productToDelete = this.selectedBodega.products[index];
@@ -191,27 +248,47 @@ ngOnInit(): void {
     confirmDeleteModal.show();
   }
 
-onConfirmDelete(): void {
-  if (this.productToDelete) {
-    this.productService.deleteProductByCode(this.productToDelete.code);
-    this.productToDelete = null;
-    this.selectedProductIndexToDelete = -1;
-    const confirmDeleteModal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal')!);
-    confirmDeleteModal?.hide();
+  /**
+   * Confirma la eliminación de un producto.
+   * @returns {void}
+   */
+  onConfirmDelete(): void {
+    if (this.productToDelete) {
+      this.productService.deleteProductByCode(this.productToDelete.code);
+      this.productToDelete = null;
+      this.selectedProductIndexToDelete = -1;
+      const confirmDeleteModal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal')!);
+      confirmDeleteModal?.hide();
+    }
   }
-}
 
+  /**
+   * Actualiza un producto existente.
+   * @param {number} index - Índice del producto a actualizar.
+   * @param {Product} product - Datos del producto actualizados.
+   * @returns {void}
+   */
   onUpdateProduct(index: number, product: Product): void {
     this.selectedBodega.products[index] = product;
     this.saveBodegas();
   }
 
+  /**
+   * Visualiza la información de un producto.
+   * @param {number} index - Índice del producto a visualizar.
+   * @returns {void}
+   */
   onViewProductInfo(index: number): void {
     this.selectedProduct = this.selectedBodega.products[index];
     const productInfoModal = new bootstrap.Modal(document.getElementById('productInfoModal')!);
     productInfoModal.show();
   }
 
+  /**
+   * Edita un producto existente.
+   * @param {number} index - Índice del producto a editar.
+   * @returns {void}
+   */
   onEditProduct(index: number): void {
     this.selectedProductIndexToEdit = index;
     this.selectedProductToEdit = { ...this.selectedBodega.products[index] };
@@ -219,6 +296,10 @@ onConfirmDelete(): void {
     editProductModal.show();
   }
 
+  /**
+   * Carga las bodegas del almacenamiento local.
+   * @returns {void}
+   */
   loadBodegas(): void {
     const bodegas = localStorage.getItem('bodegas');
     if (bodegas) {
@@ -232,10 +313,18 @@ onConfirmDelete(): void {
     this.updateBodegaProducts();
   }
 
+  /**
+   * Guarda las bodegas en el almacenamiento local.
+   * @returns {void}
+   */
   saveBodegas(): void {
     localStorage.setItem('bodegas', JSON.stringify(this.bodegas));
   }
 
+  /**
+   * Actualiza los productos de cada bodega.
+   * @returns {void}
+   */
   updateBodegaProducts(): void {
     this.bodegas.forEach(bodega => {
       bodega.products = this.products.filter(product => product.bodega === bodega.name);
@@ -243,6 +332,11 @@ onConfirmDelete(): void {
     this.filteredProducts = this.selectedBodega.products;
   }
 
+  /**
+   * Añade un producto a una bodega.
+   * @param {Product} product - Producto a añadir.
+   * @returns {void}
+   */
   addProductToBodega(product: Product): void {
     const targetBodega = this.bodegas.find(b => b.name === product.bodega);
     if (targetBodega && !targetBodega.products.some(p => p.code === product.code)) {
@@ -251,17 +345,30 @@ onConfirmDelete(): void {
     }
   }
 
+  /**
+   * Carga todos los productos de todas las bodegas.
+   * @returns {void}
+   */
   loadAllProducts(): void {
     this.allProducts = this.bodegas.reduce((acc: Product[], bodega: Bodega) => {
       return acc.concat(bodega.products);
     }, []);
   }
 
+  /**
+   * Selecciona una bodega.
+   * @param {Bodega} bodega - Bodega seleccionada.
+   * @returns {void}
+   */
   selectBodega(bodega: Bodega): void {
     this.selectedBodega = bodega;
     this.filteredProducts = bodega.products;
   }
 
+  /**
+   * Guarda los cambios en un producto editado.
+   * @returns {void}
+   */
   onSaveEditProduct(): void {
     if (this.selectedProductToEdit && this.selectedProductIndexToEdit !== -1) {
       this.selectedProductToEdit.bodega = this.selectedBodega.name;
@@ -289,50 +396,60 @@ onConfirmDelete(): void {
     }
   }
 
-onAddProduct(form: NgForm): void {
-  form.form.markAllAsTouched();
-  if (form.valid) {
-    if (!this.productExists(this.newProduct.code)) {
-      this.newProduct.code = this.normalizeCode(this.newProduct.code);
-      const targetBodega = this.bodegas.find(b => b.name === this.newProduct.bodega);
-      if (targetBodega) {
-        targetBodega.products.push(this.newProduct);
-        this.productService.addProduct(this.newProduct);
-        this.saveBodegas();
+  /**
+   * Añade un nuevo producto.
+   * @param {NgForm} form - Formulario de producto.
+   * @returns {void}
+   */
+  onAddProduct(form: NgForm): void {
+    form.form.markAllAsTouched();
+    if (form.valid) {
+      if (!this.productExists(this.newProduct.code)) {
+        this.newProduct.code = this.normalizeCode(this.newProduct.code);
+        const targetBodega = this.bodegas.find(b => b.name === this.newProduct.bodega);
+        if (targetBodega) {
+          targetBodega.products.push(this.newProduct);
+          this.productService.addProduct(this.newProduct);
+          this.saveBodegas();
+        }
+        form.resetForm();
+        this.newProduct = {
+          code: '',
+          name: '',
+          description: '',
+          model: '',
+          brand: '',
+          material: '',
+          color: '',
+          family: '',
+          value: 0,
+          currency: '',
+          unit: '',
+          location: '',
+          stock: 0,
+          bodega: 'Bodega Principal'
+        };
+        const formElement = document.querySelector('form.needs-validation-product');
+        if (formElement) {
+          formElement.classList.remove('was-validated');
+        }
+        this.loadAllProducts();
+      } else {
+        alert('El código del producto ya existe. Por favor, ingrese un código diferente.');
       }
-      form.resetForm();
-      this.newProduct = {
-        code: '',
-        name: '',
-        description: '',
-        model: '',
-        brand: '',
-        material: '',
-        color: '',
-        family: '',
-        value: 0,
-        currency: '',
-        unit: '',
-        location: '',
-        stock: 0,
-        bodega: 'Bodega Principal'
-      };
+    } else {
       const formElement = document.querySelector('form.needs-validation-product');
       if (formElement) {
-        formElement.classList.remove('was-validated');
+        formElement.classList.add('was-validated');
       }
-      this.loadAllProducts();
-    } else {
-      alert('El código del producto ya existe. Por favor, ingrese un código diferente.');
-    }
-  } else {
-    const formElement = document.querySelector('form.needs-validation-product');
-    if (formElement) {
-      formElement.classList.add('was-validated');
     }
   }
-}
 
+  /**
+   * Añade una nueva bodega.
+   * @param {NgForm} form - Formulario de bodega.
+   * @returns {void}
+   */
   addBodega(form: NgForm): void {
     if (this.newBodegaName) {
       this.bodegas.push({ name: this.newBodegaName, products: [] });
@@ -343,6 +460,12 @@ onAddProduct(form: NgForm): void {
     }
   }
 
+  /**
+   * Restablece el formulario especificado.
+   * @param {NgForm} form - Formulario a restablecer.
+   * @param {'user' | 'product'} type - Tipo de formulario.
+   * @returns {void}
+   */
   resetForm(form: NgForm, type: 'user' | 'product'): void {
     form.resetForm();
     if (type === 'user') {
@@ -373,6 +496,10 @@ onAddProduct(form: NgForm): void {
     }
   }
 
+  /**
+   * Añade un producto a la lista de ingreso.
+   * @returns {void}
+   */
   onAddProductoToIngreso(): void {
     if (!this.selectedProduct) {
       alert('Por favor, seleccione un producto.');
@@ -392,10 +519,19 @@ onAddProduct(form: NgForm): void {
     this.cantidadIngreso = 1;
   }
 
+  /**
+   * Elimina un ítem de la lista de ingreso.
+   * @param {number} index - Índice del ítem a eliminar.
+   * @returns {void}
+   */
   onEliminarItem(index: number): void {
     this.ingresoItems.splice(index, 1);
   }
 
+  /**
+   * Confirma el ingreso de productos.
+   * @returns {void}
+   */
   onConfirmarIngreso(): void {
     this.ingresoItems.forEach(item => {
       const product = this.selectedBodega.products.find(p => p.code === item.product.code);
@@ -432,11 +568,19 @@ onAddProduct(form: NgForm): void {
     }
   }
 
+  /**
+   * Muestra el modal para agregar una nueva bodega.
+   * @returns {void}
+   */
   openAddBodegaModal(): void {
     const addBodegaModal = new bootstrap.Modal(document.getElementById('addBodegaModal')!);
     addBodegaModal.show();
   }
 
+  /**
+   * Añade un producto a la lista de salida.
+   * @returns {void}
+   */
   onAddProductoToSalida(): void {
     if (!this.selectedProductSalida) {
       alert('Por favor, seleccione un producto.');
@@ -458,6 +602,10 @@ onAddProduct(form: NgForm): void {
     this.cantidadSalida = 1;
   }
 
+  /**
+   * Confirma la salida de productos.
+   * @returns {void}
+   */
   onConfirmarSalida(): void {
     this.salidaItems.forEach(item => {
       const product = this.selectedBodega.products.find(p => p.code === item.product.code);
@@ -499,15 +647,29 @@ onAddProduct(form: NgForm): void {
     }
   }
 
+  /**
+   * Elimina un ítem de la lista de salida.
+   * @param {number} index - Índice del ítem a eliminar.
+   * @returns {void}
+   */
   onEliminarItemSalida(index: number): void {
     this.salidaItems.splice(index, 1);
   }
 
+  /**
+   * Abre el historial de movimientos.
+   * @returns {void}
+   */
   onAbrirHistorial(): void {
     const detalleHistorialModal = new bootstrap.Modal(document.getElementById('detalleHistorialModal')!);
     detalleHistorialModal.show();
   }
 
+  /**
+   * Visualiza los detalles de un movimiento.
+   * @param {Movimiento} movimiento - Movimiento a visualizar.
+   * @returns {void}
+   */
   onVerDetallesMovimiento(movimiento: Movimiento): void {
     this.selectedMovimiento = movimiento;
     const detalleMovimientoModal = new bootstrap.Modal(document.getElementById('detalleMovimientoModal')!);
@@ -516,6 +678,10 @@ onAddProduct(form: NgForm): void {
     detalleHistorialModal?.hide();
   }
 
+  /**
+   * Carga los proyectos del almacenamiento local.
+   * @returns {void}
+   */
   loadProjects(): void {
     const storedProjects = localStorage.getItem('projects');
     if (storedProjects) {
@@ -523,6 +689,10 @@ onAddProduct(form: NgForm): void {
     }
   }
 
+  /**
+   * Realiza la búsqueda en el historial.
+   * @returns {void}
+   */
   onSearchHistorial(): void {
     this.relatedProject = null;
     const searchTerm = this.searchHistorialTerm.toLowerCase();
@@ -557,8 +727,12 @@ onAddProduct(form: NgForm): void {
 
       console.log('Filtered Historial (no search term):', this.filteredHistorial);
     }
-}
+  }
 
+  /**
+   * Vuelve al historial de movimientos.
+   * @returns {void}
+   */
   onVolverHistorial(): void {
     const detalleMovimientoModal = bootstrap.Modal.getInstance(document.getElementById('detalleMovimientoModal')!);
     detalleMovimientoModal?.hide();
@@ -566,6 +740,10 @@ onAddProduct(form: NgForm): void {
     detalleHistorialModal.show();
   }
 
+  /**
+   * Añade un producto a la lista de traslado.
+   * @returns {void}
+   */
   onAddProductoToTraslado(): void {
     if (!this.selectedProductTraslado) {
       alert('Por favor, seleccione un producto.');
@@ -584,10 +762,19 @@ onAddProduct(form: NgForm): void {
     this.selectedProductTraslado = null;
   }
 
+  /**
+   * Elimina un ítem de la lista de traslado.
+   * @param {number} index - Índice del ítem a eliminar.
+   * @returns {void}
+   */
   onEliminarItemTraslado(index: number): void {
     this.trasladoItems.splice(index, 1);
   }
 
+  /**
+   * Confirma el traslado de productos.
+   * @returns {void}
+   */
   onConfirmarTraslado(): void {
     if (!this.selectedBodegaOrigen || !this.selectedBodegaDestino || this.selectedBodegaOrigen === this.selectedBodegaDestino) {
       alert('Seleccione bodegas válidas.');

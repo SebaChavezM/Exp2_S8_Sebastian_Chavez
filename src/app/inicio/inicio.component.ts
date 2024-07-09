@@ -12,9 +12,18 @@ import { CommonModule } from '@angular/common';
 })
 export class InicioComponent {
 
+  /**
+   * Constructor del componente Inicio.
+   * @param {AuthService} authService - Servicio de autenticación.
+   * @param {Router} router - Router para la navegación.
+   */
   constructor(public authService: AuthService, private router: Router) {}
 
-  navigateToDashboard() {
+  /**
+   * Navega al panel de control correspondiente según el rol del usuario.
+   * @returns {void}
+   */
+  navigateToDashboard(): void {
     const userRole = this.authService.getCurrentUser()?.role;
     if (userRole === 'Admin') {
       this.router.navigate(['/admin-dashboard']);
@@ -27,7 +36,12 @@ export class InicioComponent {
     }
   }
 
-  navigateToPage(page: string) {
+  /**
+   * Navega a una página específica.
+   * @param {string} page - La ruta de la página a la que se va a navegar.
+   * @returns {void}
+   */
+  navigateToPage(page: string): void {
     this.router.navigate([page]);
   }
 }
