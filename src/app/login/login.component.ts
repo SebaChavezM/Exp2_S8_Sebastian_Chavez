@@ -145,7 +145,6 @@ export class LoginComponent {
 
     this.isAdult = age >= 18;
   }
-
   /**
    * Reinicia el modal de recuperación de cuenta.
    * @returns {void}
