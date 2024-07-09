@@ -1,7 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import * as bootstrap from 'bootstrap';
+import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -11,28 +10,44 @@ import { AuthService } from '../auth/auth.service';
   standalone: true,
   imports: [CommonModule, FormsModule]
 })
+/**
+ * Componente de inicio de sesión.
+ * @class
+ */
 export class LoginComponent {
+  /** Correo electrónico del usuario */
   email: string = '';
+  /** Contraseña del usuario */
   password: string = '';
+  /** Correo electrónico para la recuperación de la cuenta */
   recoveryEmail: string = '';
+  /** Nombre completo del usuario */
   fullName: string = '';
+  /** Fecha de nacimiento del usuario */
   birthDate: string = '';
+  /** Área de trabajo del usuario */
   workArea: string = '';
+  /** Supervisor del usuario */
   supervisor: string = '';
+  /** Mensaje de error relacionado con el correo electrónico */
   emailError: string = '';
+  /** Mensaje de error relacionado con el inicio de sesión */
   loginError: string = '';
+  /** Indica si el correo electrónico es válido */
   emailValid: boolean = true;
+  /** Indica si el usuario es mayor de edad */
   isAdult: boolean = true;
 
   /**
-   * Constructor del componente LoginComponent.
+   * Constructor del componente.
    * @param {AuthService} authService - Servicio de autenticación.
    */
   constructor(private authService: AuthService) {}
 
   /**
-   * Maneja el envío del formulario de inicio de sesión.
-   * @param {NgForm} form - Formulario de inicio de sesión.
+   * Maneja el evento de envío del formulario de inicio de sesión.
+   * 
+   * @param {NgForm} form - El formulario de inicio de sesión.
    * @returns {void}
    */
   onSubmit(form: NgForm): void {
@@ -63,8 +78,9 @@ export class LoginComponent {
   }
 
   /**
-   * Envía una notificación para la recuperación de la cuenta.
-   * @param {NgForm} form - Formulario de notificación.
+   * Envía una notificación para la recuperación de cuenta.
+   * 
+   * @param {NgForm} form - El formulario de recuperación de cuenta.
    * @returns {void}
    */
   sendNotification(form: NgForm): void {
@@ -89,8 +105,9 @@ export class LoginComponent {
   }
 
   /**
-   * Muestra un paso específico en el flujo de recuperación.
-   * @param {number} step - Número del paso a mostrar.
+   * Muestra el paso actual en el proceso de recuperación de cuenta.
+   * 
+   * @param {number} step - El paso actual a mostrar.
    * @returns {void}
    */
   showStep(step: number): void {
@@ -111,8 +128,9 @@ export class LoginComponent {
   }
 
   /**
-   * Valida la edad del usuario a partir de la fecha de nacimiento.
-   * @param {Event} event - Evento de cambio en la entrada de fecha de nacimiento.
+   * Valida si la edad del usuario es mayor o igual a 18 años.
+   * 
+   * @param {Event} event - El evento de cambio de fecha de nacimiento.
    * @returns {void}
    */
   validateAge(event: any): void {
@@ -129,7 +147,7 @@ export class LoginComponent {
   }
 
   /**
-   * Restablece el modal de recuperación de cuenta.
+   * Reinicia el modal de recuperación de cuenta.
    * @returns {void}
    */
   resetModal(): void {

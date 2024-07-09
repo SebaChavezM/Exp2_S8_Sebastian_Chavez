@@ -100,7 +100,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="interfaces/Notification.html" data-type="entity-link" >Notification</a>
                             </li>
                             <li class="link">
-                                <a href="interfaces/User.html" data-type="entity-link" >User</a>
+                                <a href="interfaces/Proyecto.html" data-type="entity-link" >Proyecto</a>
                             </li>
                         </ul>
                     </li>

@@ -8,22 +8,29 @@ import { BulkUploadComponent } from '../bulk-upload/bulk-upload.component';
 import * as bootstrap from 'bootstrap';
 
 /**
- * Interfaz para representar una bodega.
- * @interface
+ * Representa una bodega en la aplicación.
+ * @interface Bodega
  */
 interface Bodega {
+  /** El nombre de la bodega. */
   name: string;
+  /** Lista de productos en la bodega. */
   products: Product[];
 }
 
 /**
- * Interfaz para representar un proyecto.
- * @interface
+ * Representa un proyecto en la aplicación.
+ * @interface Proyecto
  */
 interface Proyecto {
+  /** El tipo de proyecto. */
   tipo: string;
+  /** El número de identificación del proyecto. */
   numero: string;
+  /** El nombre del proyecto. */
   nombre: string;
+  /** El estado actual del proyecto (opcional). */
+  estado?: string;
 }
 
 @Component({
@@ -39,18 +46,31 @@ interface Proyecto {
  * @implements {OnInit}
  */
 export class DashboardComponent implements OnInit {
+  /** Lista de todos los productos. */
   products: Product[] = [];
+  /** Lista de todos los productos combinados de todas las bodegas. */
   allProducts: Product[] = [];
+  /** Lista de productos filtrados para mostrar. */
   filteredProducts: Product[] = [];
+  /** Historial de movimientos de productos. */
   historial: Movimiento[] = [];
+  /** Índice del producto seleccionado para eliminar. */
   selectedProductIndexToDelete: number = -1;
+  /** Índice del producto seleccionado para editar. */
   selectedProductIndexToEdit: number = -1;
+  /** Producto seleccionado actualmente. */
   selectedProduct: Product | null = null;
+  /** Producto seleccionado actualmente para salida. */
   selectedProductSalida: Product | null = null;
+  /** Lista de todas las bodegas. */
   bodegas: Bodega[] = [];
+  /** Bodega seleccionada actualmente. */
   selectedBodega: Bodega = { name: 'Bodega Principal', products: [] };
+  /** Nombre de la nueva bodega a agregar. */
   newBodegaName: string = '';
+  /** Término de búsqueda para filtrar productos. */
   searchProductTerm: string = '';
+  /** Nuevo producto a agregar. */
   newProduct: Product = {
     code: '',
     name: '',
@@ -67,17 +87,29 @@ export class DashboardComponent implements OnInit {
     stock: 0,
     bodega: 'Bodega Principal'
   };
+  /** Lista de ítems de ingreso. */
   ingresoItems: any[] = [];
+  /** Lista de ítems de salida. */
   salidaItems: any[] = [];
+  /** Cantidad de ingreso. */
   cantidadIngreso: number = 1;
+  /** Cantidad de salida. */
   cantidadSalida: number = 1;
+  /** Tipo de documento para la salida. */
   tipoDocumento: string = '';
+  /** Número de documento para la salida. */
   numeroDocumento: string = '';
+  /** Motivo de la salida. */
   motivoSalida: string = '';
+  /** Número de registro de ingreso. */
   registroNumeroIngreso: number = 0;
+  /** Número de registro de salida. */
   registroNumeroSalida: number = 0;
+  /** Fecha actual en formato de cadena. */
   today: string = '';
+  /** Movimiento seleccionado actualmente. */
   selectedMovimiento: Movimiento | null = null;
+  /** Producto seleccionado actualmente para edición. */
   selectedProductToEdit: Product = {
     code: '',
     name: '',
@@ -94,22 +126,36 @@ export class DashboardComponent implements OnInit {
     stock: 0,
     bodega: 'Bodega Principal'
   };
+  /** Producto a eliminar. */
   productToDelete: Product | null = null;
+  /** Indica si el código del producto ya existe. */
   productCodeExists: boolean = false;
+  /** Mensaje de error en el registro. */
   registerError: string = '';
+  /** Mensaje de éxito en el registro. */
   registerSuccess: string = '';
+  /** Lista de ítems de traslado. */
   trasladoItems: any[] = [];
+  /** Bodega de origen seleccionada para traslado. */
   selectedBodegaOrigen: Bodega | null = null;
+  /** Bodega de destino seleccionada para traslado. */
   selectedBodegaDestino: Bodega | null = null;
+  /** Producto seleccionado actualmente para traslado. */
   selectedProductTraslado: Product | null = null;
+  /** Término de búsqueda en el historial. */
   searchHistorialTerm: string = '';
+  /** Lista de movimientos filtrados en el historial. */
   filteredHistorial: Movimiento[] = [];
+  /** Filtro para mostrar ingresos en el historial. */
   filterIngreso: boolean = true;
+  /** Filtro para mostrar salidas en el historial. */
   filterSalida: boolean = true;
+  /** Filtro para mostrar traslados en el historial. */
   filterTraslado: boolean = true;
+  /** Proyecto relacionado actualmente. */
   relatedProject: Proyecto | null = null;
+  /** Lista de proyectos. */
   projects: Proyecto[] = [];
-
   /**
    * Constructor del componente.
    * @param {ProductService} productService - Servicio de productos.

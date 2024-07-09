@@ -98,7 +98,7 @@
   <li class="breadcrumb-item">Interfaces</li>
   <li class="breadcrumb-item"
   >
-  Bodega</li>
+  Proyecto</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -130,7 +130,7 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Representa una bodega en la aplicación.</p>
+                <p>Representa un proyecto en la aplicación.</p>
 
             </p>
 
@@ -148,15 +148,28 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#name" 
+                                            <span class="modifier">Optional</span>
+                                        <a href="#estado" 
 >
-                                            name
+                                            estado
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="#products" 
+                                        <a href="#nombre" 
 >
-                                            products
+                                            nombre
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#numero" 
+>
+                                            numero
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#tipo" 
+>
+                                            tipo
                                         </a>
                                 </li>
                             </ul>
@@ -174,9 +187,9 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="name"></a>
-                                        <span class="name "><b>name</b>
-                                            <a href="#name">
+                                        <a name="estado"></a>
+                                        <span class="name "><b>estado</b>
+                                            <a href="#estado">
                                                 <span class="icon ion-ios-link"></span>
                                             </a>
                                         </span>
@@ -184,7 +197,51 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>name:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>estado:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>El estado actual del proyecto (opcional).</p>
+</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="nombre"></a>
+                                        <span class="name "><b>nombre</b>
+                                            <a href="#nombre">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>nombre:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -203,7 +260,7 @@
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>El nombre de la bodega.</p>
+                                    <div class="io-description"><p>El nombre del proyecto.</p>
 </div>
                                 </td>
                             </tr>
@@ -213,9 +270,9 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="products"></a>
-                                        <span class="name "><b>products</b>
-                                            <a href="#products">
+                                        <a name="numero"></a>
+                                        <span class="name "><b>numero</b>
+                                            <a href="#numero">
                                                 <span class="icon ion-ios-link"></span>
                                             </a>
                                         </span>
@@ -223,7 +280,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>products:     <code>Product[]</code>
+                                        <code>numero:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -231,7 +288,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code>Product[]</code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                                         </td>
                                     </tr>
@@ -242,7 +299,46 @@
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>Lista de productos en la bodega.</p>
+                                    <div class="io-description"><p>El número de identificación del proyecto.</p>
+</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="tipo"></a>
+                                        <span class="name "><b>tipo</b>
+                                            <a href="#tipo">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>tipo:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>El tipo de proyecto.</p>
 </div>
                                 </td>
                             </tr>
@@ -1168,7 +1264,7 @@ export class DashboardComponent implements OnInit {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
-            var COMPODOC_CURRENT_PAGE_URL = 'Bodega-2.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'Proyecto.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
