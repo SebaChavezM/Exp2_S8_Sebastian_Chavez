@@ -16,26 +16,56 @@ interface Notification {
 export class AuthService {
 
   constructor(private router: Router) {
-    this.createDefaultAdmin();
+    this.createDefaultUsers();
   }
 
-  createDefaultAdmin(): void {
+  createDefaultUsers(): void {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const adminUser = users.find((u: any) => u.email === 'admin@example.com');
 
-    if (!adminUser) {
-      const defaultAdmin = {
+    const defaultUsers = [
+      {
         id: '1',
         firstName: 'Admin',
         lastName: 'User',
         email: 'admin@example.com',
         password: 'Admin12345',
         role: 'Admin'
-      };
-      users.push(defaultAdmin);
-      localStorage.setItem('users', JSON.stringify(users));
-      console.log('Usuario administrador creado:', defaultAdmin);
-    }
+      },
+      {
+        id: '2',
+        firstName: 'Area',
+        lastName: 'User',
+        email: 'area@example.com',
+        password: 'Area12345',
+        role: 'Área'
+      },
+      {
+        id: '3',
+        firstName: 'Auditor',
+        lastName: 'User',
+        email: 'auditor@example.com',
+        password: 'Auditor12345',
+        role: 'Auditor'
+      },
+      {
+        id: '4',
+        firstName: 'Bodega',
+        lastName: 'User',
+        email: 'bodega@example.com',
+        password: 'Bodega12345',
+        role: 'Bodega'
+      }
+    ];
+
+    defaultUsers.forEach(defaultUser => {
+      const userExists = users.find((u: any) => u.email === defaultUser.email);
+      if (!userExists) {
+        users.push(defaultUser);
+      }
+    });
+
+    localStorage.setItem('users', JSON.stringify(users));
+    console.log('Usuarios predeterminados creados:', defaultUsers);
   }
 
   login(email: string, password: string): boolean {
@@ -104,6 +134,13 @@ export class AuthService {
       users[userIndex] = updatedUser;
       localStorage.setItem('users', JSON.stringify(users));
     }
+  }
+
+  getCurrentUserRole(): string {
+    // Aquí deberías tener la lógica para obtener el rol del usuario actual
+    // Esto es solo un ejemplo. Necesitas adaptar esto a tu lógica de autenticación.
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')!);
+    return currentUser ? currentUser.role : 'Guest';
   }
 
   getNotifications(): Notification[] {

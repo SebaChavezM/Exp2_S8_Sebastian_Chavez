@@ -65,6 +65,29 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  goToDashboard(): void {
+    const userRole = this.authService.getCurrentUserRole();
+
+    switch (userRole) {
+      case 'Admin':
+        this.router.navigate(['/admin-dashboard']);
+        break;
+      case 'Area':
+        this.router.navigate(['/area-dashboard']);
+        break;
+      case 'Bodega':
+        this.router.navigate(['/bodega-dashboard']);
+        break;
+      case 'Auditor':
+        this.router.navigate(['/auditor-dashboard']);
+        break;
+      default:
+        // Redirige a una página por defecto o muestra un mensaje de error
+        this.router.navigate(['/default-dashboard']);
+        break;
+    }
+  }
+
   /**
    * Cierra todos los dropdowns abiertos.
    * @returns {void}

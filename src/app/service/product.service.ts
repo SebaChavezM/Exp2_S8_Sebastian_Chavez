@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 export interface Product {
@@ -64,6 +64,8 @@ export class ProductService {
   private notificationsSubject: BehaviorSubject<Notification[]> = new BehaviorSubject<Notification[]>(this.notifications);
   historial$ = this.historialSubject.asObservable();
 
+  productAdded = new EventEmitter<Product>();
+
   constructor() {}
 
   private loadProductsFromLocalStorage(): Product[] {
@@ -80,6 +82,7 @@ export class ProductService {
     if (!currentProducts.some(p => p.code === product.code)) {
       currentProducts.push(product);
       this.saveProductsToLocalStorage(currentProducts);
+      this.productAdded.emit(product);
     }
   }
 
@@ -185,5 +188,14 @@ export class ProductService {
       currentProducts[productIndex].stock += cantidad;
       this.saveProductsToLocalStorage(currentProducts);
     }
+  }
+
+  // Método para guardar bodegas
+  saveBodegasToLocalStorage(bodegas: any[]): void {
+    localStorage.setItem('bodegas', JSON.stringify(bodegas));
+  }
+
+  loadBodegasFromLocalStorage(): any[] {
+    return JSON.parse(localStorage.getItem('bodegas')!) || [];
   }
 }

@@ -44,6 +44,9 @@
       <i class="bi bi-chevron-down"></i>
     </li>
     <div *ngIf="authService.isRoleAllowed(['Admin', 'Área', 'Bodega'])" class="collapse" id="operacionesSubmenu">
+      <a class="list-group-item list-group-item-action bg-light ps-5" (click)="goToDashboard()">
+        <i class="bi bi-boxes"></i> <span>Bodegas</span>
+      </a>           
       <a class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#Modal_add_item">
         <i class="bi bi-plus-square"></i> <span>Crear Producto</span>
       </a>

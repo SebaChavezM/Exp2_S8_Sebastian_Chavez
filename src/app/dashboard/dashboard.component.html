@@ -194,67 +194,67 @@
 
 <div class="modal fade" id="ingresoBodegaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Ingreso a Bodega</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <form id="ingresoBodegaForm">
-                  <div class="row mb-3">
-                      <div class="col-md-6">
-                          <label for="registroNumero" class="form-label">Ingreso n°:</label>
-                          <input type="text" class="form-control" id="registroNumero" [(ngModel)]="registroNumeroIngreso" name="registroNumeroIngreso" readonly>
-                      </div>
-                      <div class="col-md-6">
-                          <label for="fechaHora" class="form-label">Fecha:</label>
-                          <input type="text" class="form-control" id="fechaHora" [(ngModel)]="today" name="today" readonly>
-                      </div>
-                  </div>
-                  <div class="row mb-3">
-                      <div class="col-md-6">
-                          <label for="selectProducto" class="form-label">Producto:</label>
-                          <select class="form-select" id="selectProducto" [(ngModel)]="selectedProduct" name="selectedProduct" required>
-                              <option *ngFor="let product of selectedBodega.products" [ngValue]="product">{{ product.name }} ({{ product.code }})</option>
-                          </select>
-                      </div>
-                      <div class="col-md-6">
-                          <label for="cantidadIngreso" class="form-label">Cantidad a Ingresar:</label>
-                          <input type="number" class="form-control" id="cantidadIngreso" [(ngModel)]="cantidadIngreso" name="cantidadIngreso" min="1">
-                      </div>
-                  </div>
-                  <button type="button" class="btn btn-custom mb-3" (click)="onAddProductoToIngreso()">Ingresar Producto</button>
-                  <div style="max-height: 300px; overflow-y: auto;">
-                      <table class="table">
-                          <thead>
-                              <tr>
-                                  <th>Código</th>
-                                  <th>Nombre</th>
-                                  <th>Cantidad</th>
-                                  <th>Acción</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr *ngFor="let item of ingresoItems; let i = index">
-                                  <td>{{ item.product.code }}</td>
-                                  <td>{{ item.product.name }}</td>
-                                  <td>
-                                      <input type="number" [(ngModel)]="item.cantidad" name="cantidad{{i}}" min="1" class="form-control">
-                                  </td>
-                                  <td>
-                                      <button type="button" class="btn btn-danger" (click)="onEliminarItem(i)">Eliminar</button>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
-              </form>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-custom" (click)="onConfirmarIngreso()">Confirmar Ingreso</button>
-          </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ingreso a Bodega</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <div class="modal-body">
+        <form id="ingresoBodegaForm">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="registroNumero" class="form-label">Ingreso n°:</label>
+              <input type="text" class="form-control" id="registroNumero" [(ngModel)]="registroNumeroIngreso" name="registroNumeroIngreso" readonly>
+            </div>
+            <div class="col-md-6">
+              <label for="fechaHora" class="form-label">Fecha:</label>
+              <input type="text" class="form-control" id="fechaHora" [(ngModel)]="today" name="today" readonly>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="selectProducto" class="form-label">Producto:</label>
+              <select class="form-select" id="selectProducto" [(ngModel)]="selectedProduct" name="selectedProduct" required>
+                <option *ngFor="let product of selectedBodega.products" [ngValue]="product">{{ product.name }} ({{ product.code }})</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="cantidadIngreso" class="form-label">Cantidad a Ingresar:</label>
+              <input type="number" class="form-control" id="cantidadIngreso" [(ngModel)]="cantidadIngreso" name="cantidadIngreso" min="1">
+            </div>
+          </div>
+          <button type="button" class="btn btn-custom mb-3" (click)="onAddProductoToIngreso()">Ingresar Producto</button>
+          <div style="max-height: 300px; overflow-y: auto;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Cantidad</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of ingresoItems; let i = index">
+                  <td>{{ item.product.code }}</td>
+                  <td>{{ item.product.name }}</td>
+                  <td>
+                    <input type="number" [(ngModel)]="item.cantidad" name="cantidad{{i}}" min="1" class="form-control">
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger" (click)="onEliminarItem(i)">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-custom" (click)="onConfirmarIngreso()" [disabled]="ingresoItems.length === 0">Confirmar Ingreso</button>
+      </div>
+    </div>
   </div>
 </div>
 
