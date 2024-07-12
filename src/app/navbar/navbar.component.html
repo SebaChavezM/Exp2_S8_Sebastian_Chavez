@@ -62,7 +62,7 @@
       <a class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#detalleHistorialModal">
         <i class="bi bi-clock-history"></i> <span>Historial</span>
       </a>
-      <a class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#bulkUploadModal">
+      <a *ngIf="authService.isRoleAllowed(['Admin', 'Área'])" class="list-group-item list-group-item-action bg-light ps-5" data-bs-toggle="modal" data-bs-target="#bulkUploadModal">
         <i class="bi bi-upload"></i> <span>Carga Masiva</span>
       </a>
     </div>

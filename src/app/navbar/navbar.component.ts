@@ -72,7 +72,7 @@ export class NavbarComponent implements OnInit {
       case 'Admin':
         this.router.navigate(['/admin-dashboard']);
         break;
-      case 'Area':
+      case 'Área':
         this.router.navigate(['/area-dashboard']);
         break;
       case 'Bodega':

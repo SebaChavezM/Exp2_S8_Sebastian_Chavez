@@ -1,26 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../auth/auth.service';
 import * as bootstrap from 'bootstrap';
 import { ProductService, Product, Movimiento } from '../service/product.service';
-import { AuthService } from '../auth/auth.service';
+import { ProyectosService } from '../service/proyecto.service';
+import { BulkUploadComponent } from "../bulk-upload/bulk-upload.component";
 
 /**
- * Interfaz para representar una bodega.
- * @interface
+ * Representa una bodega en la aplicación.
+ * @interface Bodega
  */
 interface Bodega {
-  /**
-   * Nombre de la bodega.
-   * @type {string}
-   */
+  /** El nombre de la bodega. */
   name: string;
-
-  /**
-   * Lista de productos en la bodega.
-   * @type {Product[]}
-   */
+  /** Lista de productos en la bodega. */
   products: Product[];
+}
+
+/**
+ * Representa un proyecto en la aplicación.
+ * @interface Proyecto
+ */
+interface Proyecto {
+  /** El tipo de proyecto. */
+  tipo: string;
+  /** El número de identificación del proyecto. */
+  numero: string;
+  /** El nombre del proyecto. */
+  nombre: string;
+  /** El estado actual del proyecto (opcional). */
+  estado?: string;
 }
 
 /**
@@ -35,111 +45,33 @@ interface Bodega {
   templateUrl: './area-dashboard.component.html',
   styleUrls: ['./area-dashboard.component.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule]
+  imports: [FormsModule, CommonModule, BulkUploadComponent]
 })
 export class AreaDashboardComponent implements OnInit {
-  /**
-   * Lista de productos.
-   * 
-   * @type {Product[]}
-   * @memberof AreaDashboardComponent
-   */
   products: Product[] = [];
-
-  /**
-   * Lista de todos los productos.
-   * 
-   * @type {Product[]}
-   * @memberof AreaDashboardComponent
-   */
+  /** Lista de todos los productos combinados de todas las bodegas. */
   allProducts: Product[] = [];
-
-  /**
-   * Lista de productos filtrados.
-   * 
-   * @type {Product[]}
-   * @memberof AreaDashboardComponent
-   */
+  /** Lista de productos filtrados para mostrar. */
   filteredProducts: Product[] = [];
-
-  /**
-   * Historial de movimientos.
-   * 
-   * @type {Movimiento[]}
-   * @memberof AreaDashboardComponent
-   */
+  /** Historial de movimientos de productos. */
   historial: Movimiento[] = [];
-
-  /**
-   * Índice del producto seleccionado para eliminar.
-   * 
-   * @type {number}
-   * @memberof AreaDashboardComponent
-   */
+  /** Índice del producto seleccionado para eliminar. */
   selectedProductIndexToDelete: number = -1;
-
-  /**
-   * Índice del producto seleccionado para editar.
-   * 
-   * @type {number}
-   * @memberof AreaDashboardComponent
-   */
+  /** Índice del producto seleccionado para editar. */
   selectedProductIndexToEdit: number = -1;
-
-  /**
-   * Producto seleccionado.
-   * 
-   * @type {(Product | null)}
-   * @memberof AreaDashboardComponent
-   */
+  /** Producto seleccionado actualmente. */
   selectedProduct: Product | null = null;
-
-  /**
-   * Producto seleccionado para salida.
-   * 
-   * @type {(Product | null)}
-   * @memberof AreaDashboardComponent
-   */
+  /** Producto seleccionado actualmente para salida. */
   selectedProductSalida: Product | null = null;
-
-  /**
-   * Lista de bodegas.
-   * 
-   * @type {Bodega[]}
-   * @memberof AreaDashboardComponent
-   */
+  /** Lista de todas las bodegas. */
   bodegas: Bodega[] = [];
-
-  /**
-   * Bodega seleccionada.
-   * 
-   * @type {Bodega}
-   * @memberof AreaDashboardComponent
-   */
+  /** Bodega seleccionada actualmente. */
   selectedBodega: Bodega = { name: 'Bodega Principal', products: [] };
-
-  /**
-   * Nombre de la nueva bodega.
-   * 
-   * @type {string}
-   * @memberof AreaDashboardComponent
-   */
+  /** Nombre de la nueva bodega a agregar. */
   newBodegaName: string = '';
-
-  /**
-   * Término de búsqueda de productos.
-   * 
-   * @type {string}
-   * @memberof AreaDashboardComponent
-   */
+  /** Término de búsqueda para filtrar productos. */
   searchProductTerm: string = '';
-
-  /**
-   * Nuevo producto a agregar.
-   * 
-   * @type {Product}
-   * @memberof AreaDashboardComponent
-   */
+  /** Nuevo producto a agregar. */
   newProduct: Product = {
     code: '',
     name: '',
@@ -156,101 +88,29 @@ export class AreaDashboardComponent implements OnInit {
     stock: 0,
     bodega: 'Bodega Principal'
   };
-
-  /**
-   * Items de ingreso.
-   * 
-   * @type {any[]}
-   * @memberof AreaDashboardComponent
-   */
+  /** Lista de ítems de ingreso. */
   ingresoItems: any[] = [];
-
-  /**
-   * Items de salida.
-   * 
-   * @type {any[]}
-   * @memberof AreaDashboardComponent
-   */
+  /** Lista de ítems de salida. */
   salidaItems: any[] = [];
-
-  /**
-   * Cantidad de ingreso.
-   * 
-   * @type {number}
-   * @memberof AreaDashboardComponent
-   */
+  /** Cantidad de ingreso. */
   cantidadIngreso: number = 1;
-
-  /**
-   * Cantidad de salida.
-   * 
-   * @type {number}
-   * @memberof AreaDashboardComponent
-   */
+  /** Cantidad de salida. */
   cantidadSalida: number = 1;
-
-  /**
-   * Tipo de documento.
-   * 
-   * @type {string}
-   * @memberof AreaDashboardComponent
-   */
+  /** Tipo de documento para la salida. */
   tipoDocumento: string = '';
-
-  /**
-   * Número de documento.
-   * 
-   * @type {string}
-   * @memberof AreaDashboardComponent
-   */
+  /** Número de documento para la salida. */
   numeroDocumento: string = '';
-
-  /**
-   * Motivo de salida.
-   * 
-   * @type {string}
-   * @memberof AreaDashboardComponent
-   */
+  /** Motivo de la salida. */
   motivoSalida: string = '';
-
-  /**
-   * Número de registro de ingreso.
-   * 
-   * @type {number}
-   * @memberof AreaDashboardComponent
-   */
+  /** Número de registro de ingreso. */
   registroNumeroIngreso: number = 0;
-
-  /**
-   * Número de registro de salida.
-   * 
-   * @type {number}
-   * @memberof AreaDashboardComponent
-   */
+  /** Número de registro de salida. */
   registroNumeroSalida: number = 0;
-
-  /**
-   * Fecha actual.
-   * 
-   * @type {string}
-   * @memberof AreaDashboardComponent
-   */
+  /** Fecha actual en formato de cadena. */
   today: string = '';
-
-  /**
-   * Movimiento seleccionado.
-   * 
-   * @type {(Movimiento | null)}
-   * @memberof AreaDashboardComponent
-   */
+  /** Movimiento seleccionado actualmente. */
   selectedMovimiento: Movimiento | null = null;
-
-  /**
-   * Producto seleccionado para editar.
-   * 
-   * @type {Product}
-   * @memberof AreaDashboardComponent
-   */
+  /** Producto seleccionado actualmente para edición. */
   selectedProductToEdit: Product = {
     code: '',
     name: '',
@@ -267,110 +127,95 @@ export class AreaDashboardComponent implements OnInit {
     stock: 0,
     bodega: 'Bodega Principal'
   };
-
-  /**
-   * Producto a eliminar.
-   * 
-   * @type {(Product | null)}
-   * @memberof AreaDashboardComponent
-   */
+  /** Producto a eliminar. */
   productToDelete: Product | null = null;
-
-  /**
-   * Indica si el código del producto ya existe.
-   * 
-   * @type {boolean}
-   * @memberof AreaDashboardComponent
-   */
+  /** Indica si el código del producto ya existe. */
   productCodeExists: boolean = false;
-
-  /**
-   * Items de traslado.
-   * 
-   * @type {any[]}
-   * @memberof AreaDashboardComponent
-   */
+  /** Mensaje de error en el registro. */
+  registerError: string = '';
+  /** Mensaje de éxito en el registro. */
+  registerSuccess: string = '';
+  /** Lista de ítems de traslado. */
   trasladoItems: any[] = [];
-
-  /**
-   * Bodega de origen seleccionada para traslado.
-   * 
-   * @type {(Bodega | null)}
-   * @memberof AreaDashboardComponent
-   */
+  /** Bodega de origen seleccionada para traslado. */
   selectedBodegaOrigen: Bodega | null = null;
-
-  /**
-   * Bodega de destino seleccionada para traslado.
-   * 
-   * @type {(Bodega | null)}
-   * @memberof AreaDashboardComponent
-   */
+  /** Bodega de destino seleccionada para traslado. */
   selectedBodegaDestino: Bodega | null = null;
-
-  /**
-   * Producto seleccionado para traslado.
-   * 
-   * @type {(Product | null)}
-   * @memberof AreaDashboardComponent
-   */
+  /** Producto seleccionado actualmente para traslado. */
   selectedProductTraslado: Product | null = null;
-  users: any;
-
+  /** Término de búsqueda en el historial. */
+  searchHistorialTerm: string = '';
+  /** Lista de movimientos filtrados en el historial. */
+  filteredHistorial: Movimiento[] = [];
+  /** Filtro para mostrar ingresos en el historial. */
+  filterIngreso: boolean = true;
+  /** Filtro para mostrar salidas en el historial. */
+  filterSalida: boolean = true;
+  /** Filtro para mostrar traslados en el historial. */
+  filterTraslado: boolean = true;
+  /** Proyecto relacionado actualmente. */
+  relatedProject: Proyecto | null = null;
+  /** Lista de proyectos. */
+  projects: Proyecto[] = [];
   /**
-   * Crea una instancia de AreaDashboardComponent.
-   * 
-   * @param {ProductService} productService Servicio de productos
-   * @param {AuthService} authService Servicio de autenticación
-   * @memberof AreaDashboardComponent
+   * Constructor del componente.
+   * @param {ProductService} productService - Servicio de productos.
+   * @param {AuthService} authService - Servicio de autenticación.
+   * @param {ProyectosService} proyectosService - Servicio de proyectos.
    */
-  constructor(private productService: ProductService, private authService: AuthService) {}
-
-  /**
-   * Método que se ejecuta al inicializar el componente.
-   * 
-   * @memberof AreaDashboardComponent
-   */
+  constructor(
+    private productService: ProductService,
+    private authService: AuthService,
+    private proyectosService: ProyectosService,
+    private cdr: ChangeDetectorRef  // <- Añadir esta línea
+  ) {}
   ngOnInit(): void {
     this.productService.products$.subscribe(products => {
       this.products = products;
-      this.filteredProducts = this.selectedBodega.products;
+      this.updateBodegaProducts();
     });
-    this.productService.historial$.subscribe(historial => this.historial = historial);
+
+    this.proyectosService.proyectos$.subscribe(projects => {
+      this.projects = projects;
+      console.log('Projects loaded:', this.projects);
+    });
+
+    this.productService.historial$.subscribe(historial => {
+      this.historial = historial;
+      this.filteredHistorial = historial;
+    });
+
     this.today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
     this.registroNumeroIngreso = this.productService.getNextIngresoNumber();
     this.registroNumeroSalida = this.productService.getNextSalidaNumber();
-    this.loadUsers();
     this.loadBodegas();
     this.loadAllProducts();
 
     if (this.bodegas.length === 0) {
-      this.bodegas.push({ name: 'Bodega Principal', products: [] });
+      this.bodegas.push({ name: 'BODEGA PRINCIPAL', products: [] }); // Normalize name to uppercase
       this.selectedBodega = this.bodegas[0];
       this.saveBodegas();
     } else {
       this.selectedBodega = this.bodegas[0];
     }
     this.filteredProducts = this.selectedBodega.products;
+    this.selectedBodegaOrigen = this.bodegas.length > 0 ? this.bodegas[0] : null;
+    this.selectedBodegaDestino = this.bodegas.length > 1 ? this.bodegas[1] : null; // Ensure there are at least 2 bodegas
   }
 
   /**
    * Normaliza el código del producto.
-   * 
-   * @param {string} code Código del producto
-   * @return {string} Código normalizado
-   * @memberof AreaDashboardComponent
+   * @param {any} code - Código del producto.
+   * @returns {string} - Código normalizado.
    */
-  normalizeCode(code: string): string {
-    return code.trim().toUpperCase();
+  normalizeCode(code: any): string {
+    return typeof code === 'string' ? code.trim().toUpperCase() : '';
   }
 
   /**
    * Verifica si un producto existe en la bodega seleccionada.
-   * 
-   * @param {string} code Código del producto
-   * @return {boolean} Verdadero si el producto existe, falso en caso contrario
-   * @memberof AreaDashboardComponent
+   * @param {string} code - Código del producto.
+   * @returns {boolean} - Verdadero si el producto existe, falso en caso contrario.
    */
   productExists(code: string): boolean {
     const normalizedCode = this.normalizeCode(code);
@@ -378,10 +223,9 @@ export class AreaDashboardComponent implements OnInit {
   }
 
   /**
-   * Convierte el valor del input a mayúsculas.
-   * 
-   * @param {Event} event Evento de entrada
-   * @memberof AreaDashboardComponent
+   * Convierte el valor de entrada a mayúsculas.
+   * @param {Event} event - Evento de entrada.
+   * @returns {void}
    */
   toUpperCase(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -389,32 +233,19 @@ export class AreaDashboardComponent implements OnInit {
   }
 
   /**
-   * Verifica si el código del producto existe.
-   * 
-   * @memberof AreaDashboardComponent
+   * Verifica la existencia del código del producto.
+   * @returns {void}
    */
-  checkProductCode() {
+  checkProductCode(): void {
     this.productCodeExists = this.productExists(this.newProduct.code);
   }
 
   /**
-   * Carga los usuarios desde el almacenamiento local.
-   * 
-   * @memberof AreaDashboardComponent
+   * Realiza la búsqueda de un producto.
+   * @param {Event} event - Evento de búsqueda.
+   * @returns {void}
    */
-  loadUsers() {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    // Falta asignar el valor de `users` a `this.users` para que los usuarios carguen correctamente.
-    this.users = users;
-  }
-
-  /**
-   * Filtra los productos según el término de búsqueda ingresado.
-   * 
-   * @param {any} event Evento de entrada de búsqueda
-   * @memberof AreaDashboardComponent
-   */
-  onSearchProduct(event: any) {
+  onSearchProduct(event: any): void {
     this.searchProductTerm = event.target.value.toLowerCase();
     if (this.searchProductTerm) {
       this.filteredProducts = this.selectedBodega.products.filter(product =>
@@ -428,12 +259,33 @@ export class AreaDashboardComponent implements OnInit {
   }
 
   /**
-   * Elimina el producto seleccionado.
-   * 
-   * @param {number} index Índice del producto a eliminar
-   * @memberof AreaDashboardComponent
+   * Abre el modal del usuario.
+   * @returns {void}
    */
-  onDeleteProduct(index: number) {
+  openUserModal(): void {
+    const userModal = new bootstrap.Modal(document.getElementById('userModal')!);
+    userModal.show();
+  }
+
+  /**
+   * Alterna la visibilidad de la contraseña.
+   * @returns {void}
+   */
+  togglePasswordVisibility(): void {
+    const passwordField = document.getElementById('editPassword') as HTMLInputElement;
+    if (passwordField.type === 'password') {
+      passwordField.type = 'text';
+    } else {
+      passwordField.type = 'password';
+    }
+  }
+
+  /**
+   * Abre el modal de confirmación para eliminar un producto.
+   * @param {number} index - Índice del producto a eliminar.
+   * @returns {void}
+   */
+  onDeleteProduct(index: number): void {
     this.selectedProductIndexToDelete = index;
     this.productToDelete = this.selectedBodega.products[index];
     const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal')!);
@@ -441,52 +293,47 @@ export class AreaDashboardComponent implements OnInit {
   }
 
   /**
-   * Confirma la eliminación del producto.
-   * 
-   * @memberof AreaDashboardComponent
+   * Confirma la eliminación de un producto.
+   * @returns {void}
    */
-  onConfirmDelete() {
-    if (this.selectedProductIndexToDelete !== -1) {
-      this.selectedBodega.products.splice(this.selectedProductIndexToDelete, 1);
-      this.saveBodegas();
-      this.selectedProductIndexToDelete = -1;
+  onConfirmDelete(): void {
+    if (this.productToDelete) {
+      this.productService.deleteProductByCode(this.productToDelete.code);
       this.productToDelete = null;
+      this.selectedProductIndexToDelete = -1;
       const confirmDeleteModal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal')!);
       confirmDeleteModal?.hide();
     }
   }
 
   /**
-   * Actualiza el producto en la bodega seleccionada.
-   * 
-   * @param {number} index Índice del producto a actualizar
-   * @param {Product} product Producto a actualizar
-   * @memberof AreaDashboardComponent
+   * Actualiza un producto existente.
+   * @param {number} index - Índice del producto a actualizar.
+   * @param {Product} product - Datos del producto actualizados.
+   * @returns {void}
    */
-  onUpdateProduct(index: number, product: Product) {
+  onUpdateProduct(index: number, product: Product): void {
     this.selectedBodega.products[index] = product;
     this.saveBodegas();
   }
 
   /**
-   * Muestra la información del producto seleccionado en un modal.
-   * 
-   * @param {number} index Índice del producto a ver
-   * @memberof AreaDashboardComponent
+   * Visualiza la información de un producto.
+   * @param {number} index - Índice del producto a visualizar.
+   * @returns {void}
    */
-  onViewProductInfo(index: number) {
+  onViewProductInfo(index: number): void {
     this.selectedProduct = this.selectedBodega.products[index];
     const productInfoModal = new bootstrap.Modal(document.getElementById('productInfoModal')!);
     productInfoModal.show();
   }
 
   /**
-   * Edita el producto seleccionado.
-   * 
-   * @param {number} index Índice del producto a editar
-   * @memberof AreaDashboardComponent
+   * Edita un producto existente.
+   * @param {number} index - Índice del producto a editar.
+   * @returns {void}
    */
-  onEditProduct(index: number) {
+  onEditProduct(index: number): void {
     this.selectedProductIndexToEdit = index;
     this.selectedProductToEdit = { ...this.selectedBodega.products[index] };
     const editProductModal = new bootstrap.Modal(document.getElementById('editProductModal')!);
@@ -494,56 +341,76 @@ export class AreaDashboardComponent implements OnInit {
   }
 
   /**
-   * Carga las bodegas desde el almacenamiento local.
-   * 
-   * @memberof AreaDashboardComponent
+   * Carga las bodegas del almacenamiento local.
+   * @returns {void}
    */
-  loadBodegas() {
+  loadBodegas(): void {
     const bodegas = localStorage.getItem('bodegas');
     if (bodegas) {
-      this.bodegas = JSON.parse(bodegas);
+      this.bodegas = JSON.parse(bodegas).map((bodega: Bodega) => ({
+        ...bodega,
+        name: bodega.name.toUpperCase()
+      }));
     } else {
       this.bodegas = [];
     }
-  } 
+    this.updateBodegaProducts();
+  }
 
   /**
    * Guarda las bodegas en el almacenamiento local.
-   * 
-   * @memberof AreaDashboardComponent
+   * @returns {void}
    */
-  saveBodegas() {
+  saveBodegas(): void {
     localStorage.setItem('bodegas', JSON.stringify(this.bodegas));
   }
 
   /**
-   * Carga todos los productos de todas las bodegas.
-   * 
-   * @memberof AreaDashboardComponent
+   * Actualiza los productos de cada bodega.
+   * @returns {void}
    */
-  loadAllProducts() {
-    this.allProducts = this.bodegas.reduce((acc: Product[], bodega: Bodega) => {
-      return acc.concat(bodega.products);
-    }, []);
+  updateBodegaProducts(): void {
+    this.bodegas.forEach(bodega => {
+      bodega.products = this.products.filter(product => product.bodega === bodega.name);
+    });
+    this.filteredProducts = this.selectedBodega.products;
   }
 
   /**
-   * Selecciona una bodega.
-   * 
-   * @param {Bodega} bodega Bodega a seleccionar
-   * @memberof AreaDashboardComponent
+   * Añade un producto a una bodega.
+   * @param {Product} product - Producto a añadir.
+   * @returns {void}
    */
-  selectBodega(bodega: Bodega) {
+  addProductToBodega(product: Product): void {
+    const targetBodega = this.bodegas.find(b => b.name === product.bodega);
+    if (targetBodega && !targetBodega.products.some(p => p.code === product.code)) {
+      targetBodega.products.push(product);
+      this.saveBodegas();
+    }
+  }
+
+  loadAllProducts(): void {
+    const products = this.productService.getAllProducts();
+    this.allProducts = products;
+    this.filteredProducts = products.filter(product => product.bodega === this.selectedBodega.name);
+    this.cdr.detectChanges(); // <- Añadir esta línea si es necesario
+  }
+  
+  /**
+   * Selecciona una bodega.
+   * @param {Bodega} bodega - Bodega seleccionada.
+   * @returns {void}
+   */
+  selectBodega(bodega: Bodega): void {
     this.selectedBodega = bodega;
     this.filteredProducts = bodega.products;
   }
 
   /**
-   * Guarda el producto editado.
-   * 
-   * @memberof AreaDashboardComponent
+   * Guarda los cambios en un producto editado.
+   * @returns {void}
    */
-  onSaveEditProduct() {
+  onSaveEditProduct(): void {
     if (this.selectedProductToEdit && this.selectedProductIndexToEdit !== -1) {
       this.selectedProductToEdit.bodega = this.selectedBodega.name;
       this.selectedBodega.products[this.selectedProductIndexToEdit] = this.selectedProductToEdit;
@@ -571,19 +438,26 @@ export class AreaDashboardComponent implements OnInit {
   }
 
   /**
-   * Agrega un nuevo producto a la bodega seleccionada.
-   * 
-   * @param {NgForm} form Formulario del producto
-   * @memberof AreaDashboardComponent
+   * Añade un nuevo producto.
+   * @param {NgForm} form - Formulario de producto.
+   * @returns {void}
    */
-  onAddProduct(form: NgForm) {
+  onAddProduct(form: NgForm): void {
     form.form.markAllAsTouched();
     if (form.valid) {
       if (!this.productExists(this.newProduct.code)) {
         this.newProduct.code = this.normalizeCode(this.newProduct.code);
+  
+        // Asegurarse de que todos los campos necesarios están llenos
+        if (!this.newProduct.name) {
+          alert('El nombre del producto es requerido.');
+          return;
+        }
+  
         const targetBodega = this.bodegas.find(b => b.name === this.newProduct.bodega);
         if (targetBodega) {
           targetBodega.products.push(this.newProduct);
+          this.productService.addProduct(this.newProduct);
           this.saveBodegas();
         }
         form.resetForm();
@@ -617,15 +491,14 @@ export class AreaDashboardComponent implements OnInit {
         formElement.classList.add('was-validated');
       }
     }
-  }
+  }  
 
   /**
-   * Agrega una nueva bodega.
-   * 
-   * @param {NgForm} form Formulario de la bodega
-   * @memberof AreaDashboardComponent
+   * Añade una nueva bodega.
+   * @param {NgForm} form - Formulario de bodega.
+   * @returns {void}
    */
-  addBodega(form: NgForm) {
+  addBodega(form: NgForm): void {
     if (this.newBodegaName) {
       this.bodegas.push({ name: this.newBodegaName, products: [] });
       this.newBodegaName = '';
@@ -636,15 +509,17 @@ export class AreaDashboardComponent implements OnInit {
   }
 
   /**
-   * Reinicia el formulario.
-   * 
-   * @param {NgForm} form Formulario a reiniciar
-   * @param {'product'} type Tipo de formulario (producto)
-   * @memberof AreaDashboardComponent
+   * Restablece el formulario especificado.
+   * @param {NgForm} form - Formulario a restablecer.
+   * @param {'user' | 'product'} type - Tipo de formulario.
+   * @returns {void}
    */
-  resetForm(form: NgForm, type: 'product') {
+  resetForm(form: NgForm, type: 'user' | 'product'): void {
     form.resetForm();
-    if (type === 'product') {
+    if (type === 'user') {
+      this.registerError = '';
+      this.registerSuccess = '';
+    } else if (type === 'product') {
       this.newProduct = {
         code: '',
         name: '',
@@ -670,11 +545,10 @@ export class AreaDashboardComponent implements OnInit {
   }
 
   /**
-   * Agrega un producto a la lista de ingreso.
-   * 
-   * @memberof AreaDashboardComponent
+   * Añade un producto a la lista de ingreso.
+   * @returns {void}
    */
-  onAddProductoToIngreso() {
+  onAddProductoToIngreso(): void {
     if (!this.selectedProduct) {
       alert('Por favor, seleccione un producto.');
       return;
@@ -694,21 +568,19 @@ export class AreaDashboardComponent implements OnInit {
   }
 
   /**
-   * Elimina un producto de la lista de ingreso.
-   * 
-   * @param {number} index Índice del producto a eliminar
-   * @memberof AreaDashboardComponent
+   * Elimina un ítem de la lista de ingreso.
+   * @param {number} index - Índice del ítem a eliminar.
+   * @returns {void}
    */
-  onEliminarItem(index: number) {
+  onEliminarItem(index: number): void {
     this.ingresoItems.splice(index, 1);
   }
 
   /**
-   * Confirma el ingreso de productos a la bodega.
-   * 
-   * @memberof AreaDashboardComponent
+   * Confirma el ingreso de productos.
+   * @returns {void}
    */
-  onConfirmarIngreso() {
+  onConfirmarIngreso(): void {
     this.ingresoItems.forEach(item => {
       const product = this.selectedBodega.products.find(p => p.code === item.product.code);
       if (product) {
@@ -732,107 +604,120 @@ export class AreaDashboardComponent implements OnInit {
     this.ingresoItems = [];
     this.productService.incrementNextIngresoNumber();
     this.registroNumeroIngreso = this.productService.getNextIngresoNumber();
-
+    this.saveBodegas();
+  
     const ingresoBodegaModalElement = document.getElementById('ingresoBodegaModal');
     if (ingresoBodegaModalElement) {
-        const ingresoBodegaModal = bootstrap.Modal.getInstance(ingresoBodegaModalElement);
-        if (ingresoBodegaModal) {
-            ingresoBodegaModal.hide();
-            setTimeout(() => ingresoBodegaModal.dispose(), 500);
-        }
+      const ingresoBodegaModal = bootstrap.Modal.getInstance(ingresoBodegaModalElement);
+      if (ingresoBodegaModal) {
+        ingresoBodegaModal.hide();
+        setTimeout(() => {
+          ingresoBodegaModal.dispose();
+          // Asegurarse de que todos los estilos relacionados con el modal sean eliminados
+          document.body.classList.remove('modal-open');
+          document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+        }, 500);
+      }
     }
-  }
-
-  /**
-   * Agrega un producto a la lista de salida.
-   * 
-   * @memberof AreaDashboardComponent
-   */
-  onAddProductoToSalida() {
-    const selectedProductCode = this.selectedProductSalida?.code;
-    if (!selectedProductCode) return;
-
-    const existingItem = this.salidaItems.find(item => item.product.code === selectedProductCode);
-    if (existingItem) {
-      alert('El producto ya se encuentra en la tabla.');
-      return;
-    }
-
-    const productToAdd = this.products.find(product => product.code === selectedProductCode);
-    if (productToAdd) {
-      this.salidaItems.push({
-        product: productToAdd,
-        cantidad: this.cantidadSalida
-      });
-      this.cantidadSalida = 1;
-    }
-  }
+  }  
 
   /**
    * Muestra el modal para agregar una nueva bodega.
-   * 
-   * @memberof AreaDashboardComponent
+   * @returns {void}
    */
-  openAddBodegaModal() {
+  openAddBodegaModal(): void {
     const addBodegaModal = new bootstrap.Modal(document.getElementById('addBodegaModal')!);
     addBodegaModal.show();
   }
 
   /**
-   * Elimina un producto de la lista de salida.
-   * 
-   * @param {number} index Índice del producto a eliminar
-   * @memberof AreaDashboardComponent
+   * Añade un producto a la lista de salida.
+   * @returns {void}
    */
-  onEliminarItemSalida(index: number) {
-    this.salidaItems.splice(index, 1);
+  onAddProductoToSalida(): void {
+    if (!this.selectedProductSalida) {
+      alert('Por favor, seleccione un producto.');
+      return;
+    }
+
+    const existingItem = this.salidaItems.find(item => item.product.code === this.selectedProductSalida!.code);
+    if (existingItem) {
+      alert('El producto ya se encuentra en la tabla.');
+      return;
+    }
+
+    this.salidaItems.push({
+      product: this.selectedProductSalida,
+      cantidad: this.cantidadSalida,
+      tipoDocumento: this.tipoDocumento,
+      numeroDocumento: this.numeroDocumento
+    });
+    this.cantidadSalida = 1;
   }
 
   /**
-   * Confirma la salida de productos de la bodega.
-   * 
-   * @memberof AreaDashboardComponent
+   * Confirma la salida de productos.
+   * @returns {void}
    */
-  onConfirmarSalida() {
+  onConfirmarSalida(): void {
     this.salidaItems.forEach(item => {
-      const product = this.products.find(p => p.code === item.product.code);
+      const product = this.selectedBodega.products.find(p => p.code === item.product.code);
       if (product) {
-        product.stock -= item.cantidad;
-        this.productService.updateProduct(product.code, product);
-        this.productService.addMovimiento({
-          tipo: 'Salida',
-          numero: this.registroNumeroSalida,
-          fecha: this.today,
-          documento: `${this.tipoDocumento} ${this.numeroDocumento}`,
-          detalles: this.motivoSalida,
-          items: this.salidaItems.map(i => ({
-            code: i.product.code,
-            name: i.product.name,
-            description: i.product.description,
-            cantidad: i.cantidad
-          })),
-          usuario: `${this.authService.getCurrentUser().firstName} ${this.authService.getCurrentUser().lastName}`
-        });
+        if (product.stock >= item.cantidad) {
+          product.stock -= item.cantidad;
+          this.productService.updateProduct(product.code, product);
+          this.productService.addMovimiento({
+            tipo: 'Salida',
+            numero: this.registroNumeroSalida,
+            fecha: this.today,
+            documento: `${item.tipoDocumento} ${item.numeroDocumento}`,
+            detalles: this.motivoSalida,
+            items: [{
+              code: item.product.code,
+              name: item.product.name,
+              description: item.product.description,
+              cantidad: item.cantidad
+            }],
+            usuario: `${this.authService.getCurrentUser().firstName} ${this.authService.getCurrentUser().lastName}`
+          });
+        } else {
+          alert(`La cantidad a retirar supera el stock disponible de ${product.name}.`);
+        }
       }
     });
     this.salidaItems = [];
     this.productService.incrementNextSalidaNumber();
     this.registroNumeroSalida = this.productService.getNextSalidaNumber();
-
+    this.saveBodegas();
+  
+    // Cierre del modal
     const salidaBodegaModalElement = document.getElementById('salidaBodegaModal');
     if (salidaBodegaModalElement) {
-        const salidaBodegaModal = bootstrap.Modal.getInstance(salidaBodegaModalElement);
-        if (salidaBodegaModal) {
-            salidaBodegaModal.hide();
-            setTimeout(() => salidaBodegaModal.dispose(), 500);
-        }
+      const modalInstance = bootstrap.Modal.getInstance(salidaBodegaModalElement);
+      if (modalInstance) {
+        modalInstance.hide();
+        setTimeout(() => {
+          modalInstance.dispose();
+          salidaBodegaModalElement.classList.remove('show');
+          document.body.classList.remove('modal-open');
+          document.querySelector('.modal-backdrop')?.remove();
+        }, 500);
+      }
     }
+  }  
+
+  /**
+   * Elimina un ítem de la lista de salida.
+   * @param {number} index - Índice del ítem a eliminar.
+   * @returns {void}
+   */
+  onEliminarItemSalida(index: number): void {
+    this.salidaItems.splice(index, 1);
   }
 
   /**
-   * Abre el historial de movimientos en un modal.
-   * 
-   * @memberof AreaDashboardComponent
+   * Abre el historial de movimientos.
+   * @returns {void}
    */
   onAbrirHistorial(): void {
     const detalleHistorialModal = new bootstrap.Modal(document.getElementById('detalleHistorialModal')!);
@@ -840,12 +725,11 @@ export class AreaDashboardComponent implements OnInit {
   }
 
   /**
-   * Muestra los detalles de un movimiento en un modal.
-   * 
-   * @param {Movimiento} movimiento Movimiento a ver
-   * @memberof AreaDashboardComponent
+   * Visualiza los detalles de un movimiento.
+   * @param {Movimiento} movimiento - Movimiento a visualizar.
+   * @returns {void}
    */
-  onVerDetallesMovimiento(movimiento: Movimiento) {
+  onVerDetallesMovimiento(movimiento: Movimiento): void {
     this.selectedMovimiento = movimiento;
     const detalleMovimientoModal = new bootstrap.Modal(document.getElementById('detalleMovimientoModal')!);
     detalleMovimientoModal.show();
@@ -854,9 +738,59 @@ export class AreaDashboardComponent implements OnInit {
   }
 
   /**
-   * Vuelve al historial de movimientos desde el modal de detalles.
-   * 
-   * @memberof AreaDashboardComponent
+   * Carga los proyectos del almacenamiento local.
+   * @returns {void}
+   */
+  loadProjects(): void {
+    const storedProjects = localStorage.getItem('projects');
+    if (storedProjects) {
+      this.projects = JSON.parse(storedProjects);
+    }
+  }
+
+  /**
+   * Realiza la búsqueda en el historial.
+   * @returns {void}
+   */
+  onSearchHistorial(): void {
+    this.relatedProject = null;
+    const searchTerm = this.searchHistorialTerm.toLowerCase();
+    console.log('Search Term:', searchTerm);
+
+    if (searchTerm) {
+      this.filteredHistorial = this.historial.filter((movimiento) => {
+        const matchesTerm = movimiento.tipo.toLowerCase().includes(searchTerm) ||
+          String(movimiento.numero).toLowerCase().includes(searchTerm) ||
+          (movimiento.tipo === 'Salida' && movimiento.documento && movimiento.documento.toLowerCase().includes(searchTerm));
+
+        const matchesFilter = (this.filterIngreso && movimiento.tipo === 'Ingreso') ||
+          (this.filterSalida && movimiento.tipo === 'Salida') ||
+          (this.filterTraslado && movimiento.tipo === 'Traslado');
+
+        return matchesTerm && matchesFilter;
+      });
+
+      console.log('Filtered Historial:', this.filteredHistorial);
+
+      this.relatedProject = this.projects.find((project: Proyecto) =>
+        project.numero.toLowerCase().includes(searchTerm)
+      ) || null;
+
+      console.log('Related Project:', this.relatedProject);
+    } else {
+      this.filteredHistorial = this.historial.filter((movimiento) => {
+        return (this.filterIngreso && movimiento.tipo === 'Ingreso') ||
+          (this.filterSalida && movimiento.tipo === 'Salida') ||
+          (this.filterTraslado && movimiento.tipo === 'Traslado');
+      });
+
+      console.log('Filtered Historial (no search term):', this.filteredHistorial);
+    }
+  }
+
+  /**
+   * Vuelve al historial de movimientos.
+   * @returns {void}
    */
   onVolverHistorial(): void {
     const detalleMovimientoModal = bootstrap.Modal.getInstance(document.getElementById('detalleMovimientoModal')!);
@@ -866,22 +800,21 @@ export class AreaDashboardComponent implements OnInit {
   }
 
   /**
-   * Agrega un producto a la lista de traslado.
-   * 
-   * @memberof AreaDashboardComponent
+   * Añade un producto a la lista de traslado.
+   * @returns {void}
    */
-  onAddProductoToTraslado() {
+  onAddProductoToTraslado(): void {
     if (!this.selectedProductTraslado) {
       alert('Por favor, seleccione un producto.');
       return;
     }
-  
+
     const existingItem = this.trasladoItems.find(item => item.product.code === this.selectedProductTraslado!.code);
     if (existingItem) {
       alert('El producto ya se encuentra en la tabla.');
       return;
     }
-  
+
     this.trasladoItems.push({
       product: this.selectedProductTraslado,
     });
@@ -889,72 +822,87 @@ export class AreaDashboardComponent implements OnInit {
   }
 
   /**
-   * Elimina un producto de la lista de traslado.
-   * 
-   * @param {number} index Índice del producto a eliminar
-   * @memberof AreaDashboardComponent
+   * Elimina un ítem de la lista de traslado.
+   * @param {number} index - Índice del ítem a eliminar.
+   * @returns {void}
    */
-  onEliminarItemTraslado(index: number) {
+  onEliminarItemTraslado(index: number): void {
     this.trasladoItems.splice(index, 1);
   }
 
   /**
-   * Confirma el traslado de productos entre bodegas.
-   * 
-   * @memberof AreaDashboardComponent
+   * Confirma el traslado de productos.
+   * @returns {void}
    */
-  onConfirmarTraslado() {
+  onConfirmarTraslado(): void {
     if (!this.selectedBodegaOrigen || !this.selectedBodegaDestino || this.selectedBodegaOrigen === this.selectedBodegaDestino) {
-      alert('Seleccione bodegas válidas.');
-      return;
+        alert('Seleccione bodegas válidas.');
+        return;
     }
-  
+
     this.trasladoItems.forEach(item => {
-      const productInOrigen = this.selectedBodegaOrigen!.products.find(p => p.code === item.product.code);
-      if (productInOrigen) {
-        const productInDestino = this.selectedBodegaDestino!.products.find(p => p.code === item.product.code);
-        if (productInDestino) {
-          productInDestino.stock += productInOrigen.stock;
-        } else {
-          this.selectedBodegaDestino!.products.push({
-            ...item.product,
-            stock: productInOrigen.stock
-          });
+        const productInOrigen = this.selectedBodegaOrigen!.products.find(p => p.code === item.product.code);
+        if (productInOrigen) {
+            const productInDestino = this.selectedBodegaDestino!.products.find(p => p.code === item.product.code);
+            if (productInDestino) {
+                productInDestino.stock += item.product.stock;
+            } else {
+                this.selectedBodegaDestino!.products.push({
+                    ...item.product,
+                    stock: item.product.stock,
+                    bodega: this.selectedBodegaDestino!.name // Asegúrate de actualizar el nombre de la bodega
+                });
+            }
+            productInOrigen.stock -= item.product.stock;
         }
-        productInOrigen.stock = 0;
-      }
     });
-  
+
     this.selectedBodegaOrigen!.products = this.selectedBodegaOrigen!.products.filter(product => product.stock > 0);
-  
+
+    // Guardar los cambios en el servicio de productos
+    this.productService.saveProductsToLocalStorage(this.bodegas.flatMap(b => b.products));
+
     this.productService.addMovimiento({
-      tipo: 'Traslado',
-      numero: this.productService.getNextSalidaNumber(),
-      fecha: this.today,
-      detalles: `Traslado de productos de ${this.selectedBodegaOrigen.name} a ${this.selectedBodegaDestino.name}`,
-      bodegaOrigen: this.selectedBodegaOrigen.name,
-      bodegaDestino: this.selectedBodegaDestino.name,
-      items: this.trasladoItems.map(item => ({
-        code: item.product.code,
-        name: item.product.name,
-        description: item.product.description,
-        cantidad: item.product.stock
-      })),
-      usuario: `${this.authService.getCurrentUser().firstName} ${this.authService.getCurrentUser().lastName}`
+        tipo: 'Traslado',
+        numero: this.productService.getNextSalidaNumber(),
+        fecha: this.today,
+        detalles: `Traslado de productos de ${this.selectedBodegaOrigen.name} a ${this.selectedBodegaDestino.name}`,
+        bodegaOrigen: this.selectedBodegaOrigen.name,
+        bodegaDestino: this.selectedBodegaDestino.name,
+        items: this.trasladoItems.map(item => ({
+            code: item.product.code,
+            name: item.product.name,
+            description: item.product.description,
+            cantidad: item.product.stock
+        })),
+        usuario: `${this.authService.getCurrentUser().firstName} ${this.authService.getCurrentUser().lastName}`
     });
-  
-    this.saveBodegas();
+
     this.trasladoItems = [];
     this.selectedBodegaOrigen = null;
     this.selectedBodegaDestino = null;
-  
+
     const trasladoBodegaModalElement = document.getElementById('trasladoBodegaModal');
     if (trasladoBodegaModalElement) {
-      const trasladoBodegaModal = bootstrap.Modal.getInstance(trasladoBodegaModalElement);
-      if (trasladoBodegaModal) {
-        trasladoBodegaModal.hide();
-        setTimeout(() => trasladoBodegaModal.dispose(), 500);
-      }
+        const trasladoBodegaModal = bootstrap.Modal.getInstance(trasladoBodegaModalElement);
+        if (trasladoBodegaModal) {
+            trasladoBodegaModal.hide();
+            setTimeout(() => {
+                trasladoBodegaModal.dispose();
+                this.resetModalState();
+            }, 500);
+        }
     }
-  }  
+}
+
+  resetModalState(): void {
+      document.body.classList.remove('modal-open');
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+      const backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) {
+          backdrop.remove();
+      }
+  }
+
 }

@@ -14,38 +14,40 @@
           <h2>Inventario - {{ selectedBodega.name }}</h2>
         </div>
         <input type="text" class="form-control mt-2" placeholder="Buscar productos..." [(ngModel)]="searchProductTerm" (input)="onSearchProduct($event)">
-        <table id="productTable" class="table table-striped table-bordered caption-top mt-2">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col">CÓDIGO</th>
-              <th scope="col">DESCRIPCIÓN</th>
-              <th scope="col">UNIDAD</th>
-              <th scope="col">STOCK</th>
-              <th scope="col">HERRAMIENTAS</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let product of filteredProducts; let i = index">
-              <td>{{ product.code }}</td>
-              <td>{{ product.description }}</td>
-              <td>{{ product.unit }}</td>
-              <td>{{ product.stock }}</td>
-              <td>
-                <div class="btn-group" role="group" aria-label="Basic example">
-                  <button type="button" class="btn btn-success" (click)="onViewProductInfo(i)">
-                    <i class="bi bi-info-circle"></i>
-                  </button>
-                  <button type="button" class="btn btn-warning" (click)="onEditProduct(i)">
-                    <i class="bi bi-pen"></i>
-                  </button>
-                  <button type="button" class="btn btn-danger" (click)="onDeleteProduct(i)">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table id="productTable" class="table table-striped table-bordered caption-top mt-2 table-custom">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">CÓDIGO</th>
+                <th scope="col">DESCRIPCIÓN</th>
+                <th scope="col">UNIDAD</th>
+                <th scope="col">STOCK</th>
+                <th scope="col">HERRAMIENTAS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of filteredProducts; let i = index">
+                <td data-label="CÓDIGO">{{ product.code }}</td>
+                <td data-label="DESCRIPCIÓN">{{ product.description }}</td>
+                <td data-label="UNIDAD">{{ product.unit }}</td>
+                <td data-label="STOCK">{{ product.stock }}</td>
+                <td data-label="HERRAMIENTAS">
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-success" (click)="onViewProductInfo(i)">
+                      <i class="bi bi-info-circle"></i>
+                    </button>
+                    <button type="button" class="btn btn-warning" (click)="onEditProduct(i)">
+                      <i class="bi bi-pen"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger" (click)="onDeleteProduct(i)">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -150,7 +152,7 @@
             </div>
           </div>
           <div class="col-12">
-            <button class="btn btn-primary" type="submit">Crear Producto</button>
+            <button class="btn btn-custom" type="submit">Crear Producto</button>
           </div>
         </form>
       </div>
@@ -192,67 +194,67 @@
 
 <div class="modal fade" id="ingresoBodegaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Ingreso a Bodega</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <form id="ingresoBodegaForm">
-                  <div class="row mb-3">
-                      <div class="col-md-6">
-                          <label for="registroNumero" class="form-label">Ingreso n°:</label>
-                          <input type="text" class="form-control" id="registroNumero" [(ngModel)]="registroNumeroIngreso" name="registroNumeroIngreso" readonly>
-                      </div>
-                      <div class="col-md-6">
-                          <label for="fechaHora" class="form-label">Fecha:</label>
-                          <input type="text" class="form-control" id="fechaHora" [(ngModel)]="today" name="today" readonly>
-                      </div>
-                  </div>
-                  <div class="row mb-3">
-                      <div class="col-md-6">
-                          <label for="selectProducto" class="form-label">Producto:</label>
-                          <select class="form-select" id="selectProducto" [(ngModel)]="selectedProduct" name="selectedProduct" required>
-                              <option *ngFor="let product of selectedBodega.products" [ngValue]="product">{{ product.name }} ({{ product.code }})</option>
-                          </select>
-                      </div>
-                      <div class="col-md-6">
-                          <label for="cantidadIngreso" class="form-label">Cantidad a Ingresar:</label>
-                          <input type="number" class="form-control" id="cantidadIngreso" [(ngModel)]="cantidadIngreso" name="cantidadIngreso" min="1">
-                      </div>
-                  </div>
-                  <button type="button" class="btn btn-primary mb-3" (click)="onAddProductoToIngreso()">Ingresar Producto</button>
-                  <div style="max-height: 300px; overflow-y: auto;">
-                      <table class="table">
-                          <thead>
-                              <tr>
-                                  <th>Código</th>
-                                  <th>Nombre</th>
-                                  <th>Cantidad</th>
-                                  <th>Acción</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr *ngFor="let item of ingresoItems; let i = index">
-                                  <td>{{ item.product.code }}</td>
-                                  <td>{{ item.product.name }}</td>
-                                  <td>
-                                      <input type="number" [(ngModel)]="item.cantidad" name="cantidad{{i}}" min="1" class="form-control">
-                                  </td>
-                                  <td>
-                                      <button type="button" class="btn btn-danger" (click)="onEliminarItem(i)">Eliminar</button>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
-              </form>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-primary" (click)="onConfirmarIngreso()">Confirmar Ingreso</button>
-          </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ingreso a Bodega</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <div class="modal-body">
+        <form id="ingresoBodegaForm">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="registroNumero" class="form-label">Ingreso n°:</label>
+              <input type="text" class="form-control" id="registroNumero" [(ngModel)]="registroNumeroIngreso" name="registroNumeroIngreso" readonly>
+            </div>
+            <div class="col-md-6">
+              <label for="fechaHora" class="form-label">Fecha:</label>
+              <input type="text" class="form-control" id="fechaHora" [(ngModel)]="today" name="today" readonly>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="selectProducto" class="form-label">Producto:</label>
+              <select class="form-select" id="selectProducto" [(ngModel)]="selectedProduct" name="selectedProduct" required>
+                <option *ngFor="let product of selectedBodega.products" [ngValue]="product">{{ product.name }} ({{ product.code }})</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="cantidadIngreso" class="form-label">Cantidad a Ingresar:</label>
+              <input type="number" class="form-control" id="cantidadIngreso" [(ngModel)]="cantidadIngreso" name="cantidadIngreso" min="1">
+            </div>
+          </div>
+          <button type="button" class="btn btn-custom mb-3" (click)="onAddProductoToIngreso()">Ingresar Producto</button>
+          <div style="max-height: 300px; overflow-y: auto;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Cantidad</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of ingresoItems; let i = index">
+                  <td>{{ item.product.code }}</td>
+                  <td>{{ item.product.name }}</td>
+                  <td>
+                    <input type="number" [(ngModel)]="item.cantidad" name="cantidad{{i}}" min="1" class="form-control">
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger" (click)="onEliminarItem(i)">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-custom" (click)="onConfirmarIngreso()" [disabled]="ingresoItems.length === 0">Confirmar Ingreso</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -302,7 +304,7 @@
               </div>
             </div>
           </div>
-          <button type="button" class="btn btn-primary mb-3" (click)="onAddProductoToSalida()">Agregar Salida</button>
+          <button type="button" class="btn btn-custom mb-3" (click)="onAddProductoToSalida()">Agregar Salida</button>
           <div style="max-height: 300px; overflow-y: auto;">
             <table class="table">
               <thead>
@@ -344,7 +346,7 @@
             </table>
           </div>
           <div class="mb-3">
-            <button type="button" class="btn btn-success" (click)="onConfirmarSalida()" [disabled]="!salidaBodegaForm.valid">Confirmar Salida</button>
+            <button type="button" class="btn btn-custom" (click)="onConfirmarSalida()" [disabled]="!salidaBodegaForm.valid">Confirmar Salida</button>
           </div>
         </form>
       </div>
@@ -359,30 +361,51 @@
         <h5 class="modal-title" id="detalleHistorialModalLabel">Historial de Movimientos</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <div style="max-height: 800px; overflow-y: auto;"> <!-- Añadido para el scroll -->
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Tipo</th>
-                <th scope="col">Número</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Detalles</th>
-              </tr>
-            </thead>
-            <tbody id="tablaHistorial">
-              <tr *ngFor="let movimiento of historial">
-                <td>{{ movimiento?.tipo }}</td>
-                <td>{{ movimiento?.numero }}</td>
-                <td>{{ movimiento?.fecha }}</td>
-                <td>
-                  <button class="btn btn-success" (click)="onVerDetallesMovimiento(movimiento)">Ver Detalles</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="modal-body" id="historial-container">
+        <div class="mb-3">
+          <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="searchHistorialTerm" (input)="onSearchHistorial()">
         </div>
-      </div>
+        <div class="mb-3">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="filterIngreso" [(ngModel)]="filterIngreso" (change)="onSearchHistorial()">
+            <label class="form-check-label" for="filterIngreso">Ingreso</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="filterSalida" [(ngModel)]="filterSalida" (change)="onSearchHistorial()">
+            <label class="form-check-label" for="filterSalida">Salida</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="filterTraslado" [(ngModel)]="filterTraslado" (change)="onSearchHistorial()">
+            <label class="form-check-label" for="filterTraslado">Traslado</label>
+          </div>
+        </div>
+        <div class="mb-3" *ngIf="relatedProject">
+          <div class="alert alert-info d-flex align-items-center" role="alert">
+            <i class="bi bi-info-circle-fill me-2"></i>
+            <span>Proyecto relacionado: {{ relatedProject.nombre }}</span>
+          </div>
+        </div>
+        <table class="table table-striped table-bordered caption-top mt-2 table-custom">
+          <thead>
+            <tr>
+              <th scope="col">Tipo</th>
+              <th scope="col">Número</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Detalles</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let movimiento of filteredHistorial">
+              <td>{{ movimiento?.tipo }}</td>
+              <td>{{ movimiento?.numero }}</td>
+              <td>{{ movimiento?.fecha }}</td>
+              <td>
+                <button class="btn btn-custom" (click)="onVerDetallesMovimiento(movimiento)">Ver Detalles</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>      
     </div>
   </div>
 </div>
@@ -408,7 +431,7 @@
           <p><strong>Bodega Destino:</strong> {{ selectedMovimiento?.bodegaDestino }}</p>
         </div>
         <p><strong>Usuario:</strong> {{ selectedMovimiento?.usuario }}</p>
-        <table class="table">
+        <table class="table table-striped table-bordered caption-top mt-2 table-custom">
           <thead>
             <tr>
               <th>Código</th>
@@ -428,7 +451,7 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="onVolverHistorial()">Volver al Historial</button>
+        <button type="button" class="btn btn-custom" (click)="onVolverHistorial()">Volver al Historial</button>
       </div>
     </div>
   </div>
@@ -442,7 +465,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-              <form id="editProductForm" (ngSubmit)="onRequestModification()" #editProductForm="ngForm">
+              <form id="editProductForm" (ngSubmit)="onSaveEditProduct()">
                   <div class="mb-3">
                       <label for="editProductCode" class="form-label">Código</label>
                       <input type="text" class="form-control" id="editProductCode" [(ngModel)]="selectedProductToEdit.code" name="code" readonly>
@@ -495,7 +518,7 @@
                       <label for="editProductStock" class="form-label">Stock</label>
                       <input type="number" class="form-control" id="editProductStock" [(ngModel)]="selectedProductToEdit.stock" name="stock" readonly>
                   </div>
-                  <button type="submit" class="btn btn-primary">Solicitar Modificación</button>
+                  <button type="submit" class="btn btn-custom">Guardar Cambios</button>
               </form>
           </div>
       </div>
@@ -533,7 +556,7 @@
             <label for="bodegaName" class="form-label">Nombre de la Bodega</label>
             <input type="text" class="form-control" id="bodegaName" [(ngModel)]="newBodegaName" name="bodegaName" required>
           </div>
-          <button type="submit" class="btn btn-primary">Agregar Bodega</button>
+          <button type="submit" class="btn btn-custom">Agregar Bodega</button>
         </form>
       </div>
     </div>
@@ -571,7 +594,7 @@
               </select>
             </div>
           </div>
-          <button type="button" class="btn btn-primary mb-3" (click)="onAddProductoToTraslado()">Agregar Producto</button>
+          <button type="button" class="btn btn-custom mb-3" (click)="onAddProductoToTraslado()">Agregar Producto</button>
           <div style="max-height: 300px; overflow-y: auto;">
             <table class="table">
               <thead>
@@ -598,7 +621,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="onConfirmarTraslado()" [disabled]="trasladoItems.length === 0">Confirmar Traslado</button>
+        <button type="button" class="btn btn-custom" (click)="onConfirmarTraslado()" [disabled]="trasladoItems.length === 0">Confirmar Traslado</button>
       </div>
     </div>
   </div>

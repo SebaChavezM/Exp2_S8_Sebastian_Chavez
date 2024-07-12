@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { CommonModule } from '@angular/common';
@@ -10,19 +10,35 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule]
 })
-export class InicioComponent {
+export class InicioComponent implements OnInit, OnDestroy {
+  userRole: string = '';
+  welcomeMessage: string = '';
+  private welcomeMessages: string[] = ['Bienvenido', 'Welcome', 'Bienvenue', 'Willkommen', 'Benvenuto'];
+  private currentMessageIndex: number = 0;
+  private intervalId: any;
 
-  /**
-   * Constructor del componente Inicio.
-   * @param {AuthService} authService - Servicio de autenticación.
-   * @param {Router} router - Router para la navegación.
-   */
   constructor(public authService: AuthService, private router: Router) {}
 
-  /**
-   * Navega al panel de control correspondiente según el rol del usuario.
-   * @returns {void}
-   */
+  ngOnInit(): void {
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser) {
+      this.userRole = currentUser.role;
+    }
+    this.welcomeMessage = this.welcomeMessages[this.currentMessageIndex];
+    this.intervalId = setInterval(() => {
+      this.changeWelcomeMessage();
+    }, 5000); // Cambiar mensaje cada 5 segundos
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.intervalId); // Limpiar el intervalo cuando el componente se destruya
+  }
+
+  private changeWelcomeMessage(): void {
+    this.currentMessageIndex = (this.currentMessageIndex + 1) % this.welcomeMessages.length;
+    this.welcomeMessage = this.welcomeMessages[this.currentMessageIndex];
+  }
+
   navigateToDashboard(): void {
     const userRole = this.authService.getCurrentUser()?.role;
     if (userRole === 'Admin') {
@@ -36,11 +52,6 @@ export class InicioComponent {
     }
   }
 
-  /**
-   * Navega a una página específica.
-   * @param {string} page - La ruta de la página a la que se va a navegar.
-   * @returns {void}
-   */
   navigateToPage(page: string): void {
     this.router.navigate([page]);
   }
