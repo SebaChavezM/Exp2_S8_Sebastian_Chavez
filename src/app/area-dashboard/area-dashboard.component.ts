@@ -48,6 +48,7 @@ interface Proyecto {
   imports: [FormsModule, CommonModule, BulkUploadComponent]
 })
 export class AreaDashboardComponent implements OnInit {
+  /** Lista de productos disponibles. */
   products: Product[] = [];
   /** Lista de todos los productos combinados de todas las bodegas. */
   allProducts: Product[] = [];
@@ -157,18 +158,25 @@ export class AreaDashboardComponent implements OnInit {
   relatedProject: Proyecto | null = null;
   /** Lista de proyectos. */
   projects: Proyecto[] = [];
+
   /**
    * Constructor del componente.
    * @param {ProductService} productService - Servicio de productos.
    * @param {AuthService} authService - Servicio de autenticación.
    * @param {ProyectosService} proyectosService - Servicio de proyectos.
+   * @param {ChangeDetectorRef} cdr - Servicio de detección de cambios.
    */
   constructor(
     private productService: ProductService,
     private authService: AuthService,
     private proyectosService: ProyectosService,
-    private cdr: ChangeDetectorRef  // <- Añadir esta línea
+    private cdr: ChangeDetectorRef
   ) {}
+
+  /**
+   * Inicializa el componente y carga datos necesarios.
+   * @returns {void}
+   */
   ngOnInit(): void {
     this.productService.products$.subscribe(products => {
       this.products = products;
@@ -389,13 +397,17 @@ export class AreaDashboardComponent implements OnInit {
     }
   }
 
+  /**
+   * Carga todos los productos desde el servicio de productos.
+   * @returns {void}
+   */
   loadAllProducts(): void {
     const products = this.productService.getAllProducts();
     this.allProducts = products;
     this.filteredProducts = products.filter(product => product.bodega === this.selectedBodega.name);
-    this.cdr.detectChanges(); // <- Añadir esta línea si es necesario
+    this.cdr.detectChanges();
   }
-  
+
   /**
    * Selecciona una bodega.
    * @param {Bodega} bodega - Bodega seleccionada.
@@ -447,13 +459,13 @@ export class AreaDashboardComponent implements OnInit {
     if (form.valid) {
       if (!this.productExists(this.newProduct.code)) {
         this.newProduct.code = this.normalizeCode(this.newProduct.code);
-  
+
         // Asegurarse de que todos los campos necesarios están llenos
         if (!this.newProduct.name) {
           alert('El nombre del producto es requerido.');
           return;
         }
-  
+
         const targetBodega = this.bodegas.find(b => b.name === this.newProduct.bodega);
         if (targetBodega) {
           targetBodega.products.push(this.newProduct);
@@ -491,7 +503,7 @@ export class AreaDashboardComponent implements OnInit {
         formElement.classList.add('was-validated');
       }
     }
-  }  
+  }
 
   /**
    * Añade una nueva bodega.
@@ -605,7 +617,7 @@ export class AreaDashboardComponent implements OnInit {
     this.productService.incrementNextIngresoNumber();
     this.registroNumeroIngreso = this.productService.getNextIngresoNumber();
     this.saveBodegas();
-  
+
     const ingresoBodegaModalElement = document.getElementById('ingresoBodegaModal');
     if (ingresoBodegaModalElement) {
       const ingresoBodegaModal = bootstrap.Modal.getInstance(ingresoBodegaModalElement);
@@ -619,7 +631,7 @@ export class AreaDashboardComponent implements OnInit {
         }, 500);
       }
     }
-  }  
+  }
 
   /**
    * Muestra el modal para agregar una nueva bodega.
@@ -689,7 +701,7 @@ export class AreaDashboardComponent implements OnInit {
     this.productService.incrementNextSalidaNumber();
     this.registroNumeroSalida = this.productService.getNextSalidaNumber();
     this.saveBodegas();
-  
+
     // Cierre del modal
     const salidaBodegaModalElement = document.getElementById('salidaBodegaModal');
     if (salidaBodegaModalElement) {
@@ -704,7 +716,7 @@ export class AreaDashboardComponent implements OnInit {
         }, 500);
       }
     }
-  }  
+  }
 
   /**
    * Elimina un ítem de la lista de salida.
@@ -836,25 +848,25 @@ export class AreaDashboardComponent implements OnInit {
    */
   onConfirmarTraslado(): void {
     if (!this.selectedBodegaOrigen || !this.selectedBodegaDestino || this.selectedBodegaOrigen === this.selectedBodegaDestino) {
-        alert('Seleccione bodegas válidas.');
-        return;
+      alert('Seleccione bodegas válidas.');
+      return;
     }
 
     this.trasladoItems.forEach(item => {
-        const productInOrigen = this.selectedBodegaOrigen!.products.find(p => p.code === item.product.code);
-        if (productInOrigen) {
-            const productInDestino = this.selectedBodegaDestino!.products.find(p => p.code === item.product.code);
-            if (productInDestino) {
-                productInDestino.stock += item.product.stock;
-            } else {
-                this.selectedBodegaDestino!.products.push({
-                    ...item.product,
-                    stock: item.product.stock,
-                    bodega: this.selectedBodegaDestino!.name // Asegúrate de actualizar el nombre de la bodega
-                });
-            }
-            productInOrigen.stock -= item.product.stock;
+      const productInOrigen = this.selectedBodegaOrigen!.products.find(p => p.code === item.product.code);
+      if (productInOrigen) {
+        const productInDestino = this.selectedBodegaDestino!.products.find(p => p.code === item.product.code);
+        if (productInDestino) {
+          productInDestino.stock += item.product.stock;
+        } else {
+          this.selectedBodegaDestino!.products.push({
+            ...item.product,
+            stock: item.product.stock,
+            bodega: this.selectedBodegaDestino!.name // Asegúrate de actualizar el nombre de la bodega
+          });
         }
+        productInOrigen.stock -= item.product.stock;
+      }
     });
 
     this.selectedBodegaOrigen!.products = this.selectedBodegaOrigen!.products.filter(product => product.stock > 0);
@@ -863,19 +875,19 @@ export class AreaDashboardComponent implements OnInit {
     this.productService.saveProductsToLocalStorage(this.bodegas.flatMap(b => b.products));
 
     this.productService.addMovimiento({
-        tipo: 'Traslado',
-        numero: this.productService.getNextSalidaNumber(),
-        fecha: this.today,
-        detalles: `Traslado de productos de ${this.selectedBodegaOrigen.name} a ${this.selectedBodegaDestino.name}`,
-        bodegaOrigen: this.selectedBodegaOrigen.name,
-        bodegaDestino: this.selectedBodegaDestino.name,
-        items: this.trasladoItems.map(item => ({
-            code: item.product.code,
-            name: item.product.name,
-            description: item.product.description,
-            cantidad: item.product.stock
-        })),
-        usuario: `${this.authService.getCurrentUser().firstName} ${this.authService.getCurrentUser().lastName}`
+      tipo: 'Traslado',
+      numero: this.productService.getNextSalidaNumber(),
+      fecha: this.today,
+      detalles: `Traslado de productos de ${this.selectedBodegaOrigen.name} a ${this.selectedBodegaDestino.name}`,
+      bodegaOrigen: this.selectedBodegaOrigen.name,
+      bodegaDestino: this.selectedBodegaDestino.name,
+      items: this.trasladoItems.map(item => ({
+        code: item.product.code,
+        name: item.product.name,
+        description: item.product.description,
+        cantidad: item.product.stock
+      })),
+      usuario: `${this.authService.getCurrentUser().firstName} ${this.authService.getCurrentUser().lastName}`
     });
 
     this.trasladoItems = [];
@@ -884,25 +896,28 @@ export class AreaDashboardComponent implements OnInit {
 
     const trasladoBodegaModalElement = document.getElementById('trasladoBodegaModal');
     if (trasladoBodegaModalElement) {
-        const trasladoBodegaModal = bootstrap.Modal.getInstance(trasladoBodegaModalElement);
-        if (trasladoBodegaModal) {
-            trasladoBodegaModal.hide();
-            setTimeout(() => {
-                trasladoBodegaModal.dispose();
-                this.resetModalState();
-            }, 500);
-        }
-    }
-}
-
-  resetModalState(): void {
-      document.body.classList.remove('modal-open');
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
-      const backdrop = document.querySelector('.modal-backdrop');
-      if (backdrop) {
-          backdrop.remove();
+      const trasladoBodegaModal = bootstrap.Modal.getInstance(trasladoBodegaModalElement);
+      if (trasladoBodegaModal) {
+        trasladoBodegaModal.hide();
+        setTimeout(() => {
+          trasladoBodegaModal.dispose();
+          this.resetModalState();
+        }, 500);
       }
+    }
   }
 
+  /**
+   * Restablece el estado del modal.
+   * @returns {void}
+   */
+  resetModalState(): void {
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) {
+      backdrop.remove();
+    }
+  }
 }

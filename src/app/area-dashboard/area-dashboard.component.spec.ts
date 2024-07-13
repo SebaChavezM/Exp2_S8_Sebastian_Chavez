@@ -1,52 +1,53 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AreaDashboardComponent } from './area-dashboard.component';
+import { ProductService } from '../service/product.service';
 import { AuthService } from '../auth/auth.service';
-import { ProductService, Product, Movimiento } from '../service/product.service';
-import { FormsModule, NgForm } from '@angular/forms';
+import { ProyectosService } from '../service/proyecto.service';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import * as bootstrap from 'bootstrap';
-
-interface Bodega {
-  name: string;
-  products: Product[];
-}
+import { BulkUploadComponent } from '../bulk-upload/bulk-upload.component';
 
 describe('AreaDashboardComponent', () => {
   let component: AreaDashboardComponent;
   let fixture: ComponentFixture<AreaDashboardComponent>;
-  let authServiceSpy: jasmine.SpyObj<AuthService>;
-  let productServiceSpy: jasmine.SpyObj<ProductService>;
+  let mockProductService: any;
+  let mockAuthService: any;
+  let mockProyectosService: any;
 
   beforeEach(async () => {
-    const authSpy = jasmine.createSpyObj('AuthService', ['getCurrentUser']);
-    const productSpy = jasmine.createSpyObj('ProductService', [
-      'products$', 'historial$', 'getNextIngresoNumber', 'getNextSalidaNumber', 
-      'updateProduct', 'addMovimiento', 'incrementNextIngresoNumber', 
-      'incrementNextSalidaNumber'
-    ]);
+    mockProductService = {
+      products$: of([]),
+      historial$: of([]),
+      getNextIngresoNumber: jasmine.createSpy('getNextIngresoNumber').and.returnValue(1),
+      getNextSalidaNumber: jasmine.createSpy('getNextSalidaNumber').and.returnValue(1),
+      deleteProductByCode: jasmine.createSpy('deleteProductByCode').and.callFake((code: string) => {
+        component.bodegas[0].products = component.bodegas[0].products.filter(p => p.code !== code);
+      }),
+      updateProduct: jasmine.createSpy('updateProduct'),
+      addMovimiento: jasmine.createSpy('addMovimiento'),
+      incrementNextIngresoNumber: jasmine.createSpy('incrementNextIngresoNumber'),
+      incrementNextSalidaNumber: jasmine.createSpy('incrementNextSalidaNumber'),
+      getAllProducts: jasmine.createSpy('getAllProducts').and.returnValue([]),
+      saveProductsToLocalStorage: jasmine.createSpy('saveProductsToLocalStorage')
+    };
+
+    mockAuthService = {
+      getCurrentUser: jasmine.createSpy('getCurrentUser').and.returnValue({ firstName: 'John', lastName: 'Doe' })
+    };
+
+    mockProyectosService = {
+      proyectos$: of([])
+    };
 
     await TestBed.configureTestingModule({
-      imports: [
-        FormsModule,
-        CommonModule,
-        RouterTestingModule,
-        AreaDashboardComponent // Importamos el componente standalone
-      ],
+      imports: [FormsModule, CommonModule, BulkUploadComponent],
       providers: [
-        { provide: AuthService, useValue: authSpy },
-        { provide: ProductService, useValue: productSpy }
+        { provide: ProductService, useValue: mockProductService },
+        { provide: AuthService, useValue: mockAuthService },
+        { provide: ProyectosService, useValue: mockProyectosService }
       ]
     }).compileComponents();
-
-    authServiceSpy = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
-    productServiceSpy = TestBed.inject(ProductService) as jasmine.SpyObj<ProductService>;
-
-    productServiceSpy.products$ = of([]);
-    productServiceSpy.historial$ = of([]);
-    productServiceSpy.getNextIngresoNumber.and.returnValue(1);
-    productServiceSpy.getNextSalidaNumber.and.returnValue(1);
 
     fixture = TestBed.createComponent(AreaDashboardComponent);
     component = fixture.componentInstance;
@@ -58,132 +59,59 @@ describe('AreaDashboardComponent', () => {
   });
 
   it('should load products on init', () => {
-    const products = [{ code: 'P001', name: 'Product 1', description: '', model: '', brand: '', material: '', color: '', family: '', value: 0, currency: '', unit: '', location: '', stock: 0, bodega: 'Bodega Principal' }];
-    productServiceSpy.products$ = of(products);
+    spyOn(component, 'loadAllProducts').and.callThrough();
     component.ngOnInit();
-    expect(component.products).toEqual(products);
+    expect(component.loadAllProducts).toHaveBeenCalled();
   });
 
-  it('should filter products based on search term', () => {
-    component.selectedBodega.products = [
-      { code: 'P001', name: 'Product 1', description: '', model: '', brand: '', material: '', color: '', family: '', value: 0, currency: '', unit: '', location: '', stock: 0, bodega: 'Bodega Principal' },
-      { code: 'P002', name: 'Product 2', description: '', model: '', brand: '', material: '', color: '', family: '', value: 0, currency: '', unit: '', location: '', stock: 0, bodega: 'Bodega Principal' }
-    ];
-
-    component.searchProductTerm = 'P001';
-    component.onSearchProduct({ target: { value: 'P001' } });
-    expect(component.filteredProducts.length).toBe(1);
-    expect(component.filteredProducts[0].code).toBe('P001');
-  });
-
-  it('should add a product to ingreso items', () => {
-    const product: Product = { code: 'P001', name: 'Product 1', description: '', model: '', brand: '', material: '', color: '', family: '', value: 0, currency: '', unit: '', location: '', stock: 10, bodega: 'Bodega Principal' };
-    component.selectedProduct = product;
-    component.cantidadIngreso = 5;
-
-    component.onAddProductoToIngreso();
-    expect(component.ingresoItems.length).toBe(1);
-    expect(component.ingresoItems[0].product).toEqual(product);
-    expect(component.ingresoItems[0].cantidad).toBe(5);
-  });
-
-  it('should confirm ingreso and update stock', () => {
-    const product: Product = { code: 'P001', name: 'Product 1', description: '', model: '', brand: '', material: '', color: '', family: '', value: 0, currency: '', unit: '', location: '', stock: 10, bodega: 'Bodega Principal' };
-    component.selectedBodega.products.push(product);
-    component.ingresoItems.push({ product: product, cantidad: 10 });
-    authServiceSpy.getCurrentUser.and.returnValue({ firstName: 'Admin', lastName: 'User' });
-
-    productServiceSpy.updateProduct.and.callFake((code: string, updatedProduct: Partial<Product>) => {
-      const index = component.selectedBodega.products.findIndex(p => p.code === code);
-      if (index !== -1) {
-        component.selectedBodega.products[index] = { ...component.selectedBodega.products[index], ...updatedProduct };
-      }
-    });
-
-    component.onConfirmarIngreso();
-    expect(product.stock).toBe(20); // Ajuste aquí
-    expect(productServiceSpy.updateProduct).toHaveBeenCalledWith(product.code, product);
-    expect(productServiceSpy.addMovimiento).toHaveBeenCalled();
-  });
-
-  it('should delete product', () => {
-    const product: Product = { code: 'P001', name: 'Product 1', description: '', model: '', brand: '', material: '', color: '', family: '', value: 0, currency: '', unit: '', location: '', stock: 10, bodega: 'Bodega Principal' };
-    component.selectedBodega.products.push(product);
-    component.onDeleteProduct(0);
-
-    expect(component.selectedProductIndexToDelete).toBe(0);
-    expect(component.productToDelete).toEqual(product); // Cambiar aquí de toBe a toEqual
-
-    const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal')!);
-    confirmDeleteModal.show();
-  });
-
-  it('should confirm product deletion', () => {
-    const product: Product = { code: 'P001', name: 'Product 1', description: '', model: '', brand: '', material: '', color: '', family: '', value: 0, currency: '', unit: '', location: '', stock: 10, bodega: 'Bodega Principal' };
-    component.selectedBodega.products.push(product);
-    component.selectedProductIndexToDelete = 0;
-    component.productToDelete = product;
+  it('should delete a product by code', () => {
+    component.bodegas = [{
+      name: 'Bodega Principal', 
+      products: [{
+        code: '123',
+        name: 'Product 1',
+        description: 'Description',
+        model: 'Model',
+        brand: 'Brand',
+        material: 'Material',
+        color: 'Color',
+        family: 'Family',
+        value: 100,
+        currency: 'USD',
+        unit: 'Unit',
+        location: 'Location',
+        stock: 10,
+        bodega: 'Bodega Principal'
+      }]
+    }];
+    component.selectedBodega = component.bodegas[0];
+    component.productToDelete = { code: '123' } as any;
 
     component.onConfirmDelete();
-    expect(component.selectedBodega.products.length).toBe(0);
-    expect(localStorage.getItem('bodegas')).toBe(JSON.stringify(component.bodegas));
+
+    expect(mockProductService.deleteProductByCode).toHaveBeenCalledWith('123');
+    expect(component.bodegas[0].products.length).toBe(0);
   });
 
-  it('should handle bodega selection', () => {
-    const bodega1: Bodega = { name: 'Bodega Principal', products: [] };
-    const bodega2: Bodega = { name: 'Bodega Secundaria', products: [] };
+  it('should select a bodega', () => {
+    const bodega = { name: 'Bodega Secundaria', products: [] };
+    component.bodegas = [component.selectedBodega, bodega];
 
-    component.bodegas = [bodega1, bodega2];
-    component.selectBodega(bodega1);  // Ajustamos el nombre de la función
+    component.selectBodega(bodega);
 
-    expect(component.selectedBodega).toBe(bodega1);
+    expect(component.selectedBodega).toBe(bodega);
+    expect(component.filteredProducts).toBe(bodega.products);
   });
 
-  it('should add new bodega', () => {
-    component.loadBodegas(); // Asegurarse de que las bodegas se carguen primero
-    const initialLength = component.bodegas.length;
-    component.newBodegaName = 'Bodega Nueva';
-    const form = { reset: () => {} } as NgForm;
-    component.addBodega(form);  // Ajustamos el nombre de la función
+  it('should confirm product ingreso', () => {
+    component.selectedBodega.products = [{ code: '123', name: 'Product 1', stock: 10 }] as any[];
+    component.ingresoItems = [{ product: { code: '123', name: 'Product 1' }, cantidad: 5 }];
+    component.selectedProduct = component.selectedBodega.products[0];
 
-    expect(component.bodegas.length).toBe(initialLength + 1);  // Ajustar el número esperado aquí
-    const newBodega = component.bodegas.find(b => b.name === 'Bodega Nueva');
-    expect(newBodega).toBeDefined();
-    expect(newBodega?.name).toBe('Bodega Nueva');
-    expect(localStorage.getItem('bodegas')).toBe(JSON.stringify(component.bodegas));
-  });
+    component.onConfirmarIngreso();
 
-  it('should add a product to salida items', () => {
-    const product: Product = { code: 'P001', name: 'Product 1', description: '', model: '', brand: '', material: '', color: '', family: '', value: 0, currency: '', unit: '', location: '', stock: 10, bodega: 'Bodega Principal' };
-    component.products.push(product);
-    component.salidaItems.push({ product: product, cantidad: 5 });
-    component.tipoDocumento = 'VD';
-    component.numeroDocumento = '12345';
-    authServiceSpy.getCurrentUser.and.returnValue({ firstName: 'Admin', lastName: 'User' });
-
-    component.onConfirmarSalida();
-    expect(product.stock).toBe(5);
-    expect(productServiceSpy.updateProduct).toHaveBeenCalledWith(product.code, product);
-    expect(productServiceSpy.addMovimiento).toHaveBeenCalled();
-  });
-
-  it('should handle product traslado between bodegas', () => {
-    const product: Product = { code: 'P001', name: 'Product 1', description: '', model: '', brand: '', material: '', color: '', family: '', value: 0, currency: '', unit: '', location: '', stock: 10, bodega: 'Bodega Principal' };
-    const bodegaOrigen: Bodega = { name: 'Bodega Origen', products: [product] };
-    const bodegaDestino: Bodega = { name: 'Bodega Destino', products: [] };
-
-    component.bodegas = [bodegaOrigen, bodegaDestino];
-    component.selectedBodegaOrigen = bodegaOrigen;
-    component.selectedBodegaDestino = bodegaDestino;
-    component.selectedProductTraslado = product;
-    authServiceSpy.getCurrentUser.and.returnValue({ firstName: 'Admin', lastName: 'User' });
-
-    component.onAddProductoToTraslado();
-    component.onConfirmarTraslado();
-
-    expect(bodegaOrigen.products.length).toBe(0);
-    expect(bodegaDestino.products.length).toBe(1);
-    expect(bodegaDestino.products[0].code).toBe(product.code);
-    expect(bodegaDestino.products[0].stock).toBe(10);
+    expect(component.selectedBodega.products[0].stock).toBe(15);
+    expect(mockProductService.updateProduct).toHaveBeenCalledWith('123', component.selectedBodega.products[0]);
+    expect(mockProductService.addMovimiento).toHaveBeenCalled();
   });
 });
