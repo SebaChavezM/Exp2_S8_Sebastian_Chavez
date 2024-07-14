@@ -4,6 +4,16 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { NotificationService } from '../service/notificacion.service';
 
+/**
+ * Componente de la barra de navegación.
+ *
+ * Este componente maneja la barra de navegación superior, la visibilidad del sidebar y 
+ * la gestión de notificaciones, incluyendo funcionalidades específicas para roles de usuario.
+ *
+ * @export
+ * @class NavbarComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -12,8 +22,11 @@ import { NotificationService } from '../service/notificacion.service';
   imports: [CommonModule, RouterModule]
 })
 export class NavbarComponent implements OnInit {
+  /** Cuenta de notificaciones pendientes. */
   pendingNotificationsCount: number = 0;
-  isSidebarCollapsed = false;
+  /** Visibilidad del sidebar. */
+  isSidebarVisible = true;
+  /** Dropdown actualmente abierto. */
   currentOpenDropdown: string | null = null;
 
   /**
@@ -42,32 +55,41 @@ export class NavbarComponent implements OnInit {
   }
 
   /**
-   * Verifica el tamaño de la pantalla y ajusta el estado de la barra lateral.
+   * Verifica el tamaño de la pantalla y ajusta la visibilidad del sidebar.
    * @returns {void}
    */
   checkScreenSize(): void {
     const screenWidth = window.innerWidth;
-    this.isSidebarCollapsed = screenWidth <= 768;
-  }
-
-  /**
-   * Alterna el estado de la barra lateral (expandida/colapsada).
-   * @returns {void}
-   */
-  toggleSidebar(): void {
-    this.isSidebarCollapsed = !this.isSidebarCollapsed;
-    const sidebar = document.getElementById('sidebar');
-    if (this.isSidebarCollapsed) {
-      sidebar?.classList.add('show');
-      this.closeAllDropdowns();  // Cierra todos los dropdowns
+    if (screenWidth <= 768) {
+      this.isSidebarVisible = false;
     } else {
-      sidebar?.classList.remove('show');
+      this.isSidebarVisible = true;
     }
   }
 
+  /**
+   * Alterna la visibilidad del sidebar.
+   * @returns {void}
+   */
+  toggleSidebar(): void {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar) {
+      if (this.isSidebarVisible) {
+        sidebar.classList.remove('show');
+        this.isSidebarVisible = false;
+      } else {
+        sidebar.classList.add('show');
+        this.isSidebarVisible = true;
+      }
+    }
+  }
+
+  /**
+   * Redirige al usuario al dashboard correspondiente según su rol.
+   * @returns {void}
+   */
   goToDashboard(): void {
     const userRole = this.authService.getCurrentUserRole();
-
     switch (userRole) {
       case 'Admin':
         this.router.navigate(['/admin-dashboard']);
@@ -82,7 +104,6 @@ export class NavbarComponent implements OnInit {
         this.router.navigate(['/auditor-dashboard']);
         break;
       default:
-        // Redirige a una página por defecto o muestra un mensaje de error
         this.router.navigate(['/default-dashboard']);
         break;
     }
@@ -163,7 +184,6 @@ export class NavbarComponent implements OnInit {
       const currentDropdown = document.getElementById(this.currentOpenDropdown);
       currentDropdown?.classList.remove('show');
     }
-  
     const dropdown = document.getElementById(dropdownId);
     if (dropdown) {
       dropdown.classList.toggle('show');

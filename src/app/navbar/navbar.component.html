@@ -1,27 +1,29 @@
 <nav class="navbar navbar-expand-lg custom-navbar fixed-top">
-  <div class="container-fluid d-flex align-items-center">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+  <div class="container-fluid d-flex align-items-center justify-content-between">
+    <a class="navbar-brand" href="#">ERP</a>
+    <button class="navbar-toggler" type="button" (click)="toggleSidebar()" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
       <i class="bi bi-list"></i>
     </button>
-    <a class="navbar-brand me-auto" href="#">ERP</a>
-    <div *ngIf="authService.isRoleAllowed(['Admin', 'Área', 'Bodega'])" class="nav-item position-relative">
-      <a class="nav-link" routerLink="/notificaciones">
-        <i class="bi bi-bell"></i>
-        <span *ngIf="pendingNotificationsCount > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-          {{ pendingNotificationsCount }}
-          <span class="visually-hidden">unread messages</span>
-        </span>
-      </a>
-    </div>
-    <div class="vr mx-3"></div>
-    <div class="dropdown">
-      <a class="nav-link d-flex align-items-center" id="userDropdown" role="button" aria-expanded="false">
-        <img [src]="authService.getCurrentUser()?.profilePicture || 'assets/img/fondos/profile picture.webp'" class="rounded-circle me-2" alt="Profile Picture" width="50" height="50">
-        <div class="d-flex flex-column align-items-start">
-          <span>{{ authService.getCurrentUser()?.firstName }} {{ authService.getCurrentUser()?.lastName }}</span>
-          <span class="text-success">{{ authService.getCurrentUser()?.role }}</span>
-        </div>
-      </a>
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <div *ngIf="authService.isRoleAllowed(['Admin', 'Área', 'Bodega'])" class="nav-item position-relative">
+        <a class="nav-link" routerLink="/notificaciones">
+          <i class="bi bi-bell"></i>
+          <span *ngIf="pendingNotificationsCount > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ pendingNotificationsCount }}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </a>
+      </div>
+      <div class="vr mx-3 d-none d-lg-block"></div>
+      <div class="dropdown ms-auto">
+        <a class="nav-link d-flex align-items-center" id="userDropdown" role="button" aria-expanded="false">
+          <img [src]="authService.getCurrentUser()?.profilePicture || 'assets/img/fondos/profile picture.webp'" class="rounded-circle me-2" alt="Profile Picture" width="50" height="50">
+          <div class="d-flex flex-column align-items-start">
+            <span>{{ authService.getCurrentUser()?.firstName }} {{ authService.getCurrentUser()?.lastName }}</span>
+            <span class="text-success">{{ authService.getCurrentUser()?.role }}</span>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </nav>

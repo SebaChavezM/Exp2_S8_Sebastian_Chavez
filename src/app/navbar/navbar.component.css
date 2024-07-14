@@ -1,3 +1,132 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.btn-custom {
+  background-color: #ee7712;
+  border: none;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.btn-custom:hover {
+  background-color: #cc6600;
+}
+
+.table-custom {
+  border: 1px solid #ee7712;
+}
+
+.table-custom thead {
+  background-color: #ee7712;
+  color: white;
+}
+
+.table-custom th,
+.table-custom td {
+  border: 1px solid #ee7712;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.logo {
+  flex: 1;
+  text-align: center;
+}
+
+.logo img {
+  width: 250px;
+}
+
+.form-container {
+  flex: 2;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+      flex-direction: column;
+      align-items: center;
+      width: 80%;
+  }
+
+  .logo {
+      margin-bottom: 20px;
+  }
+
+  .logo img {
+      width: 150px;
+  }
+
+  .form-container {
+      width: 100%;
+  }
+
+  .table-custom {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+  }
+
+  .table-custom thead {
+      display: none;
+  }
+
+  .table-custom th,
+  .table-custom td {
+      display: block;
+      text-align: left;
+      white-space: normal;
+  }
+
+  .table-custom td:before {
+      content: attr(data-label);
+      font-weight: bold;
+      display: inline-block;
+      width: 100px;
+      background-color: #ee7712;
+      color: white;
+      padding: 10px;
+      border: 1px solid #ee7712;
+  }
+
+  .table-custom td {
+      padding: 10px;
+      border: 1px solid #ee7712;
+      position: relative;
+      padding-left: 120px;
+  }
+
+  #sidebar .list-group-item span {
+      display: inline !important;
+  }
+}
+
+.main-content .btn-success,
+.main-content .btn-warning,
+.main-content .btn-danger,
+.main-content .btn-primary,
+.main-content .btn-secondary {
+  background-color: #ee7712;
+  border: none;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.main-content .btn-success:hover,
+.main-content .btn-warning:hover,
+.main-content .btn-danger:hover,
+.main-content .btn-primary:hover,
+.main-content .btn-secondary:hover {
+  background-color: #cc6600;
+}
+
+#historial-container {
+  max-height: 800px;
+  overflow-y: auto;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
 .custom-navbar {
   background-color: #ffffff;
   border-bottom: 1px solid #e5e5e5;
@@ -47,10 +176,10 @@
   width: 60px;
   height: 100vh;
   position: fixed;
-  top: 0;
+  top: 56px; /* Ajusta según la altura de tu navbar */
   left: 0;
   z-index: 1000;
-  padding-top: 70px;
+  padding-top: 20px;
   transition: width 0.3s ease-in-out;
   overflow-x: hidden;
   background-color: #f5f7fa; /* Fondo similar al de Chipax */
@@ -196,4 +325,32 @@
 #sidebar .list-group-item .bi-chevron-down {
   position: absolute;
   right: 10px;
+}
+
+/* Ocultar sidebar en dispositivos móviles */
+@media (max-width: 768px) {
+  #sidebar {
+      display: none;
+  }
+
+  #sidebar.show {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+  }
+
+  #sidebar .sidebar-content {
+      width: 250px;
+      height: 100%;
+      background-color: #f5f7fa;
+  }
+
+  /* Make sure spans are visible on mobile */
+  #sidebar .list-group-item span {
+      display: inline !important;
+  }
 }
